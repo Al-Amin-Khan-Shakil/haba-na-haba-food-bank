@@ -34,6 +34,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    if @user == current_user
+      flash[:alert] = 'You cannot delete your own account.'
+    else
+      @user.destroy
+      flash[:notice] = 'User was successfully delete.'
+    end
+
+    redirect_to users_path
+  end
+
   private
 
   def set_user
