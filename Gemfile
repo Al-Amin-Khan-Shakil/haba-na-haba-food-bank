@@ -70,3 +70,6 @@ end
 
 # Environment variable
 gem 'dotenv-rails', groups: %i[development test]
+
+# Devise for authentication
+gem 'devise'
