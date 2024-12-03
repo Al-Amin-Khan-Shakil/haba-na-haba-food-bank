@@ -1,4 +1,7 @@
 <div>
-  <h1 class="font-bold text-4xl">Users#edit</h1>
-  <p>Find me in app/views/users/edit.html.erb</p>
+  <h3 class="text-2xl font-bold mb-4">Update User</h3>
+  <%= render 'form', user: @user %>
+  <button onclick="window.history.back()" class="bg-gray-100 text-gray-500 py-1 px-2 mb-3 lg:py-1 lg:px-4 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+    <i class="fa-solid fa-arrow-left"></i> <span class="ml-2 hidden lg:inline-block">Back</span>
+  </button>
 </div>
