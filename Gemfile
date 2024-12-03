@@ -76,3 +76,6 @@ gem 'devise'
 
 # Adds validations for Active Storage attachments, such as file size, content type, etc.
 gem 'active_storage_validations'
+
+# Font awesome for icons
+gem 'font-awesome-sass', '~> 6.5.1'
