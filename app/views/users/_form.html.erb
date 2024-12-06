@@ -1,0 +1,57 @@
+<%= form_with model: @user, local: true do |f| %>
+  <% if @user.errors.any? %>
+    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+      <h2 class="font-bold">Please fix the following errors:</h2>
+      <ul class="list-disc pl-5">
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <div class="mb-4">
+    <%= f.label :first_name, "First Name", class: "block font-bold mb-2" %>
+    <%= f.text_field :first_name, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :last_name, "Last Name", class: "block font-bold mb-2" %>
+    <%= f.text_field :last_name, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :email, "Email", class: "block font-bold mb-2" %>
+    <%= f.email_field :email, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :phone_number, "Phone Number", class: "block font-bold mb-2" %>
+    <%= f.text_field :phone_number, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :role, "Role", class: "block font-bold mb-2" %>
+    <%= f.select :role, User::ROLES, {}, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :gender, "Gender", class: "block font-bold mb-2" %>
+    <%= f.select :gender, User::GENDERS, {}, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :address, "Address", class: "block font-bold mb-2" %>
+    <%= f.text_area :address, class: "w-full p-2 border rounded", rows: 3 %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :profile_picture, "Profile Picture", class: "block font-bold mb-2" %>
+    <%= f.file_field :profile_picture, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :password, "Password", class: "block font-bold mb-2" %>
+    <%= f.password_field :password, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :password_confirmation, "Password Confirmation", class: "block font-bold mb-2" %>
+    <%= f.password_field :password_confirmation, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mt-6">
+    <%= f.submit class: "bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600" %>
+  </div>
+<% end %>

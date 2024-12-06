@@ -1,0 +1,42 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold mb-6">User Details</h1>
+  <div class="bg-white shadow rounded-md p-6">
+    <div class="flex items-center mb-6">
+      <% if @user.profile_picture.attached? %>
+        <%= image_tag @user.profile_picture, class: "rounded-full w-24 h-24 object-cover mr-4" %>
+      <% else %>
+        <div class="rounded-full w-24 h-24 bg-gray-200 flex items-center justify-center text-gray-500 mr-4">
+          <i class="fa-solid fa-user text-4xl"></i>
+        </div>
+      <% end %>
+      <div>
+        <h2 class="text-2xl font-semibold"><%= "#{@user.first_name} #{@user.last_name}" %></h2>
+        <p class="text-gray-600 capitalize"><%= @user.role %></p>
+      </div>
+    </div>
+    <table class="min-w-full bg-white border border-gray-300 rounded-md overflow-hidden shadow">
+      <tbody>
+        <tr class="border-b">
+          <th class="text-left px-4 py-2 text-gray-600 font-bold">Email:</th>
+          <td class="px-4 py-2"><%= @user.email %></td>
+        </tr>
+        <tr class="border-b">
+          <th class="text-left px-4 py-2 text-gray-600 font-bold">Phone Number:</th>
+          <td class="px-4 py-2"><%= @user.phone_number %></td>
+        </tr>
+        <tr class="border-b">
+          <th class="text-left px-4 py-2 text-gray-600 font-bold">Gender:</th>
+          <td class="px-4 py-2 capitalize"><%= @user.gender %></td>
+        </tr>
+        <tr>
+          <th class="text-left px-4 py-2 text-gray-600 font-bold">Address:</th>
+          <td class="px-4 py-2"><%= @user.address %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-6 flex space-x-4">
+    <%= link_to 'Edit User', edit_user_path(@user), class: "bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600" %>
+    <%= link_to 'Back', users_path, class: "bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400" %>
+  </div>
+</div>
