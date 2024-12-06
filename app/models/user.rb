@@ -21,7 +21,6 @@ class User < ApplicationRecord
             content_type: ['image/png', 'image/jpg', 'image/jpeg'],
             size: { less_than: 2.megabytes, message: 'is too large (maximum size is 2MB)' }
 
-
   ROLES.each do |role_name|
     define_method "#{role_name.gsub(' ', '_')}?" do
       role == role_name.tr('_', ' ')
