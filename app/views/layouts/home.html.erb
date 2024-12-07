@@ -11,11 +11,7 @@
   </head>
   <body>
     <main>
-      <% if user_signed_in? %>
-        <%= render "layouts/sidebar" %>
-      <% else %>
-        <%= yield %>
-      <% end %>
+      <%= yield %>
     </main>
   </body>
 </html>
