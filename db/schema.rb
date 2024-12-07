@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_03_114349) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_07_154532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_114349) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "counties", force: :cascade do |t|
+    t.string "name"
+    t.bigint "district_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_counties_on_district_id"
+  end
+
+  create_table "districts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sub_counties", force: :cascade do |t|
+    t.string "name"
+    t.bigint "county_id", null: false
+    t.bigint "district_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["county_id"], name: "index_sub_counties_on_county_id"
+    t.index ["district_id"], name: "index_sub_counties_on_district_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -62,4 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_114349) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "counties", "districts"
+  add_foreign_key "sub_counties", "counties"
+  add_foreign_key "sub_counties", "districts"
 end
