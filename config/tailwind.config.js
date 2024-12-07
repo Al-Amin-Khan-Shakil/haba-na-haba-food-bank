@@ -13,6 +13,11 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        primarycolor: "#6dc13d",
+        hoverprimarycolor: "#63b833",
+        primarytext: "#302C51",
+      },
     },
   },
   plugins: [
