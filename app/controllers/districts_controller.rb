@@ -9,10 +9,7 @@ class DistrictsController < ApplicationController
 
   def new
     @district = District.new
-    3.times do
-      county = @district.counties.build
-      2.times { county.sub_counties.build }
-    end
+    @district.counties.build.sub_counties.build # Initialize nested counties and sub-counties
   end
 
   def create
@@ -26,13 +23,20 @@ class DistrictsController < ApplicationController
 
   private
 
+  # def district_params
+  #   params.require(:district).permit(
+  #     :name,
+  #     counties_attributes: [
+  #       :id, :name, :_destroy,
+  #       sub_counties_attributes: [:id, :name, :_destroy]
+  #     ]
+  #   )
+  # end
+
   def district_params
     params.require(:district).permit(
       :name,
-      counties_attributes: [
-        :id, :name, :_destroy,
-        sub_counties_attributes: [:id, :name, :_destroy]
-      ]
+      counties_attributes: [:id, :name, :district_id, :_destroy, sub_counties_attributes: [:id, :name, :county_id, :_destroy]]
     )
   end
 end
