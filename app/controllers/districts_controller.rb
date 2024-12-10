@@ -3,15 +3,22 @@ class DistrictsController < ApplicationController
     @districts = District.includes(:counties, :sub_counties)
   end
 
+  def show
+    @district = District.includes(counties: :sub_counties).find(params[:id])
+  end
+
   def new
     @district = District.new
-    @district.counties.build.sub_counties.build
+    3.times do
+      county = @district.counties.build
+      2.times { county.sub_counties.build }
+    end
   end
 
   def create
     @district = District.new(district_params)
     if @district.save
-      redirect_to districts_path, notice: "District was successfully created."
+      redirect_to @district, notice: "District was successfully created."
     else
       render :new
     end

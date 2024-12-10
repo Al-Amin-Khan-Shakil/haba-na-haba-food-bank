@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
-  get 'districts/index'
-  get 'districts/new'
   devise_for :users,  skip: [:registrations]
 
   get 'home/index'
   resources :users
   resources :districts do
-    resources :counties, only: [:create, :destroy]
-    resources :sub_counties, only: [:create, :destroy]
+    resources :counties, only: [] do
+      resources :sub_counties, only: []
+    end
   end
 
   # Conditional root route

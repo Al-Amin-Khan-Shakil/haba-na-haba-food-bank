@@ -2,3 +2,36 @@
   <h1 class="font-bold text-4xl">Districts#new</h1>
   <p>Find me in app/views/districts/new.html.erb</p>
 </div>
+<%= form_with model: @district, local: true do |f| %>
+  <div>
+    <%= f.label :name, "District Name" %>
+    <%= f.text_field :name %>
+  </div>
+  <h3>Counties</h3>
+  <div id="counties">
+    <%= f.fields_for :counties do |county_form| %>
+      <div class="county">
+        <%= county_form.label :name, "County Name" %>
+        <%= county_form.text_field :name %>
+        <%= county_form.hidden_field :_destroy %>
+        <%= link_to "Remove County", "#", class: "remove-county" %>
+        <h4>Sub-Counties</h4>
+        <div class="sub-counties">
+          <%= county_form.fields_for :sub_counties do |sub_county_form| %>
+            <div class="sub-county">
+              <%= sub_county_form.label :name, "Sub-County Name" %>
+              <%= sub_county_form.text_field :name %>
+              <%= sub_county_form.hidden_field :_destroy %>
+              <%= link_to "Remove Sub-County", "#", class: "remove-sub-county" %>
+            </div>
+          <% end %>
+          <%= link_to "Add Sub-County", "#", class: "add-sub-county" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= link_to "Add County", "#", class: "add-county" %>
+  <div>
+    <%= f.submit "Create District" %>
+  </div>
+<% end %>
