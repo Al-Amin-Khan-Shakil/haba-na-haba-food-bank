@@ -1,6 +1,6 @@
 class DistrictsController < ApplicationController
   def index
-    @districts = District.includes(:counties, :sub_counties)
+    @districts = District.all
   end
 
   def show

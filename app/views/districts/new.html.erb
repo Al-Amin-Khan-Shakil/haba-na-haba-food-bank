@@ -1,37 +1,51 @@
-<div>
-  <h1 class="font-bold text-4xl">Districts#new</h1>
-  <p>Find me in app/views/districts/new.html.erb</p>
-</div>
-<%= form_with model: @district, local: true do |f| %>
-  <div>
-    <%= f.label :name, "District Name" %>
-    <%= f.text_field :name %>
-  </div>
-  <h3>Counties</h3>
-  <div id="counties">
-    <%= f.fields_for :counties do |county_form| %>
-      <div class="county">
-        <%= county_form.label :name, "County Name" %>
-        <%= county_form.text_field :name %>
-        <%= county_form.hidden_field :_destroy %>
-        <%= link_to "Remove County", "#", class: "remove-county" %>
-        <h4>Sub-Counties</h4>
-        <div class="sub-counties">
-          <%= county_form.fields_for :sub_counties do |sub_county_form| %>
-            <div class="sub-county">
-              <%= sub_county_form.label :name, "Sub-County Name" %>
-              <%= sub_county_form.text_field :name %>
-              <%= sub_county_form.hidden_field :_destroy %>
-              <%= link_to "Remove Sub-County", "#", class: "remove-sub-county" %>
-            </div>
-          <% end %>
-          <%= link_to "Add Sub-County", "#", class: "add-sub-county" %>
+<div class="max-w-4xl mx-auto my-8 bg-white shadow-md rounded-lg p-6">
+  <!-- Page Title -->
+  <h1 class="font-bold text-4xl text-gray-800 mb-6">Create New District</h1>
+  <!-- Form -->
+  <%= form_with model: @district, local: true, class: "space-y-6" do |f| %>
+    <!-- District Name -->
+    <div>
+      <%= f.label :name, "District Name", class: "block text-gray-700 font-medium mb-2" %>
+      <%= f.text_field :name, class: "w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+    <!-- Counties Section -->
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Counties</h3>
+    <div id="counties" class="space-y-6">
+      <%= f.fields_for :counties do |county_form| %>
+        <div class="county border border-gray-300 p-4 rounded-lg shadow-sm">
+          <!-- County Name -->
+          <div>
+            <%= county_form.label :name, "County Name", class: "block text-gray-700 font-medium mb-2" %>
+            <%= county_form.text_field :name, class: "w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+          </div>
+          <!-- Remove County -->
+          <%= county_form.hidden_field :_destroy %>
+          <%= link_to "Remove County", "#", class: "remove-county text-red-500 hover:text-red-700 font-medium mt-2 inline-block" %>
+          <!-- Sub-Counties Section -->
+          <h4 class="text-lg font-semibold text-gray-800 mt-4 mb-2">Sub-Counties</h4>
+          <div class="sub-counties space-y-4">
+            <%= county_form.fields_for :sub_counties do |sub_county_form| %>
+              <div class="sub-county bg-gray-50 border border-gray-300 p-3 rounded-lg">
+                <!-- Sub-County Name -->
+                <div>
+                  <%= sub_county_form.label :name, "Sub-County Name", class: "block text-gray-700 font-medium mb-2" %>
+                  <%= sub_county_form.text_field :name, class: "w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+                </div>
+                <!-- Remove Sub-County -->
+                <%= sub_county_form.hidden_field :_destroy %>
+                <%= link_to "Remove Sub-County", "#", class: "remove-sub-county text-red-500 hover:text-red-700 font-medium mt-2 inline-block" %>
+              </div>
+            <% end %>
+          </div>
+          <%= link_to "Add Sub-County", "#", class: "add-sub-county text-blue-500 hover:text-blue-700 font-medium mt-2 inline-block" %>
         </div>
-      </div>
-    <% end %>
-  </div>
-  <%= link_to "Add County", "#", class: "add-county" %>
-  <div>
-    <%= f.submit "Create District" %>
-  </div>
-<% end %>
+      <% end %>
+    </div>
+    <!-- Add County Button -->
+    <%= link_to "Add County", "#", class: "add-county text-blue-500 hover:text-blue-700 font-medium mt-4 block" %>
+    <!-- Submit Button -->
+    <div>
+      <%= f.submit "Create District", class: "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow" %>
+    </div>
+  <% end %>
+</div>
