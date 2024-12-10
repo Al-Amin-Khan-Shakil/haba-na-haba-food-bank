@@ -108,8 +108,14 @@
       </li>
       <li>
         <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-arrow-trend-up text-base text-white group-hover:text-gray-800"></i>
+          <i class="fa-solid fa-magnifying-glass-plus text-base text-white group-hover:text-gray-800"></i>
           <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Events</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to districts_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+          <i class="fa-solid fa-location text-base text-white group-hover:text-gray-800"></i>
+          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Locations</span>
         <% end %>
       </li>
       <p class="py-2 text-white font-Outfit font-normal text-sm mr-20">PREFERENCE</p>
