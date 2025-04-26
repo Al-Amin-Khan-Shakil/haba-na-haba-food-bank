@@ -3,6 +3,11 @@ Rails.application.routes.draw do
 
   get 'home/index'
   resources :users
+  resources :districts do
+    resources :counties, only: [] do
+      resources :sub_counties, only: []
+    end
+  end
 
   # Conditional root route
   authenticated :user do
