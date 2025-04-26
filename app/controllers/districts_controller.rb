@@ -21,6 +21,10 @@ class DistrictsController < ApplicationController
     end
   end
 
+  def edit
+    @district = District.includes(counties: :sub_counties).find(params[:id])
+  end
+
   private
 
   def district_params
