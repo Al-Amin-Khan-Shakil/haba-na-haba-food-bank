@@ -15,7 +15,7 @@ class DistrictsController < ApplicationController
   def create
     @district = District.new(district_params)
     if @district.save
-      redirect_to @district, notice: "District was successfully created."
+      redirect_to @district, notice: 'District was successfully created.'
     else
       render :new
     end
@@ -36,7 +36,9 @@ class DistrictsController < ApplicationController
   def district_params
     params.require(:district).permit(
       :name,
-      counties_attributes: [:id, :name, :district_id, :_destroy, sub_counties_attributes: [:id, :name, :county_id, :_destroy]]
+      counties_attributes: [:id, :name, :district_id, :_destroy, {
+        sub_counties_attributes: %i[id name county_id _destroy]
+      }]
     )
   end
 end
