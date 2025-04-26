@@ -25,6 +25,22 @@ class DistrictsController < ApplicationController
     @district = District.includes(counties: :sub_counties).find(params[:id])
   end
 
+  def update
+    @district = District.includes(counties: :sub_counties).find(params[:id])
+
+    if @district.update(district_params)
+      redirect_to @district, notice: 'District was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @district = District.find(params[:id])
+    @district.destroy
+    redirect_to districts_path, notice: 'District was successfully destroyed.'
+  end
+
   private
 
   def district_params
