@@ -1,0 +1,41 @@
+<%= form_with(model: district) do |f| %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <h3>Counties</h3>
+  <div data-controller="nested-form" data-association="counties">
+    <div data-nested-form-target="container">
+      <%= f.fields_for :counties do |county_fields| %>
+        <div class="nested-fields county-fields my-4 p-4 border">
+          <div class="field">
+            <%= county_fields.label :name %>
+            <%= county_fields.text_field :name %>
+            <%= county_fields.hidden_field :_destroy %>
+          </div>
+          <div class="sub-counties-container my-3" data-controller="nested-form" data-association="sub_counties">
+            <h4>Sub-Counties</h4>
+            <div data-nested-form-target="container">
+              <%= county_fields.fields_for :sub_counties do |sub_county_fields| %>
+                <div class="nested-fields sub-county-fields my-3 p-3 border">
+                  <div class="field">
+                    <%= sub_county_fields.label :name %>
+                    <%= sub_county_fields.text_field :name %>
+                    <%= sub_county_fields.hidden_field :_destroy %>
+                  </div>
+                  <button type="button" class="remove-nested">Remove Sub-County</button>
+                </div>
+              <% end %>
+            </div>
+            <button type="button" data-action="nested-form#addAssociation" class="add-sub-county">Add Sub-County</button>
+          </div>
+          <button type="button" class="remove-nested">Remove County</button>
+        </div>
+      <% end %>
+    </div>
+    <button type="button" data-action="nested-form#addAssociation" data-nested-form-target="addButton">Add County</button>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

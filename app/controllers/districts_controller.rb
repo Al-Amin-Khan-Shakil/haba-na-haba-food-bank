@@ -1,4 +1,5 @@
 class DistrictsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @districts = District.all
   end
@@ -17,7 +18,7 @@ class DistrictsController < ApplicationController
     if @district.save
       redirect_to @district, notice: 'District was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

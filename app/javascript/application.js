@@ -2,4 +2,3 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 import "flowbite";
-import "./districts/nested_county_subcounty";
