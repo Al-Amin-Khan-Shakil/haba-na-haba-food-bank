@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_26_114748) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_28_062937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -43,6 +43,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_26_114748) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "branches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "phone_number"
+    t.string "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "counties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.uuid "district_id", null: false
@@ -55,6 +63,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_26_114748) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "branch_id"
+    t.index ["branch_id"], name: "index_districts_on_branch_id"
   end
 
   create_table "sub_counties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -86,5 +96,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_26_114748) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "counties", "districts"
+  add_foreign_key "districts", "branches"
   add_foreign_key "sub_counties", "counties"
 end
