@@ -1,0 +1,38 @@
+<%= form_with(model: branch, local: true) do |form| %>
+  <% if branch.errors.any? %>
+    <div>
+      <h2><%= pluralize(branch.errors.count, "error") %> prohibited this branch from being saved:</h2>
+      <ul>
+        <% branch.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "border p-2 w-full" %>
+  </div>
+  <div>
+    <%= form.label :phone_number %>
+    <%= form.text_field :phone_number, class: "border p-2 w-full" %>
+  </div>
+  <div>
+    <%= form.label :address %>
+    <%= form.text_field :address, class: "border p-2 w-full" %>
+  </div>
+  <div>
+    <%= form.label :districts, "Assign Districts" %>
+    <div class="grid grid-cols-2 gap-2 mt-2">
+      <% @unassigned_districts.each do |district| %>
+        <div class="flex items-center">
+          <%= check_box_tag "branch[district_ids][]", district.id, @branch.districts.include?(district), id: "district_#{district.id}", class: "mr-2" %>
+          <%= label_tag "district_#{district.id}", district.name %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="mt-4">
+    <%= form.submit class: "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded" %>
+  </div>
+<% end %>
