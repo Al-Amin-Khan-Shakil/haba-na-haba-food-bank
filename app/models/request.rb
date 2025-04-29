@@ -5,7 +5,7 @@ class Request < ApplicationRecord
   belongs_to :sub_county, optional: true
   belongs_to :user, optional: true
 
-  has_one :donation, dependent: nil
+  has_one :donation, dependent: :nullify
   accepts_nested_attributes_for :donation
 
   enum request_type: {

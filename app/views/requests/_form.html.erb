@@ -12,27 +12,63 @@
   </div>
   <div class="mb-4">
     <%= f.label :request_type %>
-    <%= f.select :request_type, Request.request_types.keys.map { |k| [k.titleize, k] },
-          {}, class: "input", data: { request_form_target: "requestTypeSelect", action: "change->request-form#toggleDonationFields" } %>
+    <%= f.select :request_type,
+          Request.request_types.keys.map { |k| [k.titleize, k] },
+          {},
+          class: "input",
+          data: {
+            request_form_target: "requestTypeSelect",
+            action: "change->request-form#toggleDonationFields"
+          } %>
   </div>
-  <!-- Add other request fields like district, county, etc., as needed -->
-  <div data-request-form-target="donationFields" class="<%= @request.donation_request? ? '' : 'hidden' %>">
-    <h3 class="font-bold mt-4">Donation Info</h3>
-    <%= f.fields_for :donation do |df| %>
-      <div class="mb-4">
-        <%= df.label :donation_type %>
-        <%= df.select :donation_type, Donation.donation_types.keys.map { |k| [k.titleize, k] }, {}, class: "input" %>
-      </div>
-      <div class="mb-4">
-        <%= df.label :donation_name %>
-        <%= df.text_field :donation_name, class: "input" %>
-      </div>
-      <div class="mb-4">
-        <%= df.label :amount %>
-        <%= df.number_field :amount, class: "input" %>
-      </div>
-    <% end %>
+  <div class="mb-4">
+    <%= f.label :is_selected, class: "block font-semibold" %>
+    <%= f.check_box :is_selected, class: "mr-2" %>
   </div>
+  <div class="mb-4">
+    <%= f.label :village, class: "block font-semibold" %>
+    <%= f.text_field :village, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :parish, class: "block font-semibold" %>
+    <%= f.text_field :parish, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :address_note, class: "block font-semibold" %>
+    <%= f.text_area :address_note, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :district_id, "District", class: "block font-semibold" %>
+    <%= f.collection_select :district_id, District.all, :id, :name,
+        { prompt: "Select a District" },
+        { class: "w-full p-2 border rounded", data: { action: "change->location#loadCounties" } } %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :county_id, "County", class: "block font-semibold" %>
+    <%= f.collection_select :county_id, County.where(district_id: request.district_id), :id, :name,
+        { prompt: "Select a County" },
+        { class: "w-full p-2 border rounded", data: { action: "change->location#loadSubCounties" } } %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :sub_county_id, "Sub-County", class: "block font-semibold" %>
+    <%= f.collection_select :sub_county_id, SubCounty.where(county_id: request.county_id), :id, :name,
+        { prompt: "Select a Sub-County" },
+        { class: "w-full p-2 border rounded" } %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :branch_id, "Branch", class: "block font-semibold" %>
+    <%= f.collection_select :branch_id, Branch.all, :id, :name,
+        { prompt: "Select a Branch" },
+        { class: "w-full p-2 border rounded" } %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :user_id, "Handled By (User)", class: "block font-semibold" %>
+    <%= f.collection_select :user_id, User.all, :id, :email,
+        { prompt: "Select a User" },
+        { class: "w-full p-2 border rounded" } %>
+  </div>
+  <!-- Empty placeholder where JS will inject donation fields -->
+  <div id="donation-fields-wrapper" data-request-form-target="donationFieldsWrapper"></div>
   <div class="mt-4">
     <%= f.submit class: "btn btn-primary" %>
   </div>
