@@ -1,5 +1,6 @@
 class DistrictsController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @districts = District.all
   end
@@ -10,7 +11,7 @@ class DistrictsController < ApplicationController
 
   def new
     @district = District.new
-    @district.counties.build.sub_counties.build # Initialize nested counties and sub-counties
+    @district.counties.build.sub_counties.build
   end
 
   def create
