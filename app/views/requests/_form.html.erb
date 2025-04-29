@@ -1,0 +1,39 @@
+<%= form_with model: @request, local: true, data: { controller: "request-form" } do |f| %>
+  <% if @request.errors.any? %>
+    <div><%= @request.errors.full_messages.to_sentence %></div>
+  <% end %>
+  <div class="mb-4">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "input" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :phone_number %>
+    <%= f.text_field :phone_number, class: "input" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :request_type %>
+    <%= f.select :request_type, Request.request_types.keys.map { |k| [k.titleize, k] },
+          {}, class: "input", data: { request_form_target: "requestTypeSelect", action: "change->request-form#toggleDonationFields" } %>
+  </div>
+  <!-- Add other request fields like district, county, etc., as needed -->
+  <div data-request-form-target="donationFields" class="<%= @request.donation_request? ? '' : 'hidden' %>">
+    <h3 class="font-bold mt-4">Donation Info</h3>
+    <%= f.fields_for :donation do |df| %>
+      <div class="mb-4">
+        <%= df.label :donation_type %>
+        <%= df.select :donation_type, Donation.donation_types.keys.map { |k| [k.titleize, k] }, {}, class: "input" %>
+      </div>
+      <div class="mb-4">
+        <%= df.label :donation_name %>
+        <%= df.text_field :donation_name, class: "input" %>
+      </div>
+      <div class="mb-4">
+        <%= df.label :amount %>
+        <%= df.number_field :amount, class: "input" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="mt-4">
+    <%= f.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

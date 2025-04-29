@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
   resources :branches
+  resources :requests
 
   # Conditional root route
   authenticated :user do

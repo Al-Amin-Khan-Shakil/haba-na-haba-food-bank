@@ -1,11 +1,12 @@
 class Request < ApplicationRecord
   belongs_to :branch
   belongs_to :district
-  belongs_to :county
-  belongs_to :sub_county
-  belongs_to :user
+  belongs_to :county, optional: true
+  belongs_to :sub_county, optional: true
+  belongs_to :user, optional: true
 
-  has_one :donation, dependent: :destroy
+  has_one :donation, dependent: nil
+  accepts_nested_attributes_for :donation
 
   enum request_type: {
     food_request: 1,

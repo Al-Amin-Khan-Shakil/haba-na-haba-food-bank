@@ -10,5 +10,6 @@ class Donation < ApplicationRecord
     others: 6
   }
 
-  validates :donar_name, :phone_number, :donation_type, :donated, presence: true
+  validates :donor_name, :phone_number, :donation_type, :donated, presence: true
+  validates :amount, numericality: { only_integer: true }, allow_nil: true
 end
