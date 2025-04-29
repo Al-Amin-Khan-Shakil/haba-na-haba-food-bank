@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_28_062937) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_29_111519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -67,6 +67,40 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_28_062937) do
     t.index ["branch_id"], name: "index_districts_on_branch_id"
   end
 
+  create_table "donations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "phone_number"
+    t.string "type"
+    t.string "donated"
+    t.integer "amount"
+    t.uuid "request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_donations_on_request_id"
+  end
+
+  create_table "requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "phone_number"
+    t.integer "request_type"
+    t.boolean "is_selected"
+    t.string "village"
+    t.string "parish"
+    t.string "address_note"
+    t.uuid "branch_id", null: false
+    t.uuid "district_id", null: false
+    t.uuid "county_id"
+    t.uuid "sub_county_id"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_requests_on_branch_id"
+    t.index ["county_id"], name: "index_requests_on_county_id"
+    t.index ["district_id"], name: "index_requests_on_district_id"
+    t.index ["sub_county_id"], name: "index_requests_on_sub_county_id"
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
   create_table "sub_counties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.uuid "county_id", null: false
@@ -97,5 +131,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_28_062937) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "counties", "districts"
   add_foreign_key "districts", "branches"
+  add_foreign_key "donations", "requests"
+  add_foreign_key "requests", "branches"
+  add_foreign_key "requests", "counties"
+  add_foreign_key "requests", "districts"
+  add_foreign_key "requests", "sub_counties"
+  add_foreign_key "requests", "users"
   add_foreign_key "sub_counties", "counties"
 end
