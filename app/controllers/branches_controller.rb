@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_branch, only: [:show, :edit, :update, :destroy]
+  before_action :set_branch, only: %i[show edit update destroy]
 
   def index
     @branches = Branch.all
@@ -32,7 +32,7 @@ class BranchesController < ApplicationController
   def update
     if @branch.update(branch_params)
       assign_districts
-      redirect_to @branch, notice: "Branch was successfully updated."
+      redirect_to @branch, notice: 'Branch was successfully updated.'
     else
       @unassigned_districts = District.where(branch_id: nil).or(District.where(branch_id: @branch.id))
       render :edit, status: :unprocessable_entity
@@ -41,7 +41,7 @@ class BranchesController < ApplicationController
 
   def destroy
     @branch.destroy
-    redirect_to branches_path, notice: "Branch was successfully destroyed."
+    redirect_to branches_path, notice: 'Branch was successfully destroyed.'
   end
 
   private
@@ -57,8 +57,8 @@ class BranchesController < ApplicationController
   def assign_districts
     District.where(branch_id: @branch.id).update_all(branch_id: nil)
 
-    if params[:branch][:district_ids]
-      District.where(id: params[:branch][:district_ids].reject(&:blank?)).update_all(branch_id: @branch.id)
-    end
+    return unless params[:branch][:district_ids]
+
+    District.where(id: params[:branch][:district_ids].reject(&:blank?)).update_all(branch_id: @branch.id)
   end
 end

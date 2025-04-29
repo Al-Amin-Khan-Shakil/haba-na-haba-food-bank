@@ -12,6 +12,7 @@ class DistrictsController < ApplicationController
   def new
     @district = District.new
     @district.counties.build.sub_counties.build
+  end
 
   def create
     @district = District.new(district_params)
