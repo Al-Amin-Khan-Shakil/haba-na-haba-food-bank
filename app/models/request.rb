@@ -1,14 +1,16 @@
-class Donation < ApplicationRecord
-  belongs_to :request
+class Request < ApplicationRecord
+  belongs_to :branch
+  belongs_to :district
+  belongs_to :county
+  belongs_to :sub_county
+  belongs_to :user
 
-  enum donation_type: {
-    fresh_food: 1,
-    dry_food: 2,
-    cloth: 3,
-    money: 4,
-    medicine: 5,
-    others: 6
+  has_one :donation, dependent: :destroy
+
+  enum request_type: {
+    food_request: 1,
+    donation_request: 2
   }
 
-  validates :donar_name, :phone_number, :donation_type, :donated, presence: true
+  validates :name, :phone_number, :request_type, presence: true
 end
