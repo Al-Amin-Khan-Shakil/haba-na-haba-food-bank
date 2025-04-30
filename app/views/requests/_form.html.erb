@@ -1,6 +1,6 @@
 <%= form_with model: @request, local: true,
     data: {
-      controller: "request-form",
+      controller: "request-form location",
       request_form_donation_values: (@request.donation_request? && @request.donation) ? @request.donation.to_json : 'null'
     } do |f| %>
   <% if @request.errors.any? %>
@@ -43,21 +43,39 @@
   </div>
   <div class="mb-4">
     <%= f.label :district_id, "District", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :district_id, District.all, :id, :name,
-        { prompt: "Select a District" },
-        { class: "w-full p-2 border rounded", data: { action: "change->location#loadCounties" } } %>
+    <%= f.collection_select :district_id, @districts, :id, :name,
+          { selected: @request.district_id, prompt: "Select District" },
+          { class: "w-full p-2 border rounded district-select",
+            data: {
+              location_target: "district",
+              action: "change->location#loadCounties",
+              location_context_path_value: requests_path
+            }
+          } %>
   </div>
   <div class="mb-4">
     <%= f.label :county_id, "County", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :county_id, County.where(district_id: @request.district_id), :id, :name,
-        { prompt: "Select a County" },
-        { class: "w-full p-2 border rounded", data: { action: "change->location#loadSubCounties" } } %>
+    <%= f.collection_select :county_id, @counties, :id, :name,
+          { selected: @request.county_id, prompt: "Select County" },
+          { class: "w-full p-2 border rounded county-select",
+            data: {
+              location_target: "county",
+              initial_selection: @request.county_id,
+              action: "change->location#loadSubCounties",
+              location_context_path_value: requests_path,
+            }
+          } %>
   </div>
   <div class="mb-4">
     <%= f.label :sub_county_id, "Sub-County", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :sub_county_id, SubCounty.where(county_id: @request.county_id), :id, :name,
-        { prompt: "Select a Sub-County" },
-        { class: "w-full p-2 border rounded" } %>
+    <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
+          { selected: @request.sub_county_id, prompt: "Select Sub-County" },
+          { class: "w-full p-2 border rounded sub-county-select",
+            data: {
+              location_target: "subCounty",
+              initial_selection: @request.sub_county_id
+            }
+          } %>
   </div>
   <div class="mb-4">
     <%= f.label :branch_id, "Branch", class: "block font-semibold mb-1" %>

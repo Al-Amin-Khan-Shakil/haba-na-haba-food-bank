@@ -11,6 +11,9 @@ class RequestsController < ApplicationController
   def new
     @request = Request.new
     @request.build_donation
+    @districts = District.all
+    @counties = County.none
+    @sub_counties = SubCounty.none
   end
 
   def create
@@ -30,6 +33,9 @@ class RequestsController < ApplicationController
 
   def edit
     @request.build_donation if @request.donation_request? && @request.donation.nil?
+    @districts = District.all
+    @counties = County.all
+    @sub_counties = SubCounty.all
   end
 
   def update
@@ -43,7 +49,6 @@ class RequestsController < ApplicationController
       end
       redirect_to @request, notice: 'Request updated successfully'
     else
-      # Ensure donation is built for the form if validation fails
       @request.build_donation if @request.donation_request? && @request.donation.blank?
       render :edit, status: :unprocessable_entity
     end
@@ -52,6 +57,24 @@ class RequestsController < ApplicationController
   def destroy
     @request.destroy
     redirect_to requests_path, notice: 'Request was successfully destroyed.'
+  end
+
+  def load_counties
+    @counties = if params[:district_id].present?
+                  County.where(district_id: params[:district_id])
+                else
+                  County.none
+                end
+    render json: @counties.map { |county| { id: county.id, name: county.name } }
+  end
+
+  def load_sub_counties
+    @sub_counties = if params[:county_id].present?
+                      SubCounty.where(county_id: params[:county_id])
+                    else
+                      SubCounty.none
+                    end
+    render json: @sub_counties.map { |sub_county| { id: sub_county.id, name: sub_county.name } }
   end
 
   private
@@ -74,7 +97,7 @@ class RequestsController < ApplicationController
       :village,
       :parish,
       :address_note,
-      donation_attributes: [:id, :donation_type, :donation_name, :amount, :_destroy]
+      donation_attributes: %i[id donation_type donation_name amount _destroy]
     )
   end
 end
