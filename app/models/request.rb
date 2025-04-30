@@ -5,8 +5,8 @@ class Request < ApplicationRecord
   belongs_to :sub_county, optional: true
   belongs_to :user, optional: true
 
-  has_one :donation, dependent: :nullify
-  accepts_nested_attributes_for :donation
+  has_one :donation, dependent: :destroy
+  accepts_nested_attributes_for :donation, update_only: true, allow_destroy: false
 
   enum request_type: {
     food_request: 1,

@@ -29,12 +29,13 @@ class RequestsController < ApplicationController
   end
 
   def edit
-    @request.build_donation if @request.donation_request? && @request.donation.blank?
+    @request.build_donation if @request.donation_request? && @request.donation.nil?
   end
 
   def update
     if @request.update(request_params)
       if @request.donation_request? && @request.donation.present?
+        # Update donor info from request
         @request.donation.update(
           donor_name: @request.name,
           phone_number: @request.phone_number
@@ -42,6 +43,8 @@ class RequestsController < ApplicationController
       end
       redirect_to @request, notice: 'Request updated successfully'
     else
+      # Ensure donation is built for the form if validation fails
+      @request.build_donation if @request.donation_request? && @request.donation.blank?
       render :edit, status: :unprocessable_entity
     end
   end
@@ -54,7 +57,7 @@ class RequestsController < ApplicationController
   private
 
   def set_request
-    @request = Request.find(params[:id])
+    @request = Request.includes(:donation).find(params[:id])
   end
 
   def request_params
@@ -71,7 +74,7 @@ class RequestsController < ApplicationController
       :village,
       :parish,
       :address_note,
-      donation_attributes: %i[donation_type donation_name amount]
+      donation_attributes: [:id, :donation_type, :donation_name, :amount, :_destroy]
     )
   end
 end
