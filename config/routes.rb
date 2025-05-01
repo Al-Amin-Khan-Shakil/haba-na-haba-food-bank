@@ -9,6 +9,12 @@ Rails.application.routes.draw do
     end
   end
   resources :branches
+  resources :requests do
+    collection do
+      get :load_counties
+      get :load_sub_counties
+    end
+  end
 
   # Conditional root route
   authenticated :user do
