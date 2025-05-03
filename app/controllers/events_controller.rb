@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.includes(:event_users => :user).find(params[:id])
+    @event = Event.includes(event_users: :user).find(params[:id])
     @event_users = @event.event_users.distinct || []
   end
 
@@ -68,7 +68,8 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:title, :description, :start_date, :end_date, :district_id, :county_id, :sub_county_id, user_ids: [])
+    params.require(:event).permit(:title, :description, :start_date, :end_date, :district_id, :county_id,
+                                  :sub_county_id, user_ids: [])
   end
 
   def set_form_dependencies
