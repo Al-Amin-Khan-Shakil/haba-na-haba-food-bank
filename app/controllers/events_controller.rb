@@ -1,20 +1,23 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_event, only: %i[show edit update destroy]
+  before_action :set_event, only: %i[edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
 
   def index
     @events = Event.all
   end
 
-  def show; end
+  def show
+    @event = Event.includes(:event_users => :user).find(params[:id])
+    @event_users = @event.event_users.distinct || []
+  end
 
   def new
     @event = Event.new
   end
 
   def create
-    @event.assign_attributes(event_params)
+    @event = Event.new(event_params)
 
     if @event.save
       allocate_users_to_event(@event, params[:event][:user_ids])
@@ -79,7 +82,7 @@ class EventsController < ApplicationController
     return if user_ids.nil? || user_ids.empty?
 
     user_ids.each do |user_id|
-      EventUser.create(event_id: event.id, user_id: user_id)
+      event.event_users.find_or_create_by(user_id: user_id)
     end
   end
 end

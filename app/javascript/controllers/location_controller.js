@@ -3,6 +3,11 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["district", "county", "subCounty"]
+  static values = {
+    basePath: {
+      type: String, default: window.location.pathname.split('/')[1]
+    }
+  }
 
   // Connect lifecycle method
   connect() {
@@ -38,7 +43,7 @@ export default class extends Controller {
     if (!districtId) return
 
     try {
-      const response = await fetch(`/requests/load_counties?district_id=${districtId}`)
+      const response = await fetch(`/${this.basePathValue}/load_counties?district_id=${districtId}`)
       const data = await response.json()
       this.rebuildSelect(this.countyTarget, data)
     } catch (error) {
@@ -52,7 +57,7 @@ export default class extends Controller {
     if (!countyId) return
 
     try {
-      const response = await fetch(`/requests/load_sub_counties?county_id=${countyId}`)
+      const response = await fetch(`/${this.basePathValue}/load_sub_counties?county_id=${countyId}`)
       const data = await response.json()
       this.rebuildSelect(this.subCountyTarget, data)
     } catch (error) {

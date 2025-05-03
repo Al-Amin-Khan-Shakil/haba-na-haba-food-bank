@@ -1,4 +1,6 @@
-<%= form_with model: @event, local: true do |f| %>
+<%= form_with model: @event, local: true, data: {
+    controller: "location"
+  } do |f| %>
   <% if @event.errors.any? %>
     <div class="text-red-600 mb-4"><%= @event.errors.full_messages.to_sentence %></div>
   <% end %>
@@ -25,6 +27,7 @@
       { class: "w-full p-2 border rounded district-select",
         data: {
           location_target: "district",
+          location_base_path_value: "events",
           action: "change->location#loadCounties",
           location_context_path_value: events_path
         }
@@ -37,6 +40,7 @@
       { class: "w-full p-2 border rounded county-select",
         data: {
           location_target: "county",
+          location_base_path_value: "events",
           initial_selection: @event.county_id,
           action: "change->location#loadSubCounties",
           location_context_path_value: events_path

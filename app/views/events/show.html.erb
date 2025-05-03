@@ -33,10 +33,6 @@
                     Added <%= time_ago_in_words(event_user.created_at) %> ago
                   </p>
                 </div>
-                <%= button_to 'Remove', event_user_path(event_user),
-                      method: :delete,
-                      data: { confirm: 'Remove this participant?' },
-                      class: "text-red-500 hover:text-red-700 text-sm" %>
               </div>
             <% end %>
           </div>
