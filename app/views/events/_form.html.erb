@@ -1,0 +1,74 @@
+<%= form_with model: @event, local: true do |f| %>
+  <% if @event.errors.any? %>
+    <div class="text-red-600 mb-4"><%= @event.errors.full_messages.to_sentence %></div>
+  <% end %>
+  <div class="mb-4">
+    <%= f.label :title, class: "block font-semibold mb-1" %>
+    <%= f.text_field :title, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :description, class: "block font-semibold mb-1" %>
+    <%= f.text_area :description, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :start_date, class: "block font-semibold mb-1" %>
+    <%= f.datetime_field :start_date, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :end_date, class: "block font-semibold mb-1" %>
+    <%= f.datetime_field :end_date, class: "w-full p-2 border rounded" %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :district_id, "District", class: "block mb-2 text-sm font-medium text-gray-900" %>
+    <%= f.collection_select :district_id, @districts, :id, :name,
+      { selected: @event.district_id, prompt: "Select District" },
+      { class: "w-full p-2 border rounded district-select",
+        data: {
+          location_target: "district",
+          action: "change->location#loadCounties",
+          location_context_path_value: events_path
+        }
+      } %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :county_id, "County", class: "block font-semibold mb-1" %>
+    <%= f.collection_select :county_id, @counties, :id, :name,
+      { selected: @event.county_id, prompt: "Select County" },
+      { class: "w-full p-2 border rounded county-select",
+        data: {
+          location_target: "county",
+          initial_selection: @event.county_id,
+          action: "change->location#loadSubCounties",
+          location_context_path_value: events_path
+        }
+      } %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :sub_county_id, "Sub County", class: "block font-semibold mb-1" %>
+    <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
+      { selected: @event.sub_county_id, prompt: "Select Sub County" },
+      { class: "w-full p-2 border rounded sub-county-select",
+        data: {
+          location_target: "subCounty",
+          initial_selection: @event.sub_county_id
+        }
+      } %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :user_ids, "Select Users to Add", class: "block mb-2 text-sm font-medium text-gray-900" %>
+    <ul id="users-list">
+      <input type="hidden" name="event[user_ids][]" value="">
+      <% @users.each do |user| %>
+        <li class="user-item">
+          <input type="checkbox" name="event[user_ids][]" value="<%= user.id %>" <%= 'checked' if @event.users.include?(user) %> />
+          <span class="user-name"><%= user.first_name %> <%= user.last_name %></span> -
+          <span class="user-phone"><%= user.phone_number %></span> -
+          <span class="user-role"><%= user.role %></span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="mt-6">
+    <%= f.submit class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
+  </div>
+<% end %>
