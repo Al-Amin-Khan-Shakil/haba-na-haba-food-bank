@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_29_142717) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_01_073640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -79,6 +79,30 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_29_142717) do
     t.index ["request_id"], name: "index_donations_on_request_id"
   end
 
+  create_table "event_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_users_on_event_id"
+    t.index ["user_id"], name: "index_event_users_on_user_id"
+  end
+
+  create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.uuid "district_id", null: false
+    t.uuid "county_id", null: false
+    t.uuid "sub_county_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["county_id"], name: "index_events_on_county_id"
+    t.index ["district_id"], name: "index_events_on_district_id"
+    t.index ["sub_county_id"], name: "index_events_on_sub_county_id"
+  end
+
   create_table "requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "phone_number"
@@ -132,6 +156,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_29_142717) do
   add_foreign_key "counties", "districts"
   add_foreign_key "districts", "branches"
   add_foreign_key "donations", "requests"
+  add_foreign_key "event_users", "events"
+  add_foreign_key "event_users", "users"
+  add_foreign_key "events", "counties"
+  add_foreign_key "events", "districts"
+  add_foreign_key "events", "sub_counties"
   add_foreign_key "requests", "branches"
   add_foreign_key "requests", "counties"
   add_foreign_key "requests", "districts"
