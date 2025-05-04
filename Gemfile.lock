@@ -113,8 +113,8 @@ GEM
     drb (2.2.1)
     error_highlight (0.7.0)
     erubi (1.13.0)
-    ffi (1.17.0)
     ffi (1.17.0-x64-mingw-ucrt)
+    ffi (1.17.0-x86_64-linux-gnu)
     font-awesome-sass (6.5.2)
       sassc (~> 2.0)
     globalid (1.2.1)
@@ -297,12 +297,13 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   tailwindcss-rails
+  tailwindcss-ruby (~> 3.4)
   turbo-rails
   tzinfo-data
   web-console
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.3.6p108
 
 BUNDLED WITH
    2.5.9

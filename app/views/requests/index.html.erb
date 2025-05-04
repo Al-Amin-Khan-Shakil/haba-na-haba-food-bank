@@ -1,21 +1,21 @@
-<h1 class="text-xl font-bold mb-4">Requests</h1>
-<%= link_to 'New Request', new_request_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-4 inline-block" %>
-<table class="min-w-full border mt-2">
+<h1 class="mb-4 text-xl font-bold">Requests</h1>
+<%= link_to 'New Request', new_request_path, class: "bg-orange-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-4 inline-block" %>
+<table class="mt-2 min-w-full border">
   <thead>
     <tr>
-      <th class="border px-4 py-2">Name</th>
-      <th class="border px-4 py-2">Phone Number</th>
-      <th class="border px-4 py-2">Type</th>
-      <th class="border px-4 py-2">Actions</th>
+      <th class="px-4 py-2 border">Name</th>
+      <th class="px-4 py-2 border">Phone Number</th>
+      <th class="px-4 py-2 border">Type</th>
+      <th class="px-4 py-2 border">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @requests.each do |request| %>
       <tr>
-        <td class="border px-4 py-2"><%= request.name %></td>
-        <td class="border px-4 py-2"><%= request.phone_number %></td>
-        <td class="border px-4 py-2"><%= request.request_type.humanize %></td>
-        <td class="border px-4 py-2">
+        <td class="px-4 py-2 border"><%= request.name %></td>
+        <td class="px-4 py-2 border"><%= request.phone_number %></td>
+        <td class="px-4 py-2 border"><%= request.request_type.humanize %></td>
+        <td class="px-4 py-2 border">
           <%= link_to 'Show', request_path(request), class: "text-blue-600 hover:underline mr-2" %>
           <%= link_to 'Edit', edit_request_path(request), class: "text-yellow-600 hover:underline mr-2" %>
           <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
