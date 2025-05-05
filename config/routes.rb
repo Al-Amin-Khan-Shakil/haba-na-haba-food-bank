@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get :load_counties
       get :load_sub_counties
     end
+    resources :family_beneficiaries
   end
   resources :events do
     collection do
@@ -28,7 +29,12 @@ Rails.application.routes.draw do
       get :load_sub_counties
     end
   end
-  resources :family_beneficiaries
+  resources :family_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
+    collection do
+      get :load_counties
+      get :load_sub_counties
+    end
+  end
 
   # Conditional root route
   authenticated :user do
