@@ -78,14 +78,23 @@ class IndividualBeneficiariesController < ApplicationController
       @individual_beneficiary = @request.individual_beneficiary
     else
       @individual_beneficiary = IndividualBeneficiary.find(params[:id])
+      @request = @individual_beneficiary.request # Fix added here
     end
+  end
+
+  def effective_district
+    @individual_beneficiary&.district || @request&.district
+  end
+
+  def effective_county
+    @individual_beneficiary&.county || @request&.county
   end
 
   def set_form_dependencies
     @users = User.all
     @districts = District.all
-    @counties = @request.district.present? ? @request.district.counties : []
-    @sub_counties = @request.county.present? ? @request.county.sub_counties : []
+    @counties = effective_district&.counties || []
+    @sub_counties = effective_county&.sub_counties || []
     @branches = Branch.all
     @events = Event.all
   end

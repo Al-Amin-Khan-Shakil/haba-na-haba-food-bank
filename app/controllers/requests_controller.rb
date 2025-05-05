@@ -34,8 +34,8 @@ class RequestsController < ApplicationController
   def edit
     @request.build_donation if @request.donation_request? && @request.donation.nil?
     @districts = District.all
-    @counties = @individual_beneficiary&.district&.counties || County.none
-    @sub_counties = @individual_beneficiary&.county&.sub_counties || SubCounty.none
+    @counties = @request.district&.counties || County.none
+    @sub_counties = @request.county&.sub_counties || SubCounty.none
   end
 
   def update
