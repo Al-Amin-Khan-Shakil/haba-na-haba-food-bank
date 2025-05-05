@@ -67,44 +67,36 @@
         <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
         <%= f.text_field :parish, value: @individual_beneficiary.parish.presence || @request.parish, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
-      <div class="mb-4">
-        <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
+      <div data-controller="location"
+     data-location-base-path-value="<%= controller.controller_name %>">
+        <%= f.label :district_id %>
         <%= f.collection_select :district_id, @districts, :id, :name,
-          { selected: @individual_beneficiary.district_id || @request.district_id, prompt: "Select District" },
+          { include_blank: "Select District", selected: @individual_beneficiary.district_id || @request&.district_id },
           {
-            class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
             data: {
               location_target: "district",
-              location_base_path_value: "individual_beneficiaries",
-              action: "change->location#loadCounties",
-              initial_selection: @individual_beneficiary.district_id || @request.district_id,
-              location_context_path_value: individual_beneficiaries_path
+              action: "change->location#loadCounties"
             }
           } %>
-      </div>
-      <div class="mb-4">
-        <%= f.label :county_id, "County", class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.collection_select :county_id, @counties, :id, :name,
-          { selected: @individual_beneficiary.county_id.nil? || @request.county_id, prompt: "Select County" },
+        <%= f.label :county_id %>
+        <%= f.select :county_id,
+          options_from_collection_for_select(@counties, :id, :name, @individual_beneficiary.county_id || @request&.county_id),
+          {},
           {
-            class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
             data: {
               location_target: "county",
-              location_base_path_value: "individual_beneficiaries",
               action: "change->location#loadSubCounties",
-              initial_selection: @individual_beneficiary.county_id || @request.county_id
+              initial_selection: (@individual_beneficiary.county_id || @request&.county_id)
             }
           } %>
-      </div>
-      <div class="mb-4">
-        <%= f.label :sub_county_id, "Sub-county", class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
-          { selected: @individual_beneficiary.sub_county_id.nil? || @request.sub_county_id, prompt: "Select Sub-county" },
+        <%= f.label :sub_county_id %>
+        <%= f.select :sub_county_id,
+          options_from_collection_for_select(@sub_counties, :id, :name, @individual_beneficiary.sub_county_id || @request&.sub_county_id),
+          {},
           {
-            class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
             data: {
               location_target: "subCounty",
-              location_context_path_value: individual_beneficiaries_path
+              initial_selection: (@individual_beneficiary.sub_county_id || @request&.sub_county_id)
             }
           } %>
       </div>
