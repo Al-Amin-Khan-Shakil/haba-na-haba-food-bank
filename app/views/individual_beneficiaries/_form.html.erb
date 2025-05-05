@@ -18,7 +18,13 @@
         </div>
         <div class="mb-4">
           <%= f.label :gender, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.select :gender, IndividualBeneficiary.genders.keys.map { |k| [k.titleize, k] }, {}, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+          <%= f.select :gender,
+            IndividualBeneficiary.genders.keys.map { |k| [k.titleize, k] },
+            { include_blank: "Select Gender" },
+            {
+              class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
+              required: true
+            } %>
         </div>
         <div class="mb-4">
           <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
@@ -63,12 +69,13 @@
         <div class="mb-4">
           <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
           <%= f.collection_select :district_id, @districts, :id, :name,
-          { selected: @request.district_id, prompt: "Select District" },
+          { selected: @individual_beneficiary.district_id || @request.district_id, prompt: "Select District" },
           { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
             data: {
               location_target: "district",
               location_base_path_value: "individual_beneficiaries",
               action: "change->location#loadCounties",
+              initial_selection: @individual_beneficiary.district_id || @request.district_id,
               location_context_path_value: individual_beneficiaries_path
             }
           } %>
@@ -76,12 +83,13 @@
         <div class="mb-4">
           <%= f.label :county_id, "County", class: "block text-gray-700 font-bold mb-2" %>
           <%= f.collection_select :county_id, @counties, :id, :name,
-            { selected: @request.county_id, prompt: "Select County" },
+            { selected: @individual_beneficiary.county_id || @request.county_id, prompt: "Select County" },
             { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
               data: {
                 location_target: "county",
                 location_base_path_value: "individual_beneficiaries",
                 action: "change->location#loadSubCounties",
+                initial_selection: @individual_beneficiary.county_id || @request.county_id,
                 location_context_path_value: individual_beneficiaries_path
               }
             } %>
@@ -89,12 +97,13 @@
         <div class="mb-4">
           <%= f.label :sub_county_id, "Sub County", class: "block text-gray-700 font-bold mb-2" %>
           <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
-          { selected: @request.sub_county_id, prompt: "Select Sub County" },
-          { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
-            data: {
-              location_target: "subCounty"
-            }
-          } %>
+            { selected: @individual_beneficiary.sub_county_id || @request.sub_county_id },
+            { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
+              data: {
+                location_target: "subCounty",
+                initial_selection: @individual_beneficiary.sub_county_id || @request.sub_county_id
+              }
+            } %>
         </div>
         <div class="mb-4">
           <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>

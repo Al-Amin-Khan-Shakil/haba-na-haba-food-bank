@@ -3,7 +3,7 @@ class CreateIndividualBeneficiaries < ActiveRecord::Migration[7.1]
     create_table :individual_beneficiaries, id: :uuid do |t|
       t.string :name
       t.integer :age
-      t.string :gender
+      t.integer :gender
       t.string :phone_number
       t.string :case_name
       t.string :case_description

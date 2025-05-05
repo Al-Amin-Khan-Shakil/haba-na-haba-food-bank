@@ -12,6 +12,6 @@ class IndividualBeneficiary < ApplicationRecord
     other: 3
   }
 
-  validates :name, :case_name, :case_description, presence: true
+  validates :name, :gender, :case_name, :case_description, presence: true
   validates :phone_number, presence: true, format: { with: /\A\+?[0-9]+\z/, message: 'Must be a valid phone number' }
 end
