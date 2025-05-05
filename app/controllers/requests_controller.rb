@@ -12,8 +12,8 @@ class RequestsController < ApplicationController
     @request = Request.new
     @request.build_donation
     @districts = District.all
-    @counties = County.none
-    @sub_counties = SubCounty.none
+    @counties = County.all
+    @sub_counties = SubCounty.all
   end
 
   def create
