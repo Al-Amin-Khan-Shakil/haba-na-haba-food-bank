@@ -1,0 +1,85 @@
+<%# app/views/individual_beneficiaries/show.html.erb %>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+      <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-900">
+          <%= @individual_beneficiary.name %>
+        </h1>
+        <div class="flex space-x-3">
+          <%= link_to 'Edit', edit_request_individual_beneficiary_path(@individual_beneficiary.request, @individual_beneficiary),
+                      class: "inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+          <%= link_to 'Back', individual_beneficiaries_path,
+                      class: "inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        </div>
+      </div>
+      <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
+        <div class="mt-2 flex items-center text-sm text-gray-500">
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= @individual_beneficiary.gender == 'Male' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' %>">
+            <%= @individual_beneficiary.gender %>
+          </span>
+          <span class="ml-2"><%= @individual_beneficiary.age %> years old</span>
+        </div>
+        <div class="mt-2 flex items-center text-sm text-gray-500">
+          <span class='flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400'> Phone:</span>
+          <%= @individual_beneficiary.phone_number %>
+        </div>
+      </div>
+    </div>
+    <div class="px-4 py-5 sm:p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Personal Information</h2>
+          <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Father's Name</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.father_name || 'Not specified' %></dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Mother's Name</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.mother_name || 'Not specified' %></dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Surname</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.sur_name || 'Not specified' %></dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Food Provided</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.provided_food || 'Not specified' %></dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Case Details</h2>
+          <dl class="space-y-4">
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Case Name</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.case_name %></dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Case Description</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.case_description || 'No description provided' %></dd>
+            </div>
+          </dl>
+        </div>
+        <div class="md:col-span-2">
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Address Information</h2>
+          <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-3">
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Village</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.village %></dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Parish</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.parish %></dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Address Note</dt>
+              <dd class="mt-1 text-sm text-gray-900"><%= @individual_beneficiary.address_note || 'None' %></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

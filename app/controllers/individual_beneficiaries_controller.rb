@@ -11,7 +11,7 @@ class IndividualBeneficiariesController < ApplicationController
   def show; end
 
   def new
-    if @request.individual_veneficiary.present?
+    if @request.individual_beneficiary.present?
       redirect_to individual_beneficiary_path(@request.individual_beneficiary),
                   notice: 'Individual Beneficiary already exists for this request.'
     else
@@ -86,6 +86,8 @@ class IndividualBeneficiariesController < ApplicationController
     @districts = District.all
     @counties = County.all
     @sub_counties = SubCounty.all
+    @branches = Branch.all
+    @events = Event.all
   end
 
   def individual_beneficiary_params

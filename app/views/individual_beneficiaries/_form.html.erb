@@ -1,0 +1,90 @@
+<%= form_with(model: [@request, @individual_beneficiary], url: request_individual_beneficiary_path(@request), local: true) do |f| %>
+  <section class="p-5">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-xl font-bold mb-4 text-gray-900">
+        <%= @individual_beneficiary.persisted? ? "Edit Individual Beneficiary" : "Create Individual Beneficiary" %>
+      </h2>
+      <div class="p-4">
+        <div class="mb-4">
+          <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :name, value: @request.name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :age, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.number_field :age, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :gender, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.select :gender, IndividualBeneficiary.genders.keys.map { |k| [k.titleize, k] }, {}, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :phone_number, value: @request.phone_number, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :case_name, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :case_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :case_description, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_area :case_description, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :father_name, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :father_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :mother_name, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :mother_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :sur_name, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :sur_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :provided_food, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.number_field :provided_food, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :village, value: @request.village, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :parish, value: @request.parish, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :address_note, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_area :address_note, value: @request.address_note, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :district_id, @districts, :id, :name, { selected: @request.district_id, prompt: "Select District" }, { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" } %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :county_id, "County", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :county_id, @counties, :id, :name, { selected: @request.county_id, prompt: "Select County" }, { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" } %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :sub_county_id, "Sub County", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :sub_county_id, @sub_counties, :id, :name, { selected: @request.sub_county_id, prompt: "Select Sub County" }, { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" } %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :branch_id, @branches, :id, :name, { selected: @request.branch_id, prompt: "Select Branch" }, { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" } %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :event_id, "Event", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :event_id, @events, :id, :title, { prompt: "Select Event" }, { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" } %>
+        </div>
+      </div>
+      <div class="actions grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 px-6">
+        <div>
+          <%= f.submit "Submit", class: "w-full py-2 px-4 bg-primarycolor text-white font-Outfit rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        </div>
+        <div>
+          <%= link_to 'Back to Beneficiaries', individual_beneficiaries_path, class: "w-full block py-2 px-4 bg-darkBlue text-white font-Outfit rounded-md text-center hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        </div>
+      </div>
+    </section>
+  <% end %>
