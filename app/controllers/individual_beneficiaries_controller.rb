@@ -84,8 +84,8 @@ class IndividualBeneficiariesController < ApplicationController
   def set_form_dependencies
     @users = User.all
     @districts = District.all
-    @counties = County.all
-    @sub_counties = SubCounty.all
+    @counties = @request.district.present? ? @request.district.counties : []
+    @sub_counties = @request.county.present? ? @request.county.sub_counties : []
     @branches = Branch.all
     @events = Event.all
   end
