@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       get :load_sub_counties
     end
   end
-  resources :family_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
+  resources :family_beneficiaries, only: [:index, :show, :destroy, :edit, :update, :create]  do
     collection do
       get :load_counties
       get :load_sub_counties
