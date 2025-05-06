@@ -19,7 +19,7 @@ class CreateFamilyBeneficiaries < ActiveRecord::Migration[7.1]
       t.text :fathers_name
       t.text :mothers_name
       t.text :fathers_occupation
-      t.text :mothers_occpation
+      t.text :mothers_occupation
       t.integer :number_of_meals_home
       t.integer :number_of_meals_school
       t.text :basic_FEH

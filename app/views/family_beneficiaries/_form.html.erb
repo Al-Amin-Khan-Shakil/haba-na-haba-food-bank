@@ -1,8 +1,6 @@
 
-  <%= form_with(model: [@request, @family_beneficiary],
-              url: request_family_beneficiaries_path(@request),
-              local: true,
-              data: { controller: "location" }) do |f| %>
+  <%= form_with(model: @family_beneficiary, local: true, data: { controller: "location" }) do |f| %>
+
 
   <section class="p-5">
     <div class="p-6 bg-white rounded-lg shadow-lg">
@@ -27,7 +25,7 @@
           [:fathers_name, :text_field],
           [:mothers_name, :text_field],
           [:fathers_occupation, :text_field],
-          [:mothers_occpation, :text_field],
+          [:mothers_occupation, :text_field],
           [:number_of_meals_home, :number_field],
           [:number_of_meals_school, :number_field],
           [:basic_FEH, :text_area],
