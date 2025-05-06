@@ -1,6 +1,8 @@
 
-  <%= form_with(model: @family_beneficiary, local: true, data: { controller: "location" }) do |f| %>
-
+  <%= form_with(model: [@request, @family_beneficiary],
+              url: request_family_beneficiaries_path(@request),
+              local: true,
+              data: { controller: "location" }) do |f| %>
 
   <section class="p-5">
     <div class="p-6 bg-white rounded-lg shadow-lg">
