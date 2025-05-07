@@ -10,7 +10,7 @@ class CreateFamilyBeneficiaries < ActiveRecord::Migration[7.1]
       t.references :district, null: false, foreign_key: true, type: :uuid
       t.references :county, null: false, foreign_key: true, type: :uuid
       t.references :sub_county, null: false, foreign_key: true, type: :uuid
-      t.text :residence_address
+      t.text :address_note
       t.text :village
       t.text :parish
       t.text :phone_number
@@ -25,8 +25,7 @@ class CreateFamilyBeneficiaries < ActiveRecord::Migration[7.1]
       t.text :basic_FEH
       t.text :basic_FES
       t.references :request, null: false, foreign_key: true, type: :uuid
-
-      t.timestamps
+      t.references :event
     end
   end
 end

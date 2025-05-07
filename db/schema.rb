@@ -113,7 +113,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_124549) do
     t.uuid "district_id", null: false
     t.uuid "county_id", null: false
     t.uuid "sub_county_id", null: false
-    t.text "residence_address"
+    t.text "address_note"
     t.text "village"
     t.text "parish"
     t.text "phone_number"
@@ -128,10 +128,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_124549) do
     t.text "basic_FEH"
     t.text "basic_FES"
     t.uuid "request_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "event_id"
     t.index ["county_id"], name: "index_family_beneficiaries_on_county_id"
     t.index ["district_id"], name: "index_family_beneficiaries_on_district_id"
+    t.index ["event_id"], name: "index_family_beneficiaries_on_event_id"
     t.index ["request_id"], name: "index_family_beneficiaries_on_request_id"
     t.index ["sub_county_id"], name: "index_family_beneficiaries_on_sub_county_id"
   end

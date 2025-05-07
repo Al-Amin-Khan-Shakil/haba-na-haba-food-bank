@@ -3,6 +3,7 @@ class FamilyBeneficiary < ApplicationRecord
   belongs_to :county
   belongs_to :sub_county
   belongs_to :request
+  belongs_to :event, optional: true
 
   validates :phone_number, presence: true, format: { with: /\A\+?[0-9]+\z/, message: 'Must be a valid phone number' }
   validates :family_members, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, presence: true
@@ -15,7 +16,7 @@ class FamilyBeneficiary < ApplicationRecord
 
   validates :district_id, :county_id, :sub_county_id, :request_id, presence: true
 
-  validates :residence_address, presence: true, length: { maximum: 255 }
+  validates :address_note, presence: true, length: { maximum: 255 }
   validates :village, presence: true, length: { maximum: 255 }
   validates :parish, presence: true, length: { maximum: 255 }
 
