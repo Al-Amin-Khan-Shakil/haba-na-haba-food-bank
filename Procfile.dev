@@ -1,3 +1,2 @@
 web: ruby bin/rails server
 css: ruby bin/rails tailwindcss:watch
-css: bin/rails tailwindcss:watch

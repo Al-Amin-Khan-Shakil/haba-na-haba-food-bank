@@ -13,26 +13,23 @@
           <span class="hidden self-center text-xl font-semibold whitespace-nowrap text-primarycolor sm:text-2xl xl:inline-block dark:text-white">Haba Na Haba</span>
         </a>
       </div>
-
       <div class="flex items-center">
         <div class="flex items-center leading-tight ms-3">
           <div class="flex flex-col gap-0 justify-center items-end mr-4">
-            <p class="hidden text-base text-gray-600 capitalize md:block dark:text-white">
+            <p class="hidden text-sm text-gray-600 capitalize md:block dark:text-white">
               <%= current_user.first_name %> <%= current_user.last_name %>
             </p>
-            <p class="hidden -mt-2 text-sm text-gray-600 capitalize md:block dark:text-white">
-              <%= current_user.role %>
+            <p class="hidden -mt-1 text-xs text-gray-600 capitalize md:block dark:text-white">
+              <%= current_user.role.humanize %>
             </p>
           </div>
-
           <% if current_user && current_user.profile_picture.attached? %>
             <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <img class="object-cover w-8 h-8 rounded-full" src="<%= url_for(current_user.profile_picture) %>" alt="user photo">
+              <img class="object-cover w-8 h-8 rounded-full" src="<%= current_user.profile_picture.attached? ? url_for(current_user.profile_picture) : 'https://avatars.githubusercontent.com/u/583231?v=4' %>" alt="user photo">
             </button>
           <% end %>
         </div>
-
         <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
           <div class="px-4 py-3">
             <p>
@@ -61,7 +58,6 @@
     </div>
   </div>
 </nav>
-
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 pt-20 w-64 h-screen border-r border-gray-200 transition-transform -translate-x-full bg-primarycolor xl:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
   <div class="overflow-y-auto px-3 pb-4 h-full bg-primarycolor dark:bg-gray-800">
     <ul class="space-y-2 font-medium">
@@ -146,7 +142,6 @@
     </ul>
   </div>
 </aside>
-
 <div class="p-4 min-h-screen bg-gray-50 xl:ml-64">
   <div class="mt-14 bg-gray-50">
     <%= yield %>
