@@ -1,6 +1,6 @@
 class FamilyBeneficiariesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_request, only: %i[new create  edit update]
+  before_action :set_request, only: %i[new create edit update]
   before_action :set_family_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new create edit update]
 
@@ -81,19 +81,23 @@ class FamilyBeneficiariesController < ApplicationController
       @family_beneficiary = @request.family_beneficiary
     else
       @family_beneficiary = FamilyBeneficiary.find(params[:id])
-      @request = @family_beneficiary.request 
+      @request = @family_beneficiary.request
     end
   end
 
-   def effective_county
+  def effective_district
+    @family_beneficiary&.district || @request&.district
+  end
+
+  def effective_county
     @family_beneficiary&.county || @request&.county
   end
 
   def set_form_dependencies
     @users = User.all
     @districts = District.all
-    @counties = @request&.district&.counties || []
-    @sub_counties = @request&.county&.sub_counties || []
+    @counties = effective_district&.counties || []
+    @sub_counties = effective_county&.sub_counties || []
     @branches = Branch.all
     @events = Event.all
   end

@@ -1,5 +1,5 @@
-<%= form_with(
-  model: @family_beneficiary,
+    
+  <%= form_with( model: @family_beneficiary,
  url: @family_beneficiary.persisted? ? family_beneficiary_path(@family_beneficiary) : request_family_beneficiaries_path(@request),
 
   method: @family_beneficiary.persisted? ? :patch : :post,
@@ -20,8 +20,7 @@
           [:female, :number_field],
           [:children, :number_field],
           [:adult_age_range, :text_area],
-          [:children_age_range, :text_area],
-         
+          [:children_age_range, :text_area],   
           [:case_name, :text_field],
           [:case_description, :text_area],
           [:fathers_name, :text_field],

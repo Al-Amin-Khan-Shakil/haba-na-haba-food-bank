@@ -24,8 +24,9 @@ class CreateFamilyBeneficiaries < ActiveRecord::Migration[7.1]
       t.integer :number_of_meals_school
       t.text :basic_FEH
       t.text :basic_FES
-      t.references :request, null: false, foreign_key: true, type: :uuid
-      t.references :event
+      t.references :request, null: true, foreign_key: true, type: :uuid
+      t.references :event, null: true, foreign_key: true, type: :uuid
+      t.references :branch, null: true, foreign_key: true, type: :uuid
     end
   end
 end
