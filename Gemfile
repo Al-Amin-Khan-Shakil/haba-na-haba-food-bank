@@ -79,3 +79,5 @@ gem 'active_storage_validations'
 
 # Font awesome for icons
 gem 'font-awesome-sass', '~> 6.5.1'
+
+gem 'tailwindcss-ruby', '~> 3.4'
