@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["container", "addButton"]
 
   connect() {
-    console.log("Nested form controller connected!") // Verify connection
+    console.log("Nested form controller connected!")
     this.setupRemoveButtons()
   }
 
