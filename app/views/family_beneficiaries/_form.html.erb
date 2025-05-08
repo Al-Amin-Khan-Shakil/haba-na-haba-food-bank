@@ -29,13 +29,13 @@
           [:mothers_occupation, :text_field],
           [:number_of_meals_home, :number_field],
           [:number_of_meals_school, :number_field],
-          [:provided_food, :number_field ,{ step: :any }],
+          [:provided_food, :number_field, { step: :any }],
           [:basic_FEH, :text_area],
           [:basic_FES, :text_area]
-        ].each do |attr, field_type| %>
+        ].each do |attr, field_type, options = {}| %>
           <div>
             <%= f.label attr, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.send(field_type, attr, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full") %>
+            <%= f.send(field_type, attr, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full", **options) %>
           </div>
         <% end %>
 
