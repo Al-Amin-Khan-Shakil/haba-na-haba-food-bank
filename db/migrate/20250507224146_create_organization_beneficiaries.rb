@@ -8,7 +8,7 @@ class CreateOrganizationBeneficiaries < ActiveRecord::Migration[7.1]
       t.text :children_age_range
       t.references :county, null: false, foreign_key: { to_table: :counties }, type: :uuid
       t.references :sub_county, null: false, foreign_key: { to_table: :sub_counties }, type: :uuid
-      t.text :residence_address
+      t.text :address_note
       t.text :village
       t.text :parish
       t.text :phone_number

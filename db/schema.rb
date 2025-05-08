@@ -146,7 +146,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
     t.text "children_age_range"
     t.uuid "county_id", null: false
     t.uuid "sub_county_id", null: false
-    t.text "residence_address"
+    t.text "address_note"
     t.text "village"
     t.text "parish"
     t.text "phone_number"
