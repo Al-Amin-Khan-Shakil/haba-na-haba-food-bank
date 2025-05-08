@@ -1,4 +1,4 @@
-class OrganizationBeneficiaryController < ApplicationController
+class OrganizationBeneficiariesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_request, only: %i[new create edit update]
   before_action :set_organization_beneficiary, only: %i[show edit update destroy]

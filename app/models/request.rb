@@ -4,6 +4,7 @@ class Request < ApplicationRecord
   belongs_to :county, optional: true
   belongs_to :sub_county, optional: true
   belongs_to :user, optional: true
+  has_one :organization_beneficiary, dependent: :nullify
 
   has_one :donation, dependent: :destroy
   accepts_nested_attributes_for :donation, update_only: true, allow_destroy: false
