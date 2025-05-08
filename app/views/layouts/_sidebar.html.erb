@@ -1,90 +1,98 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-sm">
-  <div class="px-3 py-3 lg:px-5 lg:pl-3 relative">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center justify-start rtl:justify-end">
+<nav class="fixed top-0 z-50 w-full border-b border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+  <div class="relative px-3 py-3 bg-white lg:px-5 lg:pl-3">
+    <div class="flex justify-between items-center">
+      <div class="flex justify-center items-center rtl:justify-end">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
           <span class="sr-only">Open sidebar</span>
           <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
           </svg>
         </button>
-        <a href="https://flowbite.com" class="flex ms-2 md:me-24 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 xl:static xl:transform-none">
+        <a href="https://flowbite.com" class="flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ms-2 md:me-24 xl:static xl:transform-none">
           <%= image_tag("hnh_admin_mobile_logo.png", class:"h-8 me-3", alt:"HNH Logo") %>
-          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap hidden xl:inline-block text-primarycolor dark:text-white">Haba Na Haba</span>
+          <span class="hidden self-center text-xl font-semibold whitespace-nowrap text-primarycolor sm:text-2xl xl:inline-block dark:text-white">Haba Na Haba</span>
         </a>
       </div>
       <div class="flex items-center">
-        <div class="flex items-center ms-3">
-          <div>
+        <div class="flex items-center leading-tight ms-3">
+          <div class="flex flex-col gap-0 justify-center items-end mr-4">
+            <p class="hidden text-sm text-gray-600 capitalize md:block dark:text-white">
+              <%= current_user.first_name %> <%= current_user.last_name %>
+            </p>
+            <p class="hidden -mt-1 text-xs text-gray-600 capitalize md:block dark:text-white">
+              <%= current_user.role.humanize %>
+            </p>
+          </div>
+          <% if current_user && current_user.profile_picture.attached? %>
             <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+              <img class="object-cover w-8 h-8 rounded-full" src="<%= current_user.profile_picture.attached? ? url_for(current_user.profile_picture) : 'https://avatars.githubusercontent.com/u/583231?v=4' %>" alt="user photo">
             </button>
+          <% end %>
+        </div>
+        <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+          <div class="px-4 py-3">
+            <p>
+              <%= link_to user_path(current_user), class:"block font-medium py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                <span class="text-gray-700 truncate whitespace-nowrap group-hover:text-primarytext"><%= current_user.first_name %> <%= current_user.last_name %></span>
+              <% end %>
+            </p>
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
+              <%= current_user.email %>
+            </p>
           </div>
-          <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-            <div class="px-4 py-3" role="none">
-              <p class="text-sm text-gray-900 dark:text-white" role="none">
-                Neil Sims
-              </p>
-              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                neil.sims@flowbite.com
-              </p>
-            </div>
-            <ul class="py-1" role="none">
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-              </li>
-            </ul>
-          </div>
+          <ul class="py-1">
+            <li>
+              <%= link_to authenticated_root_path, class:"block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                <span>Settings</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path, data: { "turbo-method": :delete }, class:"block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                <span>Sign out</span>
+              <% end %>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </nav>
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-primarycolor border-r border-gray-200 xl:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
-  <div class="h-full px-3 pb-4 overflow-y-auto bg-primarycolor dark:bg-gray-800">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 pt-20 w-64 h-screen border-r border-gray-200 transition-transform -translate-x-full bg-primarycolor xl:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+  <div class="overflow-y-auto px-3 pb-4 h-full bg-primarycolor dark:bg-gray-800">
     <ul class="space-y-2 font-medium">
       <li>
         <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-cube text-xl text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Dashboard</span>
+          <i class="text-xl text-white fa-solid fa-cube group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Dashboard</span>
         <% end %>
       </li>
       <li>
         <%= link_to branches_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-warehouse text-base text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Branches</span>
+          <i class="text-base text-white fa-solid fa-warehouse group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Branches</span>
         <% end %>
       </li>
       <li>
         <%= link_to requests_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-circle-check text-base text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Requests</span>
+          <i class="text-base text-white fa-solid fa-circle-check group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Requests</span>
         <% end %>
       </li>
       <li>
         <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-list text-base text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Inventories</span>
+          <i class="text-base text-white fa-solid fa-list group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Inventories</span>
         <% end %>
       </li>
       <li>
         <details class="">
           <summary class="flex items-center p-2 text-white rounded-lg cursor-pointer hover:bg-gray-100 group">
-            <i class="fa-solid fa-user-group group-hover:text-gray-800 text-sm"></i>
-            <span class="ms-3 group-hover:text-primarytext text-base">Beneficiaries</span>
-            <i class="fa-solid fa-chevron-down text-xs  group-hover:text-primarytext ml-2 transition-transform duration-200"></i>
+            <i class="text-sm fa-solid fa-user-group group-hover:text-gray-800"></i>
+            <span class="text-base ms-3 group-hover:text-primarytext">Beneficiaries</span>
+            <i class="ml-2 text-xs transition-transform duration-200 fa-solid fa-chevron-down group-hover:text-primarytext"></i>
           </summary>
-          <ul class="space-y-2 ms-8 border-l-2 border-white pl-3 mt-2">
+          <ul class="pl-3 mt-2 space-y-2 border-l-2 border-white ms-8">
             <li>
               <%= link_to individual_beneficiaries_path, class: "flex items-center px-2 text-white hover:bg-gray-100 rounded-md" do %>
                 <span class="w-2 h-2 rounded-full mr-2 text-base bg-primarytext"></span>
@@ -93,13 +101,13 @@
             </li>
             <li>
               <%= link_to "#", class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
-                <span class="w-2 h-2 rounded-full mr-2 text-base bg-primarytext"></span>
+                <span class="mr-2 w-2 h-2 text-base rounded-full bg-primarytext"></span>
                 <span class="text-primarytext">Family</span>
               <% end %>
             </li>
             <li>
               <%= link_to "#", class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
-                <span class="w-2 h-2 rounded-full mr-2 text-base bg-primarytext"></span>
+                <span class="mr-2 w-2 h-2 text-base rounded-full bg-primarytext"></span>
                 <span class="text-primarytext">Organization</span>
               <% end %>
             </li>
@@ -108,33 +116,33 @@
       </li>
       <li>
         <%= link_to events_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-calendar-days text-base text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Events</span>
+          <i class="text-base text-white fa-solid fa-calendar-days group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Events</span>
         <% end %>
       </li>
       <li>
         <%= link_to districts_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-location text-base text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Locations</span>
+          <i class="text-base text-white fa-solid fa-location group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Locations</span>
         <% end %>
       </li>
-      <p class="py-2 text-white font-Outfit font-normal text-sm mr-20">PREFERENCE</p>
+      <p class="py-2 mr-20 text-sm font-normal text-white font-Outfit">PREFERENCE</p>
       <li>
         <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-gear text-base text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Profile</span>
+          <i class="text-base text-white fa-solid fa-gear group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Profile</span>
         <% end %>
       </li>
       <li>
         <%= link_to destroy_user_session_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="fa-solid fa-arrow-right-from-bracket text-base text-white group-hover:text-gray-800"></i>
-          <span class="ms-3 text-white whitespace-nowrap group-hover:text-primarytext">Log Out</span>
+          <i class="text-base text-white fa-solid fa-arrow-right-from-bracket group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Log Out</span>
         <% end %>
       </li>
     </ul>
   </div>
 </aside>
-<div class="p-4 bg-gray-50 min-h-screen xl:ml-64">
+<div class="p-4 min-h-screen bg-gray-50 xl:ml-64">
   <div class="mt-14 bg-gray-50">
     <%= yield %>
   </div>
