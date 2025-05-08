@@ -147,6 +147,7 @@ class FamilyBeneficiariesController < ApplicationController
     %i[
       number_of_meals_home
       number_of_meals_school
+      provided_food
       basic_FEH
       basic_FES
     ]
