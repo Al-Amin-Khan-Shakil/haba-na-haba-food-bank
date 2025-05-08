@@ -1,7 +1,7 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
-  <div class="relative px-3 py-3 lg:px-5 lg:pl-3">
+<nav class="fixed top-0 z-50 w-full border-b border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+  <div class="relative px-3 py-3 bg-white lg:px-5 lg:pl-3">
     <div class="flex justify-between items-center">
-      <div class="flex justify-start items-center rtl:justify-end">
+      <div class="flex justify-center items-center rtl:justify-end">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
           <span class="sr-only">Open sidebar</span>
           <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -10,41 +10,49 @@
         </button>
         <a href="https://flowbite.com" class="flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ms-2 md:me-24 xl:static xl:transform-none">
           <%= image_tag("hnh_admin_mobile_logo.png", class:"h-8 me-3", alt:"HNH Logo") %>
-          <span class="hidden self-center text-xl font-semibold whitespace-nowrap sm:text-2xl xl:inline-block text-primarycolor dark:text-white">Haba Na Haba</span>
+          <span class="hidden self-center text-xl font-semibold whitespace-nowrap text-primarycolor sm:text-2xl xl:inline-block dark:text-white">Haba Na Haba</span>
         </a>
       </div>
       <div class="flex items-center">
-        <div class="flex items-center ms-3">
-          <div>
+        <div class="flex items-center leading-tight ms-3">
+          <div class="flex flex-col gap-0 justify-center items-end mr-4">
+            <p class="hidden text-sm text-gray-600 capitalize md:block dark:text-white">
+              <%= current_user.first_name %> <%= current_user.last_name %>
+            </p>
+            <p class="hidden -mt-1 text-xs text-gray-600 capitalize md:block dark:text-white">
+              <%= current_user.role.humanize %>
+            </p>
+          </div>
+          <% if current_user && current_user.profile_picture.attached? %>
             <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+              <img class="object-cover w-8 h-8 rounded-full" src="<%= current_user.profile_picture.attached? ? url_for(current_user.profile_picture) : 'https://avatars.githubusercontent.com/u/583231?v=4' %>" alt="user photo">
             </button>
+          <% end %>
+        </div>
+        <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+          <div class="px-4 py-3">
+            <p>
+              <%= link_to user_path(current_user), class:"block font-medium py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                <span class="text-gray-700 truncate whitespace-nowrap group-hover:text-primarytext"><%= current_user.first_name %> <%= current_user.last_name %></span>
+              <% end %>
+            </p>
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
+              <%= current_user.email %>
+            </p>
           </div>
-          <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-            <div class="px-4 py-3" role="none">
-              <p class="text-sm text-gray-900 dark:text-white" role="none">
-                Neil Sims
-              </p>
-              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                neil.sims@flowbite.com
-              </p>
-            </div>
-            <ul class="py-1" role="none">
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-              </li>
-            </ul>
-          </div>
+          <ul class="py-1">
+            <li>
+              <%= link_to authenticated_root_path, class:"block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                <span>Settings</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path, data: { "turbo-method": :delete }, class:"block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                <span>Sign out</span>
+              <% end %>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
