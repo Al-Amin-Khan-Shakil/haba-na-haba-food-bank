@@ -105,7 +105,7 @@ class UssdHandler
 
   def create_food_and_donation_request
     name = @input[1].titleize
-    donation_type = inputs[3].to_i
+    donation_type = @input[3].to_i
     district = find_district(@input[4])
     county = find_county(@input[5], district)
     sub_county = find_sub_county(@input[6], county)
@@ -125,24 +125,27 @@ class UssdHandler
   end
 
   def find_district(name)
+    quoted_name = ActiveRecord::Base.connection.quote(name)
     District.where('similarity(name, ?) > 0.4', name)
-      .order("similarity(name, #{ActiveRecord::Base.connection.quote(name)}) DESC")
+      .order(Arel.sql("similarity(name, #{quoted_name}) DESC"))
       .first
   end
 
   def find_county(name, district)
     return nil unless district
 
+    quoted_name = ActiveRecord::Base.connection.quote(name)
     district.counties.where('similarity(name, ?) > 0.4', name)
-      .order("similarity(name, #{ActiveRecord::Base.connection.quote(name)}) DESC")
+      .order(Arel.sql("similarity(name, #{quoted_name}) DESC"))
       .first
   end
 
   def find_sub_county(name, county)
     return nil unless county
 
+    quoted_name = ActiveRecord::Base.connection.quote(name)
     county.sub_counties.where('similarity(name, ?) > 0.4', name)
-      .order("similarity(name, #{ActiveRecord::Base.connection.quote(name)}) DESC")
+      .order(Arel.sql("similarity(name, #{quoted_name}) DESC"))
       .first
   end
 end
