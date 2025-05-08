@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
-  get 'family_beneficiaries/index'
-  get 'family_beneficiaries/show'
-  get 'family_beneficiaries/new'
-  get 'family_beneficiaries/edit'
-  get 'family_beneficiaries/create'
-  get 'family_beneficiaries/update'
-  get 'family_beneficiaries/destroy'
+
   devise_for :users,  skip: [:registrations]
 
   get 'home/index'
@@ -21,8 +15,8 @@ Rails.application.routes.draw do
       get :load_counties
       get :load_sub_counties
     end
-    resources :family_beneficiaries
-    resources :organization_beneficiaries
+    resources :family_beneficiaries, only: [:create, :new]
+    resources :organization_beneficiaries, only: [:create, :new]
   end
   resources :events do
     collection do
@@ -30,13 +24,13 @@ Rails.application.routes.draw do
       get :load_sub_counties
     end
   end
-  resources :family_beneficiaries, only: [:index, :show, :destroy, :edit, :update, :create]  do
+  resources :family_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
     collection do
       get :load_counties
       get :load_sub_counties
     end
   end
-  resources :organization_beneficiaries, only: [:index, :show, :destroy, :edit, :update, :create]  do
+  resources :organization_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
     collection do
       get :load_counties
       get :load_sub_counties
