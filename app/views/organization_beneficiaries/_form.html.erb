@@ -13,27 +13,27 @@
       </h2>
       <div class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
 
-        <% [
-          [:organization_name, :text_area],
-          [:registration_no, :text_field],
-          [:organization_no, :text_field],
-          [:directors_name, :text_field],
-          [:head_of_institution, :text_field],
-          [:male, :number_field],
-          [:female, :number_field],
-          [:children_age_range, :text_area],
-          [:adult_age_range, :text_area],
-          [:case_name, :text_field],
-          [:case_description, :text_area],
-          [:number_of_meals_home, :number_field],
-          [:provided_food, :number_field],
-          [:basic_FEH, :text_area]
-        ].each do |attr, field_type| %>
-          <div>
-            <%= f.label attr, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.send(field_type, attr, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full") %>
-          </div>
-        <% end %>
+      <% [
+        [:organization_name, :text_area],
+        [:registration_no, :text_field],
+        [:organization_no, :text_field],
+        [:directors_name, :text_field],
+        [:head_of_institution, :text_field],
+        [:male, :number_field],
+        [:female, :number_field],
+        [:children_age_range, :text_area],
+        [:adult_age_range, :text_area],
+        [:case_name, :text_field],
+        [:case_description, :text_area],
+        [:number_of_meals_home, :number_field],
+        [:provided_food, :number_field, { step: 0.5 }],
+        [:basic_FEH, :text_area]
+      ].each do |attr, field_type, options = {}| %>
+        <div>
+          <%= f.label attr, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.send(field_type, attr, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full", **options) %>
+        </div>
+      <% end %>
 
         <!-- Fallback Fields -->
         <div>
