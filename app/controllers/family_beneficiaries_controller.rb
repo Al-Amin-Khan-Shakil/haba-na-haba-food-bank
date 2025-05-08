@@ -8,10 +8,7 @@ class FamilyBeneficiariesController < ApplicationController
     @family_beneficiaries = FamilyBeneficiary.all
   end
 
-  def show
-    @family_beneficiary = FamilyBeneficiary.find(params[:id])
-    @request = @family_beneficiary.request
-  end
+  def show; end
 
   def new
     if @request.family_beneficiary.present?
