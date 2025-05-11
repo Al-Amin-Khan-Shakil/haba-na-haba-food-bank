@@ -9,7 +9,6 @@ class Event < ApplicationRecord
   has_many :family_beneficiaries, dependent: :nullify
   has_many :individual_beneficiaries, dependent: :nullify
 
-
   validates :title, presence: true
   validates :description, presence: true
   validates :start_date, presence: true
