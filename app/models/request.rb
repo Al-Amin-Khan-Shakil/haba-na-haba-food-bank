@@ -7,6 +7,7 @@ class Request < ApplicationRecord
   has_one :organization_beneficiary, dependent: :nullify
 
   has_one :donation, dependent: :destroy
+  has_one :individual_beneficiary, dependent: :nullify
   accepts_nested_attributes_for :donation, update_only: true, allow_destroy: false
   has_one :family_beneficiary, dependent: :destroy
   enum request_type: {

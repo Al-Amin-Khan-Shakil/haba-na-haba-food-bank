@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -170,6 +171,36 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
     t.index ["sub_county_id"], name: "index_organization_beneficiaries_on_sub_county_id"
   end
 
+  create_table "individual_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.integer "gender"
+    t.string "phone_number"
+    t.string "case_name"
+    t.string "case_description"
+    t.string "father_name"
+    t.string "mother_name"
+    t.string "sur_name"
+    t.decimal "provided_food"
+    t.string "village"
+    t.string "parish"
+    t.string "address_note"
+    t.uuid "district_id", null: false
+    t.uuid "county_id", null: false
+    t.uuid "sub_county_id", null: false
+    t.uuid "request_id"
+    t.uuid "branch_id"
+    t.uuid "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_individual_beneficiaries_on_branch_id"
+    t.index ["county_id"], name: "index_individual_beneficiaries_on_county_id"
+    t.index ["district_id"], name: "index_individual_beneficiaries_on_district_id"
+    t.index ["event_id"], name: "index_individual_beneficiaries_on_event_id"
+    t.index ["request_id"], name: "index_individual_beneficiaries_on_request_id"
+    t.index ["sub_county_id"], name: "index_individual_beneficiaries_on_sub_county_id"
+  end
+
   create_table "requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "phone_number"
@@ -236,6 +267,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
   add_foreign_key "family_beneficiaries", "sub_counties"
   add_foreign_key "organization_beneficiaries", "counties"
   add_foreign_key "organization_beneficiaries", "sub_counties"
+  add_foreign_key "individual_beneficiaries", "branches"
+  add_foreign_key "individual_beneficiaries", "counties"
+  add_foreign_key "individual_beneficiaries", "districts"
+  add_foreign_key "individual_beneficiaries", "events"
+  add_foreign_key "individual_beneficiaries", "requests"
+  add_foreign_key "individual_beneficiaries", "sub_counties"
   add_foreign_key "requests", "branches"
   add_foreign_key "requests", "counties"
   add_foreign_key "requests", "districts"

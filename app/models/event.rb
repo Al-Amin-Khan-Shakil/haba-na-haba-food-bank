@@ -7,6 +7,8 @@ class Event < ApplicationRecord
   has_many :users, through: :event_users
   has_many :organization_beneficiaries, dependent: :nullify
   has_many :family_beneficiaries, dependent: :nullify
+  has_many :individual_beneficiaries, dependent: :nullify
+
 
   validates :title, presence: true
   validates :description, presence: true
