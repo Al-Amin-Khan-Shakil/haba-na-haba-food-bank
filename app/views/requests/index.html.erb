@@ -20,6 +20,7 @@
           <%= link_to 'Edit', edit_request_path(request), class: "text-yellow-600 hover:underline mr-2" %>
           <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
           <%= link_to 'Family Beneficiary', new_request_family_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+          <%= link_to 'Individual Beneficiary', new_request_individual_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
 
         </td>
       </tr>
