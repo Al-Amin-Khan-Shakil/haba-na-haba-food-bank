@@ -80,7 +80,7 @@
         <% end %>
       </li>
       <li>
-        <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to inventories_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-list group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Inventories</span>
         <% end %>
@@ -105,7 +105,6 @@
                 <span class="text-primarytext">Family</span>
               <% end %>
             </li>
-           
             <li>
               <%= link_to "organization_beneficiaries_path", class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
                 <span class="mr-2 w-2 h-2 text-base rounded-full bg-primarytext"></span>

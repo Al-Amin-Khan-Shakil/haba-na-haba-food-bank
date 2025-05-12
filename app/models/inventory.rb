@@ -10,7 +10,13 @@ class Inventory < ApplicationRecord
   validates :name, :expire_date, :amount, :cost_of_item, :collection_place, presence: true
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
   validates :cost_of_item, numericality: { greater_than_or_equal_to: 0 }
-  validates :expire_date, date: { after_or_equal_to: proc {
-    Date.today
-  }, message: 'must be after or equal to today' }
+  validate :expire_date_must_be_in_future
+
+  private
+
+  def expire_date_must_be_in_future
+    if expire_date.present? && expire_date <= Date.today
+      errors.add(:expire_date, "must be after today")
+    end
+  end
 end
