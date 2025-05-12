@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_05_105039) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_05_124549) do
+
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -104,6 +106,74 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_105039) do
     t.index ["sub_county_id"], name: "index_events_on_sub_county_id"
   end
 
+
+  create_table "family_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "family_members"
+    t.integer "male"
+    t.integer "female"
+    t.integer "children"
+    t.text "adult_age_range"
+    t.text "children_age_range"
+    t.uuid "district_id", null: false
+    t.uuid "county_id", null: false
+    t.uuid "sub_county_id", null: false
+    t.text "address_note"
+    t.text "village"
+    t.text "parish"
+    t.text "phone_number"
+    t.text "case_name"
+    t.text "case_description"
+    t.text "fathers_name"
+    t.text "mothers_name"
+    t.text "fathers_occupation"
+    t.text "mothers_occupation"
+    t.integer "number_of_meals_home"
+    t.integer "number_of_meals_school"
+    t.text "basic_FEH"
+    t.text "basic_FES"
+    t.decimal "provided_food"
+    t.uuid "request_id"
+    t.uuid "event_id"
+    t.uuid "branch_id"
+    t.index ["branch_id"], name: "index_family_beneficiaries_on_branch_id"
+    t.index ["county_id"], name: "index_family_beneficiaries_on_county_id"
+    t.index ["district_id"], name: "index_family_beneficiaries_on_district_id"
+    t.index ["event_id"], name: "index_family_beneficiaries_on_event_id"
+    t.index ["request_id"], name: "index_family_beneficiaries_on_request_id"
+    t.index ["sub_county_id"], name: "index_family_beneficiaries_on_sub_county_id"
+  end
+
+  create_table "organization_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "organization_name"
+    t.integer "male"
+    t.integer "female"
+    t.text "adult_age_range"
+    t.text "children_age_range"
+    t.uuid "county_id", null: false
+    t.uuid "sub_county_id", null: false
+    t.text "address_note"
+    t.text "village"
+    t.text "parish"
+    t.text "phone_number"
+    t.text "case_name"
+    t.text "case_description"
+    t.text "registration_no"
+    t.text "organization_no"
+    t.text "directors_name"
+    t.text "head_of_institution"
+    t.integer "number_of_meals_home"
+    t.text "basic_FEH"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "provided_food"
+    t.integer "event_id"
+    t.uuid "district_id"
+    t.uuid "branch_id"
+    t.uuid "request_id"
+    t.index ["county_id"], name: "index_organization_beneficiaries_on_county_id"
+    t.index ["id"], name: "index_organization_beneficiaries_on_id", unique: true
+    t.index ["sub_county_id"], name: "index_organization_beneficiaries_on_sub_county_id"
+
   create_table "individual_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "age"
@@ -132,6 +202,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_105039) do
     t.index ["event_id"], name: "index_individual_beneficiaries_on_event_id"
     t.index ["request_id"], name: "index_individual_beneficiaries_on_request_id"
     t.index ["sub_county_id"], name: "index_individual_beneficiaries_on_sub_county_id"
+
   end
 
   create_table "requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -192,6 +263,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_105039) do
   add_foreign_key "events", "counties"
   add_foreign_key "events", "districts"
   add_foreign_key "events", "sub_counties"
+
+  add_foreign_key "family_beneficiaries", "branches"
+  add_foreign_key "family_beneficiaries", "counties"
+  add_foreign_key "family_beneficiaries", "districts"
+  add_foreign_key "family_beneficiaries", "events"
+  add_foreign_key "family_beneficiaries", "requests"
+  add_foreign_key "family_beneficiaries", "sub_counties"
+  add_foreign_key "organization_beneficiaries", "counties"
+  add_foreign_key "organization_beneficiaries", "sub_counties"
   add_foreign_key "individual_beneficiaries", "branches"
   add_foreign_key "individual_beneficiaries", "counties"
   add_foreign_key "individual_beneficiaries", "districts"

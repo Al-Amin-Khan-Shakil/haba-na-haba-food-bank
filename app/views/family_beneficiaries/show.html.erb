@@ -1,0 +1,86 @@
+<div class="p-4 w-full bg-white rounded-lg shadow-md md:p-6">
+  <h1 class="mb-6 text-2xl font-bold text-primarycolor">Family Beneficiary Details</h1>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <!-- Left Column -->
+    <div class="space-y-6">
+      <!-- Demographics -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Demographics</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Total Members:</strong> <%= @family_beneficiary.family_members %></li>
+          <li><strong>Male:</strong> <%= @family_beneficiary.male %></li>
+          <li><strong>Female:</strong> <%= @family_beneficiary.female %></li>
+          <li><strong>Children:</strong> <%= @family_beneficiary.children %></li>
+          <li><strong>Adult Age Range:</strong> <%= @family_beneficiary.adult_age_range %></li>
+          <li><strong>Children Age Range:</strong> <%= @family_beneficiary.children_age_range %></li>
+        </ul>
+      </div>
+
+      <!-- Location -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Location</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>District:</strong> <%= @family_beneficiary.district&.name %></li>
+          <li><strong>County:</strong> <%= @family_beneficiary.county&.name %></li>
+          <li><strong>Sub County:</strong> <%= @family_beneficiary.sub_county&.name %></li>
+          <li><strong>Parish:</strong> <%= @family_beneficiary.parish %></li>
+          <li><strong>Village:</strong> <%= @family_beneficiary.village %></li>
+          <li><strong> Address:</strong> <%= @family_beneficiary.address_note %></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Contact</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Phone Number:</strong> <%= @family_beneficiary.phone_number %></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Middle Column -->
+    <div class="space-y-6">
+      <!-- Case Information -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Case Information</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Case Name:</strong> <%= @family_beneficiary.case_name %></li>
+          <li><strong>Case Description:</strong> <%= @family_beneficiary.case_description %></li>
+        </ul>
+      </div>
+
+      <!-- Parental Details -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Parental Details</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Father's Name:</strong> <%= @family_beneficiary.fathers_name %></li>
+          <li><strong>Father's Occupation:</strong> <%= @family_beneficiary.fathers_occupation %></li>
+          <li><strong>Mother's Name:</strong> <%= @family_beneficiary.mothers_name %></li>
+          <li><strong>Mother's Occupation:</strong> <%= @family_beneficiary.mothers_occupation %></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="space-y-6">
+      <!-- Meals & Basic Info -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Meals & Basic Info</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Number of Meals at Home:</strong> <%= @family_beneficiary.number_of_meals_home %></li>
+          <li><strong>Number of Meals at School:</strong> <%= @family_beneficiary.number_of_meals_school %></li>
+          <li><strong>Basic FEH:</strong> <%= @family_beneficiary.basic_FEH %></li>
+          <li><strong>Basic FES:</strong> <%= @family_beneficiary.basic_FES %></li>
+          <li><strong>Provided Food</strong> <%= @family_beneficiary.provided_food %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="pt-4 mt-8 space-x-4 text-sm border-t">
+    <%= link_to 'Edit', edit_family_beneficiary_path(@family_beneficiary), class: "text-white bg-primarycolor hover:bg-opacity-90 px-4 py-2 rounded" %>
+    <%= link_to 'Back', family_beneficiaries_path, class: "text-primarycolor underline" %>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+module FamilyBeneficiariesHelper
+end

@@ -28,6 +28,9 @@ Metrics/BlockLength:
   AllowedMethods: ["describe"]
   Max: 30
 
+  require:
+  - rubocop-rails
+
 Style/Documentation:
   Enabled: false
 Style/ClassAndModuleChildren:
@@ -58,3 +61,5 @@ Style/HashTransformKeys:
   Enabled: false
 Style/HashTransformValues:
   Enabled: false
+Layout/EndOfLine:
+  EnforcedStyle: lf
