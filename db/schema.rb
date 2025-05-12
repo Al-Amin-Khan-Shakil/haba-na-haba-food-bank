@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_08_053001) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_12_131924) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -171,6 +171,30 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_08_053001) do
     t.index ["sub_county_id"], name: "index_individual_beneficiaries_on_sub_county_id"
   end
 
+  create_table "inventories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.date "expire_date"
+    t.decimal "amount"
+    t.decimal "cost_of_item"
+    t.string "collection_place"
+    t.uuid "district_id", null: false
+    t.uuid "county_id", null: false
+    t.uuid "sub_county_id", null: false
+    t.uuid "request_id"
+    t.uuid "branch_id"
+    t.uuid "event_id"
+    t.uuid "donation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_inventories_on_branch_id"
+    t.index ["county_id"], name: "index_inventories_on_county_id"
+    t.index ["district_id"], name: "index_inventories_on_district_id"
+    t.index ["donation_id"], name: "index_inventories_on_donation_id"
+    t.index ["event_id"], name: "index_inventories_on_event_id"
+    t.index ["request_id"], name: "index_inventories_on_request_id"
+    t.index ["sub_county_id"], name: "index_inventories_on_sub_county_id"
+  end
+
   create_table "organization_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "organization_name"
     t.integer "male"
@@ -273,6 +297,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_08_053001) do
   add_foreign_key "individual_beneficiaries", "events"
   add_foreign_key "individual_beneficiaries", "requests"
   add_foreign_key "individual_beneficiaries", "sub_counties"
+  add_foreign_key "inventories", "branches"
+  add_foreign_key "inventories", "counties"
+  add_foreign_key "inventories", "districts"
+  add_foreign_key "inventories", "donations"
+  add_foreign_key "inventories", "events"
+  add_foreign_key "inventories", "requests"
+  add_foreign_key "inventories", "sub_counties"
   add_foreign_key "organization_beneficiaries", "counties"
   add_foreign_key "organization_beneficiaries", "sub_counties"
   add_foreign_key "requests", "branches"
