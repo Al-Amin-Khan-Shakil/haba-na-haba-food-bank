@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       get :load_sub_counties
     end
   end
+  
   # Conditional root route
   authenticated :user do
     root to: 'users#index', as: :authenticated_root

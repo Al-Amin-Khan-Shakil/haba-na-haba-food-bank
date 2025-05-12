@@ -8,10 +8,7 @@ class FamilyBeneficiariesController < ApplicationController
     @family_beneficiaries = FamilyBeneficiary.all
   end
 
-  def show
-    @family_beneficiary = FamilyBeneficiary.find(params[:id])
-    @request = @family_beneficiary.request
-  end
+  def show; end
 
   def new
     if @request.family_beneficiary.present?
@@ -103,56 +100,11 @@ class FamilyBeneficiariesController < ApplicationController
   end
 
   def family_beneficiary_params
-    params.require(:family_beneficiary).permit(
-      basic_info_params,
-      location_params,
-      parental_details_params,
-      meals_info_params,
-      case_info_params
-    )
-  end
-
-  def basic_info_params
-    %i[
-      family_members
-      male
-      female
-      children
-      adult_age_range
-      children_age_range
-    ]
-  end
-
-  def location_params
-    %i[
-      district_id
-      county_id
-      sub_county_id
-      address_note
-      village
-      parish
-    ]
-  end
-
-  def parental_details_params
-    %i[
-      fathers_name
-      mothers_name
-      fathers_occupation
-      mothers_occupation
-    ]
-  end
-
-  def meals_info_params
-    %i[
-      number_of_meals_home
-      number_of_meals_school
-      basic_FEH
-      basic_FES
-    ]
-  end
-
-  def case_info_params
-    %i[case_name case_description phone_number request_id]
+    params.require(:family_beneficiary).permit(:family_members, :male, :female, :children, :adult_age_range,
+                                               :children_age_range, :district_id, :county_id, :sub_county_id,
+                                               :address_note, :village, :parish, :fathers_name, :mothers_name,
+                                               :fathers_occupation, :mothers_occupation, :number_of_meals_home,
+                                               :number_of_meals_school, :provided_food, :basic_FEH, :basic_FES,
+                                               :case_name, :case_description, :phone_number, :request_id)
   end
 end

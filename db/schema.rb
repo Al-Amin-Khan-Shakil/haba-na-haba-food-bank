@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -128,6 +129,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
     t.integer "number_of_meals_school"
     t.text "basic_FEH"
     t.text "basic_FES"
+    t.decimal "provided_food"
     t.uuid "request_id"
     t.uuid "event_id"
     t.uuid "branch_id"
@@ -199,6 +201,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
     t.index ["event_id"], name: "index_individual_beneficiaries_on_event_id"
     t.index ["request_id"], name: "index_individual_beneficiaries_on_request_id"
     t.index ["sub_county_id"], name: "index_individual_beneficiaries_on_sub_county_id"
+
   end
 
   create_table "requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
