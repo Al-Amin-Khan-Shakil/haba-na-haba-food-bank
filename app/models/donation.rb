@@ -1,5 +1,6 @@
 class Donation < ApplicationRecord
   belongs_to :request
+  has_one :inventory, dependent: :nullify
 
   enum donation_type: {
     fresh_food: 1,
