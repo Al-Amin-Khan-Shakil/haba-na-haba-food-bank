@@ -7,4 +7,6 @@ class SubCounty < ApplicationRecord
   has_many :requests, dependent: :nullify
 
   validates :name, presence: true
+  has_many :family_beneficiaries, dependent: :nullify
+  has_many :organization_beneficiaries, dependent: :nullify
 end

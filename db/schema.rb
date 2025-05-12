@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_05_124549) do
-
+ActiveRecord::Schema[7.1].define(version: 2025_05_07_224146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -106,7 +105,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_124549) do
     t.index ["sub_county_id"], name: "index_events_on_sub_county_id"
   end
 
-
   create_table "family_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "family_members"
     t.integer "male"
@@ -173,6 +171,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_124549) do
     t.index ["county_id"], name: "index_organization_beneficiaries_on_county_id"
     t.index ["id"], name: "index_organization_beneficiaries_on_id", unique: true
     t.index ["sub_county_id"], name: "index_organization_beneficiaries_on_sub_county_id"
+  end
 
   create_table "individual_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
@@ -263,7 +262,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_05_124549) do
   add_foreign_key "events", "counties"
   add_foreign_key "events", "districts"
   add_foreign_key "events", "sub_counties"
-
   add_foreign_key "family_beneficiaries", "branches"
   add_foreign_key "family_beneficiaries", "counties"
   add_foreign_key "family_beneficiaries", "districts"

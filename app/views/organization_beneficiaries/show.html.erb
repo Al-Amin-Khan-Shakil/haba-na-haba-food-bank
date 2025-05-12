@@ -1,0 +1,83 @@
+<div class="p-4 w-full bg-white rounded-lg shadow-md md:p-6">
+  <h1 class="mb-6 text-2xl font-bold text-primarycolor">Organization Beneficiary Details</h1>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <!-- Left Column -->
+    <div class="space-y-6">
+      <!-- Organization Info -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Organization Info</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Organization Name:</strong> <%= @organization_beneficiary.organization_name %></li>
+          <li><strong>Registration No:</strong> <%= @organization_beneficiary.registration_no %></li>
+          <li><strong>Organization No:</strong> <%= @organization_beneficiary.organization_no %></li>
+        </ul>
+      </div>
+
+      <!-- Demographics -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Demographics</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Male:</strong> <%= @organization_beneficiary.male %></li>
+          <li><strong>Female:</strong> <%= @organization_beneficiary.female %></li>
+          <li><strong>Adult Age Range:</strong> <%= @organization_beneficiary.adult_age_range %></li>
+          <li><strong>Children Age Range:</strong> <%= @organization_beneficiary.children_age_range %></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Middle Column -->
+    <div class="space-y-6">
+      <!-- Location -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Location</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>District:</strong> <%= @organization_beneficiary.district&.name %></li>
+          <li><strong>County:</strong> <%= @organization_beneficiary.county&.name %></li>
+          <li><strong>Sub County:</strong> <%= @organization_beneficiary.sub_county&.name %></li>
+          <li><strong>Parish:</strong> <%= @organization_beneficiary.parish %></li>
+          <li><strong>Village:</strong> <%= @organization_beneficiary.village %></li>
+          <li><strong>Address:</strong> <%= @organization_beneficiary.address_note %></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Contact</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Phone Number:</strong> <%= @organization_beneficiary.phone_number %></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="space-y-6">
+      <!-- Case & Management Info -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Case & Management</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Case Name:</strong> <%= @organization_beneficiary.case_name %></li>
+          <li><strong>Case Description:</strong> <%= @organization_beneficiary.case_description %></li>
+          <li><strong>Director's Name:</strong> <%= @organization_beneficiary.directors_name %></li>
+          <li><strong>Head of Institution:</strong> <%= @organization_beneficiary.head_of_institution %></li>
+        </ul>
+      </div>
+
+      <!-- Meals & Resources -->
+      <div>
+        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Resources & Meals</h2>
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Number of Meals at Home:</strong> <%= @organization_beneficiary.number_of_meals_home %></li>
+          <li><strong>Basic FEH:</strong> <%= @organization_beneficiary.basic_FEH %></li>
+          <li><strong>Provided Food:</strong> <%= @organization_beneficiary.provided_food %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="pt-4 mt-8 space-x-4 text-sm border-t">
+    <%= link_to 'Edit', edit_organization_beneficiary_path(@organization_beneficiary), class: "text-white bg-primarycolor hover:bg-opacity-90 px-4 py-2 rounded" %>
+    <%= link_to 'Back', organization_beneficiaries_path, class: "text-primarycolor underline" %>
+  </div>
+</div>

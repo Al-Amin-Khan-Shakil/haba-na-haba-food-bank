@@ -1,0 +1,2 @@
+module OrganizationBeneficiaryHelper
+end
