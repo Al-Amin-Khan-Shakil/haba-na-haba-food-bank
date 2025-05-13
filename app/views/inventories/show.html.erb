@@ -1,0 +1,24 @@
+<h1 class="text-xl font-bold mb-4">Inventory Details</h1>
+<div class="bg-white p-4 shadow rounded space-y-2">
+  <p><strong>Name:</strong> <%= @inventory.name %></p>
+  <p><strong>Amount:</strong> <%= @inventory.amount %></p>
+  <p><strong>Cost of Item:</strong> <%= @inventory.cost_of_item %></p>
+  <p><strong>Expire Date:</strong> <%= @inventory.expire_date %></p>
+  <p><strong>Collection Place:</strong> <%= @inventory.collection_place %></p>
+  <hr class="my-4">
+  <h2 class="text-lg font-semibold">Donation Details</h2>
+  <% if @inventory.donation.present? %>
+    <p><strong>Donor Name:</strong> <%= @inventory.donation.donor_name %></p>
+    <p><strong>Phone Number:</strong> <%= @inventory.donation.phone_number %></p>
+    <p><strong>Donation Type:</strong> <%=@inventory.donation.donation_type.titleize %></p>
+    <p><strong>Donation Name:</strong> <%= @inventory.donation.donation_name %></p>
+    <p><strong>Donation Amount:</strong> <%= @inventory.donation.amount %></p>
+    <p><strong>Donor Type:</strong> <%= @inventory.donation.donor_type %></p>
+  <% else %>
+    <p class="text-gray-500">No donation information available.</p>
+  <% end %>
+</div>
+<div class="mt-4">
+  <%= link_to 'Back to Inventories', inventories_path, class: 'text-blue-600 hover:underline' %>
+  <%= link_to 'Edit', edit_inventory_path(@inventory), class: 'text-blue-600 hover:underline' %>
+</div>

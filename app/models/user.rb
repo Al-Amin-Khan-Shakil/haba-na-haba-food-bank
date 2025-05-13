@@ -18,7 +18,7 @@ class User < ApplicationRecord
                       message: 'must include at least one letter and one number' },
             if: :password_required?
   validates :profile_picture,
-            content_type: ['image/png', 'image/jpg', 'image/jpeg'],
+            content_type: ['image/png', 'image/jpeg'],
             size: { less_than: 2.megabytes, message: 'is too large (maximum size is 2MB)' }
 
   ROLES.each do |role_name|

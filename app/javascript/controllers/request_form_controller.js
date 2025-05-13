@@ -26,6 +26,22 @@ export default class extends Controller {
     this.donationFieldsWrapperTarget.innerHTML = `
       <h3 class="font-bold mt-4">Donation Info</h3>
       <div class="mb-4">
+        <label for="request_donation_attributes_donor_type">Donor Type</label>
+        <select name="request[donation_attributes][donor_type]" class="input">
+          <option value="">Select type</option>
+          ${Object.entries({
+            individual: "Individual",
+            private_organization: "Private Organization",
+            government_organization: "Government Organization",
+            non_government_organization: "Non-Government Organization",
+            international_organization: "International Organization",
+            others: "Others"
+          }).map(([value, label]) => `
+            <option value="${value}">${label}</option>
+          `).join('')}
+        </select>
+      </div>
+      <div class="mb-4">
         <label for="request_donation_attributes_donation_type">Donation Type</label>
         <select name="request[donation_attributes][donation_type]" class="input">
           <option value="">Select type</option>
