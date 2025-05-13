@@ -100,7 +100,8 @@ class InventoriesController < ApplicationController
   end
 
   def inventory_params
-    params.require(:inventory).permit(:name, :expire_date, :amount, :cost_of_item, :collection_place, :district_id, :county_id,
+    params.require(:inventory).permit(:name, :expire_date, :amount, :cost_of_item,
+                                      :collection_place, :district_id, :county_id,
                                       :sub_county_id, :donation_id, :request_id, :branch_id, :event_id)
   end
 end
