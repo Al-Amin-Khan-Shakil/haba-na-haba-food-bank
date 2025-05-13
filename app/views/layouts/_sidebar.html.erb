@@ -58,61 +58,43 @@
     </div>
   </div>
 </nav>
-
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 pt-20 w-64 h-screen border-r border-gray-200 transition-transform -translate-x-full bg-primarycolor xl:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
   <div class="overflow-y-auto px-3 pb-4 h-full bg-primarycolor dark:bg-gray-800">
     <ul class="space-y-2 font-medium">
       <li>
-        <%= link_to authenticated_root_path, class: "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white transition duration-75 group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z" />
-          </svg>
-          <span class="ms-3 whitespace-nowrap text-white group-hover:text-primarytext">Dashboard</span>
+        <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+          <i class="text-xl text-white fa-solid fa-cube group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Dashboard</span>
         <% end %>
       </li>
-      
       <li>
         <%= link_to branches_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l1.5-4.5h15L21 9v10a1 1 0 01-1 1h-4V9H8v11H4a1 1 0 01-1-1V9z" />
-          </svg>
+          <i class="fas fa-map-marked-alt text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Branches</span>
         <% end %>
       </li>
-      
       <li>
         <%= link_to requests_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20 13v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16-3V6a2 2 0 00-2-2H6a2 2 0 00-2 2v4m16 0l-4-4m0 0l-4 4m4-4v12" />
-          </svg>
+           <i class="fas fa-clipboard-check text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Requests</span>
         <% end %>
       </li>
-      
       <li>
         <%= link_to users_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1m-4 5v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1h5m4-5a4 4 0 100-8 4 4 0 000 8z" />
-          </svg>
+          <i class="text-base text-white fa-solid fa-users group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Users</span>
         <% end %>
       </li>
-      
       <li>
         <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7l1.664-2.5A2 2 0 016.236 3h11.528a2 2 0 011.572.764L21 7M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10M10 13h4" />
-          </svg>
+         <i class="fas fa-layer-group text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Inventories</span>
         <% end %>
       </li>
-      
       <li>
         <details class="">
           <summary class="flex items-center p-2 text-white rounded-lg cursor-pointer hover:bg-gray-100 group">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 20H4v-1a4 4 0 014-4h1m4-6a4 4 0 100-8 4 4 0 000 8z" />
-            </svg>
+            <i class="text-sm fa-solid fa-user-group group-hover:text-gray-800"></i>
             <span class="text-base ms-3 group-hover:text-primarytext">Beneficiaries</span>
             <i class="ml-2 text-xs transition-transform duration-200 fa-solid fa-chevron-down group-hover:text-primarytext"></i>
           </summary>
@@ -129,6 +111,7 @@
                 <span class="text-primarytext">Family</span>
               <% end %>
             </li>
+           
             <li>
               <%= link_to organization_beneficiaries_path, class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
                 <span class="mr-2 w-2 h-2 text-base rounded-full bg-primarytext"></span>
@@ -138,46 +121,34 @@
           </ul>
         </details>
       </li>
-      
       <li>
         <%= link_to events_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 4h10M5 11h14M5 19h14M5 15h14" />
-          </svg>
+          <i class="text-base text-white fa-solid fa-calendar-days group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Events</span>
         <% end %>
       </li>
-      
       <li>
         <%= link_to districts_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5s-3 1.343-3 3 1.343 3 3 3z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4.5 8-11a8 8 0 10-16 0c0 6.5 8 11 8 11z" />
-          </svg>
+          <i class="text-base text-white fa-solid fa-location group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Locations</span>
         <% end %>
       </li>
-      
       <p class="py-2 mr-20 text-sm font-normal text-white font-Outfit">PREFERENCE</p>
-      
       <li>
-      <%= link_to user_path(current_user), class: "flex items-center gap-2 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-       <i class="text-base text-white fa-solid fa-gear group-hover:text-gray-800"></i>
-        <span class="text-white whitespace-nowrap group-hover:text-primarytext">Profile</span>
-      <% end %>
-    </li>
-    
-    
+        <%= link_to user_path(current_user), class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+          <i class="text-base text-white fa-solid fa-gear group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Profile</span>
+        <% end %>
+      </li>
       <li>
         <%= link_to destroy_user_session_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-             <i class="text-base text-white fa-solid fa-arrow-right-from-bracket group-hover:text-gray-800"></i>
+          <i class="text-base text-white fa-solid fa-arrow-right-from-bracket group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Log Out</span>
         <% end %>
       </li>
     </ul>
   </div>
 </aside>
-
 <div class="p-4 min-h-screen bg-gray-50 xl:ml-64">
   <div class="mt-14 bg-gray-50">
     <%= yield %>
