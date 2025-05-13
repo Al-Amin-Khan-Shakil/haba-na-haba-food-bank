@@ -69,19 +69,25 @@
       </li>
       <li>
         <%= link_to branches_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="text-base text-white fa-solid fa-warehouse group-hover:text-gray-800"></i>
+          <i class="fas fa-map-marked-alt text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Branches</span>
         <% end %>
       </li>
       <li>
         <%= link_to requests_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="text-base text-white fa-solid fa-circle-check group-hover:text-gray-800"></i>
+           <i class="fas fa-clipboard-check text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Requests</span>
         <% end %>
       </li>
       <li>
+        <%= link_to users_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+          <i class="text-base text-white fa-solid fa-users group-hover:text-gray-800"></i>
+          <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Users</span>
+        <% end %>
+      </li>
+      <li>
         <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-          <i class="text-base text-white fa-solid fa-list group-hover:text-gray-800"></i>
+           <i class="fas fa-box text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Inventories</span>
         <% end %>
       </li>
@@ -107,7 +113,7 @@
             </li>
            
             <li>
-              <%= link_to "organization_beneficiaries_path", class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
+              <%= link_to organization_beneficiaries_path, class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
                 <span class="mr-2 w-2 h-2 text-base rounded-full bg-primarytext"></span>
                 <span class="text-primarytext">Organization</span>
               <% end %>
@@ -129,7 +135,7 @@
       </li>
       <p class="py-2 mr-20 text-sm font-normal text-white font-Outfit">PREFERENCE</p>
       <li>
-        <%= link_to authenticated_root_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to user_path(current_user), class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-gear group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Profile</span>
         <% end %>

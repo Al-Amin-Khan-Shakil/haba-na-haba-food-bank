@@ -1,8 +1,11 @@
 class OrganizationBeneficiariesController < ApplicationController
+  include BeneficiaryGuard
+
   before_action :authenticate_user!
   before_action :set_request, only: %i[new create edit update]
   before_action :set_organization_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
+  before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
     @organization_beneficiaries = OrganizationBeneficiary.all
@@ -11,25 +14,15 @@ class OrganizationBeneficiariesController < ApplicationController
   def show; end
 
   def new
-    if @request.organization_beneficiary.present?
-      redirect_to organization_beneficiary_path(@request.organization_beneficiary),
-                  notice: 'Organization Beneficiary already exists for this request.'
-    else
-      @organization_beneficiary = @request.build_organization_beneficiary
-    end
+    @organization_beneficiary = @request.build_organization_beneficiary
   end
 
   def create
-    if @request.organization_beneficiary.present?
-      redirect_to organization_beneficiary_path(@request.organization_beneficiary),
-                  notice: 'Organization Beneficiary already exists for this request.'
+    @organization_beneficiary = @request.build_organization_beneficiary(organization_beneficiary_params)
+    if @organization_beneficiary.save
+      redirect_to @organization_beneficiary, notice: 'Organization Beneficiary was successfully created.'
     else
-      @organization_beneficiary = @request.build_organization_beneficiary(organization_beneficiary_params)
-      if @organization_beneficiary.save
-        redirect_to @organization_beneficiary, notice: 'Organization Beneficiary was successfully created.'
-      else
-        render :new, status: :unprocessable_entity
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 

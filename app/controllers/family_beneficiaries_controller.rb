@@ -1,8 +1,11 @@
 class FamilyBeneficiariesController < ApplicationController
+  include BeneficiaryGuard
+
   before_action :authenticate_user!
   before_action :set_request, only: %i[new create edit update]
   before_action :set_family_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new create edit update]
+  before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
     @family_beneficiaries = FamilyBeneficiary.all
@@ -11,25 +14,15 @@ class FamilyBeneficiariesController < ApplicationController
   def show; end
 
   def new
-    if @request.family_beneficiary.present?
-      redirect_to family_beneficiary_path(@request.family_beneficiary),
-                  notice: 'Family Beneficiary already exists for this request.'
-    else
-      @family_beneficiary = @request.build_family_beneficiary
-    end
+    @family_beneficiary = @request.build_family_beneficiary
   end
 
   def create
-    if @request.family_beneficiary.present?
-      redirect_to family_beneficiary_path(@request.family_beneficiary),
-                  notice: 'Family Beneficiary already exists for this request.'
+    @family_beneficiary = @request.build_family_beneficiary(family_beneficiary_params)
+    if @family_beneficiary.save
+      redirect_to @family_beneficiary, notice: 'Family Beneficiary was successfully created.'
     else
-      @family_beneficiary = @request.build_family_beneficiary(family_beneficiary_params)
-      if @family_beneficiary.save
-        redirect_to family_beneficiary_path(@family_beneficiary), notice: 'Family Beneficiary was successfully created.'
-      else
-        render :new, status: :unprocessable_entity
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 
