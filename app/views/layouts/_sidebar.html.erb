@@ -162,9 +162,7 @@
       
       <li>
       <%= link_to user_path(current_user), class: "flex items-center gap-2 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white group-hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75A3.75 3.75 0 1 0 12 8.25a3.75 3.75 0 0 0 0 7.5zM19.5 12a7.5 7.5 0 0 0-.225-1.8l1.63-1.26a.75.75 0 0 0 .105-1.14l-1.5-1.5a.75.75 0 0 0-1.14.105l-1.26 1.63a7.5 7.5 0 0 0-1.8-.225 7.5 7.5 0 0 0-1.8.225l-1.26-1.63a.75.75 0 0 0-1.14-.105l-1.5 1.5a.75.75 0 0 0 .105 1.14l1.63 1.26c-.15.57-.225 1.17-.225 1.8s.075 1.23.225 1.8l-1.63 1.26a.75.75 0 0 0-.105 1.14l1.5 1.5c.3.3.78.3 1.08 0l1.26-1.63c.57.15 1.17.225 1.8.225s1.23-.075 1.8-.225l1.26 1.63c.3.3.78.3 1.08 0l1.5-1.5a.75.75 0 0 0-.105-1.14l-1.63-1.26c.15-.57.225-1.17.225-1.8z" />
-        </svg>
+       <i class="text-base text-white fa-solid fa-gear group-hover:text-gray-800"></i>
         <span class="text-white whitespace-nowrap group-hover:text-primarytext">Profile</span>
       <% end %>
     </li>
@@ -172,7 +170,7 @@
     
       <li>
         <%= link_to destroy_user_session_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-            <i class="text-base text-white fa-solid fa-gear group-hover:text-gray-800"></i>
+             <i class="text-base text-white fa-solid fa-arrow-right-from-bracket group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Log Out</span>
         <% end %>
       </li>
