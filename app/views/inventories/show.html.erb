@@ -10,10 +10,10 @@
   <% if @inventory.donation.present? %>
     <p><strong>Donor Name:</strong> <%= @inventory.donation.donor_name %></p>
     <p><strong>Phone Number:</strong> <%= @inventory.donation.phone_number %></p>
-    <p><strong>Donation Type:</strong> <%= Donation.donation_types.key(@inventory.donation.donation_type) %></p>
+    <p><strong>Donation Type:</strong> <%=@inventory.donation.donation_type.titleize %></p>
     <p><strong>Donation Name:</strong> <%= @inventory.donation.donation_name %></p>
     <p><strong>Donation Amount:</strong> <%= @inventory.donation.amount %></p>
-    <p><strong>Donor Type:</strong> <%= Donation.donor_types.key(@inventory.donation.donor_type) %></p>
+    <p><strong>Donor Type:</strong> <%= @inventory.donation.donor_type %></p>
   <% else %>
     <p class="text-gray-500">No donation information available.</p>
   <% end %>

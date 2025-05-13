@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :family_beneficiaries, only: [:create, :new]
     resources :organization_beneficiaries, only: [:create, :new]
     resource :individual_beneficiary, only: [:new, :create]
-    resources :inventories, only: [:create, :new]
+    resource :inventory, only: [:create, :new]
   end
   resources :individual_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
       collection do

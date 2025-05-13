@@ -15,8 +15,8 @@ class Inventory < ApplicationRecord
   private
 
   def expire_date_must_be_in_future
-    if expire_date.present? && expire_date <= Date.today
-      errors.add(:expire_date, "must be after today")
-    end
+    return unless expire_date.present? && expire_date <= Date.today
+
+    errors.add(:expire_date, 'must be after today')
   end
 end

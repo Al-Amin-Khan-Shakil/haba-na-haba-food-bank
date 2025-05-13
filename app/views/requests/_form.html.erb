@@ -103,6 +103,13 @@
                 class: "input" %>
         </div>
         <div class="mb-4">
+          <%= df.label :donor_type %>
+          <%= df.select :donor_type,
+                Donation.donor_types.keys.map { |k| [k.titleize, k] },
+                { include_blank: "Select type" },
+                class: "input" %>
+        </div>
+        <div class="mb-4">
           <%= df.label :donation_name %>
           <%= df.text_field :donation_name, class: "input" %>
         </div>
