@@ -12,9 +12,9 @@
     <tbody class="bg-white divide-y divide-gray-200">
       <% beneficiaries.each do |beneficiary| %>
         <tr>
-          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.name %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.age %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.gender %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.fathers_name %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.mothers_name %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.case_name %></td>
           <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.phone_number %></td>
           <td class="px-6 py-4 whitespace-nowrap">
             <%= link_to 'View', beneficiary, class: 'text-blue-600 hover:text-blue-800' %>
