@@ -2,9 +2,13 @@ module FilterMethods
     private
   
     # General filters (first occurrences kept)
-  
+    
     def filter_by_name(relation, name)
-      name.present? ? relation.where('first_name ILIKE ? OR last_name ILIKE ?', "%#{name}%", "%#{name}%") : relation
+        name.present? ? relation.where('name ILIKE ?', "%#{name}%") : relation
+    end
+  
+    def filter_by_full_name(relation, first_name)
+        first_name.present? ? relation.where('first_name ILIKE ? OR last_name ILIKE ?', "%#{first_name}%", "%#{first_name}%") : relation
     end
   
     def filter_by_role(relation, role)
@@ -104,9 +108,16 @@ module FilterMethods
       relation.where('(male + female) BETWEEN ? AND ?', min_people, max_people)
     end
   
-    def filter_by_request_type(relation, request_type)
-      request_type.present? ? relation.where('request_type ILIKE ?', "%#{request_type}%") : relation
-    end
+    def filter_by_request_type(relation, request_types)
+        if request_types.present?
+          request_types = Array.wrap(request_types)
+          enum_values = request_types.map { |type| Request.request_types[type] }.compact
+          enum_values.any? ? relation.where(request_type: enum_values) : relation.none
+        else
+          relation
+        end
+      end
+      
   
     def filter_by_is_selected(relation, is_selected)
       is_selected.present? ? relation.where(is_selected: is_selected) : relation
@@ -118,28 +129,16 @@ module FilterMethods
   
     # Inventories filters:
   
-    def filter_by_donation_type(inventories, donation_type)
-      donation_type.present? ? inventories.where('donation_type ILIKE ?', "%#{donation_type}%") : inventories
+    def filter_by_donation_type(relation, donation_type)
+      donation_type.present? ? relation.where('donation_type ILIKE ?', "%#{donation_type}%") : relation
     end
   
-    def filter_by_donor_type(inventories, donor_type)
-      donor_type.present? ? inventories.where('donor_type ILIKE ?', "%#{donor_type}%") : inventories
+    def filter_by_donor_type(relation, donor_type)
+      donor_type.present? ? relation.where('donor_type ILIKE ?', "%#{donor_type}%") : relation
     end
   
-    def filter_by_collection_date(inventories, start_date, end_date)
-      if start_date.present? && end_date.present?
-        inventories.where(collection_date: start_date..end_date)
-      elsif start_date.present?
-        inventories.where('collection_date >= ?', start_date)
-      elsif end_date.present?
-        inventories.where('collection_date <= ?', end_date)
-      else
-        inventories
-      end
+    def filter_by_donor_name(relation, donor_name)
+      donor_name.present? ? relation.where('donor_name ILIKE ?', "%#{donor_name}%") : relation
     end
-  
-    def filter_by_donor_name(inventories, donor_name)
-      donor_name.present? ? inventories.where('donor_name ILIKE ?', "%#{donor_name}%") : inventories
-    end
-  end
+end
   

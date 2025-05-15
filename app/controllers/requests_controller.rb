@@ -3,7 +3,10 @@ class RequestsController < ApplicationController
   before_action :set_request, only: %i[show edit update destroy]
 
   def index
-    @requests = Request.all
+    @requests = apply_filters(Request.all, filter_params)
+    @districts = District.all
+    @counties = County.all
+    @sub_counties = SubCounty.all
   end
 
   def show; end
@@ -82,7 +85,16 @@ class RequestsController < ApplicationController
   def set_request
     @request = Request.includes(:donation).find(params[:id])
   end
-
+  
+  def filter_params
+    params.fetch(:filter, {}).permit(
+      :name, :phone_number, :request_type,
+      :district_id, :county_id, :sub_county_id,
+      :is_selected, :branch_id,
+      :start_date, :end_date
+    )
+  end
+  
   def request_params
     params.require(:request).permit(
       :name,
