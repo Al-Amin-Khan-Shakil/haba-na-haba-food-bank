@@ -59,6 +59,8 @@ Rails.application.routes.draw do
     end
 
     resources :individual_beneficiaries, only: [:create, :new]
+    resources :family_beneficiaries, only: [:create, :new]
+    resources :organization_beneficiaries, only: [:create, :new]
   end
 
   # Conditional root route
