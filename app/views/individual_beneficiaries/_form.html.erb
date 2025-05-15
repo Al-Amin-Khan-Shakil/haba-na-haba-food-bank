@@ -1,6 +1,12 @@
 <%= form_with(
       model: @individual_beneficiary,
-      url: @individual_beneficiary.persisted? ? individual_beneficiary_path(@individual_beneficiary) : request_individual_beneficiary_path(@request),
+      url: if @individual_beneficiary.persisted?
+             individual_beneficiary_path(@individual_beneficiary)
+           elsif @event
+              event_individual_beneficiaries_path(@event)
+            else
+              request_individual_beneficiary_path(@request)
+            end,
       method: @individual_beneficiary.persisted? ? :patch : :post,
       local: true,
       data: { controller: "location" }
@@ -13,7 +19,7 @@
       <!-- Basic Fields -->
       <div class="mb-4">
         <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.text_field :name, value: @individual_beneficiary.name.presence || @request.name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        <%= f.text_field :name, value: @individual_beneficiary&.name.presence || @request&.name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <div class="mb-4">
         <%= f.label :age, class: "block text-gray-700 font-bold mb-2" %>
@@ -25,7 +31,7 @@
       </div>
       <div class="mb-4">
         <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.text_field :phone_number, value: @individual_beneficiary.phone_number.presence || @request.phone_number, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        <%= f.text_field :phone_number, value: @individual_beneficiary&.phone_number.presence || @request&.phone_number, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <!-- Case Info -->
       <div class="mb-4">
@@ -56,22 +62,22 @@
       </div>
       <div class="mb-4">
         <%= f.label :address_note, class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.text_area :address_note, value: @individual_beneficiary.address_note.presence || @request.address_note, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        <%= f.text_area :address_note, value: @individual_beneficiary&.address_note.presence || @request&.address_note, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <!-- Location -->
       <div class="mb-4">
         <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.text_field :village, value: @individual_beneficiary.village.presence || @request.village, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        <%= f.text_field :village, value: @individual_beneficiary&.village.presence || @request&.village, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <div class="mb-4">
         <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.text_field :parish, value: @individual_beneficiary.parish.presence || @request.parish, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        <%= f.text_field :parish, value: @individual_beneficiary&.parish.presence || @request&.parish, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <div data-controller="location"
      data-location-base-path-value="<%= controller.controller_name %>">
         <%= f.label :district_id %>
         <%= f.collection_select :district_id, @districts, :id, :name,
-          { include_blank: "Select District", selected: @individual_beneficiary.district_id || @request&.district_id },
+          { include_blank: "Select District", selected: @individual_beneficiary&.district_id || @request&.district_id },
           {
             data: {
               location_target: "district",
@@ -80,23 +86,23 @@
           } %>
         <%= f.label :county_id %>
         <%= f.select :county_id,
-          options_from_collection_for_select(@counties, :id, :name, @individual_beneficiary.county_id || @request&.county_id),
+          options_from_collection_for_select(@counties, :id, :name, @individual_beneficiary&.county_id || @request&.county_id),
           {},
           {
             data: {
               location_target: "county",
               action: "change->location#loadSubCounties",
-              initial_selection: (@individual_beneficiary.county_id || @request&.county_id)
+              initial_selection: (@individual_beneficiary&.county_id || @request&.county_id)
             }
           } %>
         <%= f.label :sub_county_id %>
         <%= f.select :sub_county_id,
-          options_from_collection_for_select(@sub_counties, :id, :name, @individual_beneficiary.sub_county_id || @request&.sub_county_id),
+          options_from_collection_for_select(@sub_counties, :id, :name, @individual_beneficiary&.sub_county_id || @request&.sub_county_id),
           {},
           {
             data: {
               location_target: "subCounty",
-              initial_selection: (@individual_beneficiary.sub_county_id || @request&.sub_county_id)
+              initial_selection: (@individual_beneficiary&.sub_county_id || @request&.sub_county_id)
             }
           } %>
       </div>
@@ -104,7 +110,7 @@
       <div class="mb-4">
         <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
         <%= f.collection_select :branch_id, @branches, :id, :name,
-          { selected: @individual_beneficiary.branch_id || @request.branch_id, prompt: "Select Branch" },
+          { selected: @individual_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
           class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <div class="mb-4">

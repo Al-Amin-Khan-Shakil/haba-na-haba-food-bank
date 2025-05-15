@@ -1,10 +1,11 @@
-# app/controllers/concerns/beneficiary_guard.rb
 module BeneficiaryGuard
   extend ActiveSupport::Concern
 
   private
 
   def redirect_if_beneficiary_exists
+    return unless @request
+
     existing_beneficiary =
       @request.organization_beneficiary ||
       @request.family_beneficiary ||
