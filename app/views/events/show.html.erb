@@ -42,40 +42,43 @@
       </div>
     </div>
   </div>
-  <div class="bg-white rounded-lg shadow overflow-hidden">
+  <div data-controller="event-tabs" class="bg-white rounded-lg shadow overflow-hidden">
     <div class="border-b border-gray-200">
       <nav class="flex -mb-px">
         <button
-          data-tab-target="#individual-tab"
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#individual-tab"
           class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
-          data-action="click->tabs#switch"
           >
           Individual Beneficiaries
         </button>
         <button
-          data-tab-target="#family-tab"
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#family-tab"
           class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
-          data-action="click->tabs#switch"
           >
           Family Beneficiaries
         </button>
         <button
-          data-tab-target="#organization-tab"
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#organization-tab"
           class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
-          data-action="click->tabs#switch"
           >
           Organization Beneficiaries
         </button>
       </nav>
     </div>
     <!-- Tab Contents -->
-    <div id="individual-tab" class="tab-content p-6">
+    <div id="individual-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
       <%= render "individual_beneficiaries/list", beneficiaries: @individual_beneficiaries %>
     </div>
-    <div id="family-tab" class="tab-content p-6 hidden">
+    <div id="family-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
       <%= render "family_beneficiaries/list", beneficiaries: @family_beneficiaries %>
     </div>
-    <div id="organization-tab" class="tab-content p-6 hidden">
+    <div id="organization-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
       <%= render "organization_beneficiaries/list", beneficiaries: @organization_beneficiaries %>
     </div>
   </div>
