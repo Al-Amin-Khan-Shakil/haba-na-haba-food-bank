@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   get 'home/index'
   post '/ussd', to: 'ussd#recive'
   resources :users
+  resources :branches
+
   resources :districts do
     resources :counties, only: [] do
       resources :sub_counties, only: []
     end
   end
-  resources :branches
+
   resources :requests do
     collection do
       get :load_counties
@@ -22,35 +24,42 @@ Rails.application.routes.draw do
     resource :individual_beneficiary, only: [:new, :create]
     resource :inventory, only: [:create, :new]
   end
+
   resources :individual_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
-      collection do
-        get :load_counties
-        get :load_sub_counties
-      end
-    end
-  resources :events do
     collection do
       get :load_counties
       get :load_sub_counties
     end
   end
+
   resources :family_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
     collection do
       get :load_counties
       get :load_sub_counties
     end
   end
+
   resources :organization_beneficiaries, only: [:index, :show, :destroy, :edit, :update]  do
     collection do
       get :load_counties
       get :load_sub_counties
     end
   end
+
   resources :inventories, only: [:index, :show, :destroy, :edit, :update]  do
     collection do
       get :load_counties
       get :load_sub_counties
     end
+  end
+
+  resources :events do
+    collection do
+      get :load_counties
+      get :load_sub_counties
+    end
+
+    resources :individual_beneficiaries, only: [:create, :new]
   end
 
   # Conditional root route
