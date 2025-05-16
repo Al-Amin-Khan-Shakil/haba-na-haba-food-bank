@@ -177,13 +177,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_12_131924) do
     t.decimal "amount"
     t.decimal "cost_of_item"
     t.string "collection_place"
+    t.string "phone_number"
+    t.string "donor_name"
     t.uuid "district_id", null: false
     t.uuid "county_id", null: false
     t.uuid "sub_county_id", null: false
     t.uuid "request_id"
     t.uuid "branch_id"
     t.uuid "event_id"
-    t.uuid "donation_id", null: false
+    t.uuid "donation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["branch_id"], name: "index_inventories_on_branch_id"
@@ -201,6 +203,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_12_131924) do
     t.integer "female"
     t.text "adult_age_range"
     t.text "children_age_range"
+    t.uuid "district_id", null: false
     t.uuid "county_id", null: false
     t.uuid "sub_county_id", null: false
     t.text "address_note"
@@ -219,10 +222,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_12_131924) do
     t.datetime "updated_at", null: false
     t.decimal "provided_food"
     t.integer "event_id"
-    t.uuid "district_id"
     t.uuid "branch_id"
     t.uuid "request_id"
     t.index ["county_id"], name: "index_organization_beneficiaries_on_county_id"
+    t.index ["district_id"], name: "index_organization_beneficiaries_on_district_id"
     t.index ["id"], name: "index_organization_beneficiaries_on_id", unique: true
     t.index ["sub_county_id"], name: "index_organization_beneficiaries_on_sub_county_id"
   end
@@ -305,6 +308,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_12_131924) do
   add_foreign_key "inventories", "requests"
   add_foreign_key "inventories", "sub_counties"
   add_foreign_key "organization_beneficiaries", "counties"
+  add_foreign_key "organization_beneficiaries", "districts"
   add_foreign_key "organization_beneficiaries", "sub_counties"
   add_foreign_key "requests", "branches"
   add_foreign_key "requests", "counties"

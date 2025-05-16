@@ -1,8 +1,11 @@
 class InventoriesController < ApplicationController
+  include BeneficiaryGuard
+
   before_action :authenticate_user!
-  before_action :set_request, only: %i[new create]
+  before_action :set_parent_resource, only: %i[new create]
   before_action :set_inventory, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
+  before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
     @inventories = Inventory.all
@@ -11,26 +14,24 @@ class InventoriesController < ApplicationController
   def show; end
 
   def new
-    if @request.inventory.present?
-      redirect_to inventory_path(@request.inventory),
-                  notice: 'Inventory already exists for this request.'
-    else
-      @inventory = @request.build_inventory
-    end
+    @inventory = if @event
+                   @event.inventories.build
+                 else
+                   @request.inventory || @request.build_inventory
+                 end
   end
 
   def create
-    if @request.inventory.present?
-      redirect_to inventory_path(@request.inventory),
-                  notice: 'Inventory already exists for this request.'
-    else
-      @inventory = @request.build_inventory(inventory_params)
+    @inventory = if @event
+                   @event.inventories.build(inventory_params)
+                 else
+                   @request.build_inventory(inventory_params)
+                 end
 
-      if @inventory.save
-        redirect_to @inventory, notice: 'Inventory was successfully created.'
-      else
-        render :new, status: :unprocessable_entity
-      end
+    if @inventory.save
+      redirect_to @inventory, notice: 'Inventory was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -69,17 +70,25 @@ class InventoriesController < ApplicationController
 
   private
 
-  def set_request
-    @request = Request.find(params[:request_id]) if params[:request_id]
+  def set_parent_resource
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+    elsif params[:request_id]
+      @request = Request.find(params[:request_id])
+    end
   end
 
   def set_inventory
-    if params[:request_id]
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+      @inventory = IndividualBeneficiary.find(params[:id])
+    elsif params[:request_id]
       @request = Request.find(params[:request_id])
       @inventory = @request.inventory
     else
       @inventory = Inventory.find(params[:id])
-      @request = @inventory.request
+      @request = @inventory&.request
+      @event = @inventory&.event
     end
   end
 
@@ -102,6 +111,7 @@ class InventoriesController < ApplicationController
   def inventory_params
     params.require(:inventory).permit(:name, :expire_date, :amount, :cost_of_item,
                                       :collection_place, :district_id, :county_id,
-                                      :sub_county_id, :donation_id, :request_id, :branch_id, :event_id)
+                                      :sub_county_id, :donation_id, :request_id, :branch_id, :event_id,
+                                      :phone_number, :donor_name)
   end
 end

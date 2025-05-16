@@ -2,7 +2,7 @@ class IndividualBeneficiariesController < ApplicationController
   include BeneficiaryGuard
 
   before_action :authenticate_user!
-  before_action :set_request, only: %i[new create edit update]
+  before_action :set_parent_resource, only: %i[new create]
   before_action :set_individual_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
@@ -14,11 +14,20 @@ class IndividualBeneficiariesController < ApplicationController
   def show; end
 
   def new
-    @individual_beneficiary = @request.build_individual_beneficiary
+    @individual_beneficiary = if @event
+                                @event.individual_beneficiaries.build
+                              else
+                                @request.individual_beneficiary || @request.build_individual_beneficiary
+                              end
   end
 
   def create
-    @individual_beneficiary = @request.build_individual_beneficiary(individual_beneficiary_params)
+    @individual_beneficiary = if @event
+                                @event.individual_beneficiaries.build(individual_beneficiary_params)
+                              else
+                                @request.build_individual_beneficiary(individual_beneficiary_params)
+                              end
+
     if @individual_beneficiary.save
       redirect_to @individual_beneficiary, notice: 'Individual Beneficiary was successfully created.'
     else
@@ -61,17 +70,25 @@ class IndividualBeneficiariesController < ApplicationController
 
   private
 
-  def set_request
-    @request = Request.find(params[:request_id]) if params[:request_id]
+  def set_parent_resource
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+    elsif params[:request_id]
+      @request = Request.find(params[:request_id])
+    end
   end
 
   def set_individual_beneficiary
-    if params[:request_id]
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+      @individual_beneficiary = IndividualBeneficiary.find(params[:id])
+    elsif params[:request_id]
       @request = Request.find(params[:request_id])
       @individual_beneficiary = @request.individual_beneficiary
     else
       @individual_beneficiary = IndividualBeneficiary.find(params[:id])
-      @request = @individual_beneficiary.request # Fix added here
+      @request = @individual_beneficiary&.request
+      @event = @individual_beneficiary&.event
     end
   end
 

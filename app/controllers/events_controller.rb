@@ -10,6 +10,10 @@ class EventsController < ApplicationController
   def show
     @event = Event.includes(event_users: :user).find(params[:id])
     @event_users = @event.event_users.distinct || []
+    @individual_beneficiaries = @event.individual_beneficiaries
+    @family_beneficiaries = @event.family_beneficiaries
+    @organization_beneficiaries = @event.organization_beneficiaries
+    @inventories = @event.inventories
   end
 
   def new

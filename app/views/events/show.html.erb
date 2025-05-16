@@ -42,4 +42,69 @@
       </div>
     </div>
   </div>
+  <div class="mb-6 flex justify-around items-center">
+    <%= link_to 'Add Individual Beneficiary',
+              new_event_individual_beneficiary_path(@event),
+              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Add Family Beneficiary',
+              new_event_family_beneficiary_path(@event),
+              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Add Organization Beneficiary',
+              new_event_organization_beneficiary_path(@event),
+              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Add Inventory',
+              new_event_inventory_path(@event),
+              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+  <div data-controller="event-tabs" class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="border-b border-gray-200">
+      <nav class="flex -mb-px">
+        <button
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#individual-tab"
+          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+          >
+          Individual Beneficiaries
+        </button>
+        <button
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#family-tab"
+          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+          >
+          Family Beneficiaries
+        </button>
+        <button
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#organization-tab"
+          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+          >
+          Organization Beneficiaries
+        </button>
+        <button
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#inventory-tab"
+          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+          >
+          Inventories
+        </button>
+      </nav>
+    </div>
+    <!-- Tab Contents -->
+    <div id="individual-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+      <%= render "individual_beneficiaries/list", beneficiaries: @individual_beneficiaries %>
+    </div>
+    <div id="family-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+      <%= render "family_beneficiaries/list", beneficiaries: @family_beneficiaries %>
+    </div>
+    <div id="organization-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+      <%= render "organization_beneficiaries/list", beneficiaries: @organization_beneficiaries %>
+    </div>
+    <div id="inventory-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+      <%= render "inventories/list", inventories: @inventories %>
+    </div>
+  </div>
 </div>

@@ -1,6 +1,10 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :validatable
 
+  has_many :requests, dependent: :nullify
+  has_many :event_users, dependent: :destroy
+  has_many :events, through: :event_users
+
   has_one_attached :profile_picture
 
   ROLES = %w[super_admin admin branch_manager volunteer].freeze

@@ -2,7 +2,7 @@ class FamilyBeneficiariesController < ApplicationController
   include BeneficiaryGuard
 
   before_action :authenticate_user!
-  before_action :set_request, only: %i[new create edit update]
+  before_action :set_parent_resource, only: %i[new create]
   before_action :set_family_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new create edit update]
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
@@ -14,11 +14,20 @@ class FamilyBeneficiariesController < ApplicationController
   def show; end
 
   def new
-    @family_beneficiary = @request.build_family_beneficiary
+    @family_beneficiary = if @event
+                            @event.family_beneficiaries.build
+                          else
+                            @request.family_beneficiary || @request.build_family_beneficiary
+                          end
   end
 
   def create
-    @family_beneficiary = @request.build_family_beneficiary(family_beneficiary_params)
+    @family_beneficiary = if @event
+                            @event.family_beneficiaries.build(family_beneficiary_params)
+                          else
+                            @request.build_family_beneficiary(family_beneficiary_params)
+                          end
+
     if @family_beneficiary.save
       redirect_to @family_beneficiary, notice: 'Family Beneficiary was successfully created.'
     else
@@ -61,17 +70,25 @@ class FamilyBeneficiariesController < ApplicationController
 
   private
 
-  def set_request
-    @request = Request.find(params[:request_id]) if params[:request_id]
+  def set_parent_resource
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+    elsif params[:request_id]
+      @request = Request.find(params[:request_id])
+    end
   end
 
   def set_family_beneficiary
-    if params[:request_id]
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+      @family_beneficiary = FamilyBeneficiary.find(params[:id])
+    elsif params[:request_id]
       @request = Request.find(params[:request_id])
       @family_beneficiary = @request.family_beneficiary
     else
       @family_beneficiary = FamilyBeneficiary.find(params[:id])
-      @request = @family_beneficiary.request
+      @request = @family_beneficiary&.request
+      @event = @family_beneficiary&.event
     end
   end
 

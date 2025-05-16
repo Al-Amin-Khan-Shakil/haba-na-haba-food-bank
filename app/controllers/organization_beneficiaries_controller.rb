@@ -2,7 +2,7 @@ class OrganizationBeneficiariesController < ApplicationController
   include BeneficiaryGuard
 
   before_action :authenticate_user!
-  before_action :set_request, only: %i[new create edit update]
+  before_action :set_parent_resource, only: %i[new create]
   before_action :set_organization_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
@@ -14,11 +14,20 @@ class OrganizationBeneficiariesController < ApplicationController
   def show; end
 
   def new
-    @organization_beneficiary = @request.build_organization_beneficiary
+    @organization_beneficiary = if @event
+                                  @event.organization_beneficiaries.build
+                                else
+                                  @request.organization_beneficiary || @request.build_organization_beneficiary
+                                end
   end
 
   def create
-    @organization_beneficiary = @request.build_organization_beneficiary(organization_beneficiary_params)
+    @organization_beneficiary = if @event
+                                  @event.organization_beneficiaries.build(organization_beneficiary_params)
+                                else
+                                  @request.build_organization_beneficiary(organization_beneficiary_params)
+                                end
+
     if @organization_beneficiary.save
       redirect_to @organization_beneficiary, notice: 'Organization Beneficiary was successfully created.'
     else
@@ -61,17 +70,25 @@ class OrganizationBeneficiariesController < ApplicationController
 
   private
 
-  def set_request
-    @request = Request.find(params[:request_id]) if params[:request_id]
+  def set_parent_resource
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+    elsif params[:request_id]
+      @request = Request.find(params[:request_id])
+    end
   end
 
   def set_organization_beneficiary
-    if params[:request_id]
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+      @organization_beneficiary = OrganizationBeneficiary.find(params[:id])
+    elsif params[:request_id]
       @request = Request.find(params[:request_id])
       @organization_beneficiary = @request.organization_beneficiary
     else
       @organization_beneficiary = OrganizationBeneficiary.find(params[:id])
-      @request = @organization_beneficiary.request
+      @request = @organization_beneficiary&.request
+      @event = @organization_beneficiary&.event
     end
   end
 
