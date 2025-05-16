@@ -75,6 +75,7 @@ class OrganizationBeneficiariesController < ApplicationController
       @event = Event.find(params[:event_id])
     elsif params[:request_id]
       @request = Request.find(params[:request_id])
+    end
   end
 
   def set_organization_beneficiary
@@ -88,6 +89,7 @@ class OrganizationBeneficiariesController < ApplicationController
       @organization_beneficiary = OrganizationBeneficiary.find(params[:id])
       @request = @organization_beneficiary&.request
       @event = @organization_beneficiary&.event
+    end
   end
 
   def effective_district
