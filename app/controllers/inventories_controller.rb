@@ -1,8 +1,11 @@
 class InventoriesController < ApplicationController
+  include BeneficiaryGuard
+
   before_action :authenticate_user!
   before_action :set_request, only: %i[new create]
   before_action :set_inventory, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
+  before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
     @inventories = Inventory.all
