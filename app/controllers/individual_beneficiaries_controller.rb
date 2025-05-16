@@ -17,7 +17,8 @@ class IndividualBeneficiariesController < ApplicationController
     @individual_beneficiary = if @event
                                 @event.individual_beneficiaries.build
                               else
-                                @request.individual_beneficiary
+                                # Initialize a new beneficiary for the request
+                                @request.individual_beneficiary || @request.build_individual_beneficiary
                               end
   end
 
@@ -81,7 +82,7 @@ class IndividualBeneficiariesController < ApplicationController
   def set_individual_beneficiary
     if params[:event_id]
       @event = Event.find(params[:event_id])
-      @individual_beneficiary = @event.individual_beneficiary
+      @individual_beneficiary = IndividualBeneficiary.find(params[:id])
     elsif params[:request_id]
       @request = Request.find(params[:request_id])
       @individual_beneficiary = @request.individual_beneficiary
