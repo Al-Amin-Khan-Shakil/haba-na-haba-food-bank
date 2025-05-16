@@ -177,13 +177,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_12_131924) do
     t.decimal "amount"
     t.decimal "cost_of_item"
     t.string "collection_place"
+    t.string "phone_number"
+    t.string "donor_name"
     t.uuid "district_id", null: false
     t.uuid "county_id", null: false
     t.uuid "sub_county_id", null: false
     t.uuid "request_id"
     t.uuid "branch_id"
     t.uuid "event_id"
-    t.uuid "donation_id", null: false
+    t.uuid "donation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["branch_id"], name: "index_inventories_on_branch_id"
