@@ -31,6 +31,14 @@
         <%= f.label :collection_place, class: "block text-gray-700 font-bold mb-2" %>
         <%= f.text_field :collection_place, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
+      <div class="mb-4">
+        <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :phone_number, value: @inventory&.phone_number || @request&.donation&.phone_number, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :donor_name, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :donor_name, value: @inventory&.donor_name || @request&.donation&.donor_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
       <!-- Location -->
       <div data-controller="location" data-location-base-path-value="<%= controller.controller_name %>" class="mb-4">
         <%= f.label :district_id, class: "block text-gray-700 font-bold mb-2" %>
@@ -45,31 +53,31 @@
         <%= f.label :county_id, class: "block text-gray-700 font-bold mb-2" %>
         <%= f.select :county_id,
           options_from_collection_for_select(@counties, :id, :name,
-            @inventory.county_id || @request&.county_id),
+            @inventory&.county_id || @request&.county_id),
             {},
             {
               data: {
                 location_target: "county",
                 action: "change->location#loadSubCounties",
-                initial_selection: (@inventory.county_id || @request&.county_id)
+                initial_selection: (@inventory&.county_id || @request&.county_id)
               }
             } %>
         <%= f.label :sub_county_id, class: "block text-gray-700 font-bold mb-2" %>
         <%= f.select :sub_county_id,
           options_from_collection_for_select(@sub_counties, :id, :name,
-            @inventory.sub_county_id || @request&.sub_county_id),
+            @inventory&.sub_county_id || @request&.sub_county_id),
             {},
             {
               data: {
                 location_target: "subCounty",
-                initial_selection: (@inventory.sub_county_id || @request&.sub_county_id)
+                initial_selection: (@inventory&.sub_county_id || @request&.sub_county_id)
               }
             } %>
       </div>
       <div class="mb-4">
         <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
         <%= f.collection_select :branch_id, @branches, :id, :name,
-          { selected: @inventory.branch_id || @request.branch_id, prompt: "Select Branch" },
+          { selected: @inventory&.branch_id || @request&.branch_id, prompt: "Select Branch" },
           class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <div class="mb-4">
