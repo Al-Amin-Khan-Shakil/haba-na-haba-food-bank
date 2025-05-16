@@ -18,8 +18,8 @@ Rails.application.routes.draw do
       get :load_sub_counties
     end
 
-    resources :family_beneficiaries, only: [:create, :new]
-    resources :organization_beneficiaries, only: [:create, :new]
+    resource :family_beneficiary, only: [:create, :new]
+    resource :organization_beneficiary, only: [:create, :new]
     resource :individual_beneficiary, only: [:new, :create]
     resource :inventory, only: [:create, :new]
   end

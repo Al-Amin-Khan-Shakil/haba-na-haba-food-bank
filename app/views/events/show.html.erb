@@ -42,9 +42,12 @@
       </div>
     </div>
   </div>
-  <div class="mb-6 flex justify-between items-center">
+  <div class="mb-6 flex justify-around items-center">
     <%= link_to 'Add Individual Beneficiary',
               new_event_individual_beneficiary_path(@event),
+              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Add Family Beneficiary',
+              new_event_family_beneficiary_path(@event),
               class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
   </div>
   <div data-controller="event-tabs" class="bg-white rounded-lg shadow overflow-hidden">
