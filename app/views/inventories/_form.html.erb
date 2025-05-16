@@ -1,10 +1,12 @@
-<%= form_with(
-      model: @inventory,
-      url: @inventory.persisted? ? inventory_path(@inventory) : request_inventory_path(@request),
-      method: @inventory.persisted? ? :patch : :post,
-      local: true,
-      data: { controller: "location" }
-    ) do |f| %>
+<% form_url = if @inventory&.persisted?
+                inventory_path(@inventory)
+              elsif @event
+                event_inventories_path(@event)
+              else
+                request_inventory_path(@request)
+              end %>
+<% method = @inventory&.persisted? ? :patch : :post %>
+<%= form_with(model: @inventory, url: form_url, method: method, local: true, data: { controller: "location", turbo: true }) do |f| %>
   <section class="p-5">
     <div class="bg-white p-6 rounded-lg shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-gray-900">
@@ -13,11 +15,11 @@
       <!-- Basic Fields -->
       <div class="mb-4">
         <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.text_field :name, value: @inventory&.donation&.donation_name || @request&.donation&.donation_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        <%= f.text_field :name, value: @inventory&.name || @inventory&.donation&.donation_name || @request&.donation&.donation_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <div class="mb-4">
         <%= f.label :amount, class: "block text-gray-700 font-bold mb-2" %>
-        <%= f.number_field :amount, value: @inventory&.donation&.amount || @request&.donation&.amount, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+        <%= f.number_field :amount, value: @inventory&.amount || @inventory&.donation&.amount || @request&.donation&.amount, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
       </div>
       <div class="mb-4">
         <%= f.label :cost_of_item, class: "block text-gray-700 font-bold mb-2" %>
