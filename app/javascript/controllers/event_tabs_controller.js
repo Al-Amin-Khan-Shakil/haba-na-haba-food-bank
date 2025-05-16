@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["button", "content"]
 
   connect() {
-    console.log("EventTabs controller connected")
     if (this.hasButtonTarget) {
       this.showTab(this.buttonTargets[0])
     }

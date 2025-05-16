@@ -80,6 +80,14 @@
           >
           Organization Beneficiaries
         </button>
+        <button
+        data-event-tabs-target="button"
+          data-action="click->event-tabs#switch"
+          data-tab="#inventory-tab"
+          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+          >
+          Inventories
+        </button>
       </nav>
     </div>
     <!-- Tab Contents -->
@@ -91,6 +99,9 @@
     </div>
     <div id="organization-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
       <%= render "organization_beneficiaries/list", beneficiaries: @organization_beneficiaries %>
+    </div>
+    <div id="inventory-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+      <%= render "inventories/list", inventories: @inventories %>
     </div>
   </div>
 </div>
