@@ -7,18 +7,25 @@ module FilterMethods
         name.present? ? relation.where('name ILIKE ?', "%#{name}%") : relation
     end
   
-    def filter_by_full_name(relation, first_name)
-        first_name.present? ? relation.where('first_name ILIKE ? OR last_name ILIKE ?', "%#{first_name}%", "%#{first_name}%") : relation
+    def filter_by_first_name(relation, first_name)
+      first_name.present? ? relation.where('first_name ILIKE ?', "%#{first_name}%") : relation
     end
-  
+
+    def filter_by_last_name(relation, last_name)
+      last_name.present? ? relation.where('last_name ILIKE ?', "%#{last_name}%") : relation
+    end
+
     def filter_by_role(relation, role)
       role.present? ? relation.where('role ILIKE ?', "%#{role}%") : relation
     end
-  
+
     def filter_by_phone_number(relation, phone_number)
-      phone_number.present? ? relation.where('phone_number ILIKE ?', "%#{phone_number}%") : relation
+      return relation unless phone_number.present?
+    
+      digits = phone_number.gsub(/\D/, '')
+      relation.where('REGEXP_REPLACE(phone_number, \'\\D\', \'\', \'g\') ILIKE ?', "%#{digits}%")
     end
-  
+    
     # Family beneficiary specific filters (non duplicated)
   
     def filter_by_father_name(relation, fathers_name)
@@ -79,7 +86,7 @@ module FilterMethods
     # Additional unique filters for other contexts:
   
     def filter_by_gender(relation, gender)
-      gender.present? ? relation.where('gender = ?', gender.capitalize) : relation
+      gender.present? ? relation.where('gender = ?', gender) : relation
     end
   
     def filter_by_age(relation, min_age, max_age)

@@ -3,6 +3,45 @@
   <div class="mb-4">
     <%= link_to 'New User', new_user_path, class: "bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" %>
   </div>
+  <%= form_tag users_path, method: :get, calss: "space-y-4" do %>
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!--User Full Name Filter -->
+    <div>
+      <%= label_tag "filter[first_name]", "First Name", class: "block text-sm font-medium text-gray-700" %>
+      <%= text_field_tag "filter[first_name]", params.dig(:filter, :first_name), class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+    <div>
+      <%= label_tag "filter[last_name]", "last Name", class: "block text-sm font-medium text-gray-700" %>
+      <%= text_field_tag "filter[last_name]", params.dig(:filter, :last_name), class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+    <!--User phone number Filter -->
+    <div>
+    <%= label_tag "filter[phone_number]", "Phone Number", class: "block text-sm font-medium text-gray-700" %>
+    <%= text_field_tag "filter[phone_number]", params.dig(:filter, :phone_number), class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+    <!--User Gender Filter -->
+    <div>
+    <%= label_tag "filter[gender]", "Gender", class: "block text-sm font-medium text-gray-700" %>
+    <%= select_tag "filter[gender]",
+      options_for_select(User::GENDERS.map { |g| [g.titleize, g] }, params.dig(:filter, :gender)),
+      prompt: "Select Gender",
+      class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+    <!--User Role Filter -->
+    <div>
+    <%= label_tag "filter[role]", "Role", class: "block text-sm font-medium text-gray-700" %>
+    <%= select_tag "filter[role]",
+      options_for_select(User::ROLES.map { |g| [g.titleize, g] }, params.dig(:filter, :role)),
+      prompt: "Select role",
+      class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+    </div>
+    <div>
+        <%= submit_tag "Filter", class: "bg-blue-600 text-white px-2 py-1 rounded-lg my-4"%>
+    <%= link_to "Reset", users_path, class: "bg-blue-600 text-white px-2 py-2 rounded-lg my-4"%>
+    <%= "#{@users.size} Results"%>
+    </div>
+    <% end %>
   <% if @users.any? %>
     <table class="min-w-full bg-white border border-gray-300 rounded-md overflow-hidden shadow">
       <thead class="bg-gray-100 border-b">
