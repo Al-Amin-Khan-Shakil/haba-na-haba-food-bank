@@ -85,13 +85,12 @@ class RequestsController < ApplicationController
   def set_request
     @request = Request.includes(:donation).find(params[:id])
   end
-  
+
   def filter_params
-    params.fetch(:filter, {}).permit(
-      :name, :phone_number, :request_type,
-      :district_id, :county_id, :sub_county_id,
-      :is_selected, :branch_id,
-      :start_date, :end_date
+    params.permit(:name, :phone_number, :request_type,
+                  :district_id, :county_id, :sub_county_id,
+                  :is_selected, :branch_id,
+                  :start_date, :end_date, :commit
     )
   end
   

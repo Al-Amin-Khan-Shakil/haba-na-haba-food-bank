@@ -3,45 +3,48 @@
   <div class="mb-4">
     <%= link_to 'New User', new_user_path, class: "bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" %>
   </div>
-  <%= form_tag users_path, method: :get, calss: "space-y-4" do %>
-     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <!--User Full Name Filter -->
+  <%= form_with url: users_path, method: :get, local: true, class: "space-y-4" do |form| %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <%= form.label :first_name, "First Name", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :first_name, value: params[:first_name], class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+      </div>
+  
+      <div>
+        <%= form.label :last_name, "Last Name", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :last_name, value: params[:last_name], class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+      </div>
+  
+      <div>
+        <%= form.label :phone_number, "Phone Number", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :phone_number, value: params[:phone_number], class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+      </div>
+  
+      <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+        <%= form.label :gender, "Gender", class: "block text-gray-700" %>
+        <%= form.select :gender,
+              options_for_select(User::GENDERS.map { |k| [k.humanize.titleize, k] }, params[:gender]),
+              { include_blank: "Select" },
+              class: "form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
+      </div>
+  
+      <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+        <%= form.label :role, "Role", class: "block text-gray-700" %>
+        <%= form.select :role,
+              options_for_select(User::ROLES.map { |k| [k.humanize.titleize, k] }, params[:role]),
+              { include_blank: "Select" },
+              class: "form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
+      </div>
+    </div>
+  
     <div>
-      <%= label_tag "filter[first_name]", "First Name", class: "block text-sm font-medium text-gray-700" %>
-      <%= text_field_tag "filter[first_name]", params.dig(:filter, :first_name), class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+      <%= form.submit "Filter", class: "bg-blue-600 text-white px-2 py-1 rounded-lg my-4" %>
+      <%= link_to "Reset", users_path, class: "bg-blue-600 text-white px-2 py-2 rounded-lg my-4" %>
+      <%= "#{@users.size} Results" %>
     </div>
-    <div>
-      <%= label_tag "filter[last_name]", "last Name", class: "block text-sm font-medium text-gray-700" %>
-      <%= text_field_tag "filter[last_name]", params.dig(:filter, :last_name), class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-    </div>
-    <!--User phone number Filter -->
-    <div>
-    <%= label_tag "filter[phone_number]", "Phone Number", class: "block text-sm font-medium text-gray-700" %>
-    <%= text_field_tag "filter[phone_number]", params.dig(:filter, :phone_number), class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-    </div>
-    <!--User Gender Filter -->
-    <div>
-    <%= label_tag "filter[gender]", "Gender", class: "block text-sm font-medium text-gray-700" %>
-    <%= select_tag "filter[gender]",
-      options_for_select(User::GENDERS.map { |g| [g.titleize, g] }, params.dig(:filter, :gender)),
-      prompt: "Select Gender",
-      class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-    </div>
-    <!--User Role Filter -->
-    <div>
-    <%= label_tag "filter[role]", "Role", class: "block text-sm font-medium text-gray-700" %>
-    <%= select_tag "filter[role]",
-      options_for_select(User::ROLES.map { |g| [g.titleize, g] }, params.dig(:filter, :role)),
-      prompt: "Select role",
-      class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-    </div>
-    </div>
-    <div>
-        <%= submit_tag "Filter", class: "bg-blue-600 text-white px-2 py-1 rounded-lg my-4"%>
-    <%= link_to "Reset", users_path, class: "bg-blue-600 text-white px-2 py-2 rounded-lg my-4"%>
-    <%= "#{@users.size} Results"%>
-    </div>
-    <% end %>
+  <% end %>
+  
+
   <% if @users.any? %>
     <table class="min-w-full bg-white border border-gray-300 rounded-md overflow-hidden shadow">
       <thead class="bg-gray-100 border-b">
@@ -59,7 +62,7 @@
           <tr class="border-b hover:bg-gray-50">
             <td class="px-4 py-2">
               <% if user.profile_picture.attached? %>
-                <%= image_tag user.profile_picture, class: "rounded-full w-12 h-12 object-cover" %>
+                <%= image user.profile_picture, class: "rounded-full w-12 h-12 object-cover" %>
               <% else %>
                 <div class="rounded-full w-12 h-12 bg-gray-200 flex items-center justify-center text-gray-500">
                   <i class="fa-solid fa-user"></i>

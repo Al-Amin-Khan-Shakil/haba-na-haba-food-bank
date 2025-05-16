@@ -14,10 +14,10 @@ module FilterMethods
     def filter_by_last_name(model, last_name)
       last_name.present? ? model.where('last_name ILIKE ?', "%#{last_name}%") : model
     end
-
     def filter_by_role(model, role)
-      role.present? ? model.where('role ILIKE ?', "%#{role}%") : model
+      role.present? ? model.where(role: role) : model
     end
+    
 
     def filter_by_phone_number(model, phone_number)
       return model unless phone_number.present?
@@ -28,11 +28,11 @@ module FilterMethods
     
     # Family beneficiary specific filters (non duplicated)
   
-    def filter_by_father_name(model, fathers_name)
+    def filter_by_fathers_name(model, fathers_name)
       fathers_name.present? ? model.where('fathers_name ILIKE ?', "%#{fathers_name}%") : model
     end
   
-    def filter_by_mother_name(model, mothers_name)
+    def filter_by_mothers_name(model, mothers_name)
       mothers_name.present? ? model.where('mothers_name ILIKE ?', "%#{mothers_name}%") : model
     end
   
