@@ -1,5 +1,7 @@
 # db/seeds.rb
-
+FamilyBeneficiary.destroy_all
+OrganizationBeneficiary.destroy_all
+IndividualBeneficiary.destroy_all
 Request.destroy_all
 User.destroy_all
 SubCounty.destroy_all
@@ -8,12 +10,14 @@ District.destroy_all
 Branch.destroy_all
 
 
+
+
 # Helper arrays for sample data
 branch_names = ["Main Branch", "West Wing", "East End", "North Point", "South Base", "Central Hub"]
 district_names = ["Central District", "North District", "South District", "East District", "West District", "Lake District"]
 county_names = ["River County", "Hill County", "Forest County", "Valley County", "Desert County", "Bay County"]
 sub_county_names = ["East Side", "West Side", "Uptown", "Downtown", "Midtown", "Old Town"]
-genders = %w[male female others]
+
 
 # Create branches
 branches = branch_names.map do |name|
@@ -48,7 +52,7 @@ sub_counties = sub_county_names.each_with_index.map do |name, i|
   )
 end
 ROLES = %w[super_admin admin branch_manager volunteer].freeze
-GENDERS = %w[male female others].freeze
+GENDERS = %w[male female].freeze
 # Create users
 6.times do |i|
   User.create!(
@@ -149,5 +153,62 @@ families = []
     request: requests.sample,
     event_id: events.sample&.id, # or remove this if you're not seeding events
     branch: branches.sample
+  )
+end
+
+organizations = []
+
+10.times do |i|
+  organizations << OrganizationBeneficiary.create!(
+    organization_name: "Organization #{i + 1}",
+    male: rand(5..20),
+    female: rand(5..20),
+    adult_age_range: "18-60",
+    children_age_range: "2-17",
+    county: counties.sample,
+    sub_county: sub_counties.sample,
+    address_note: "Next to health center, block #{i}",
+    village: "Village Org #{('A'..'Z').to_a[i % 26]}",
+    parish: "Parish #{rand(1..5)}",
+    phone_number: "075#{rand(1000000..9999999)}",
+    case_name: "Org Case #{i + 1}",
+    case_description: "Organization #{i + 1} requires supplies for its beneficiaries.",
+    registration_no: "REG-ORG-#{1000 + i}",
+    organization_no: "ORGNO-#{2000 + i}",
+    directors_name: Faker::Name.name,
+    head_of_institution: Faker::Name.name,
+    number_of_meals_home: rand(1..3),
+    basic_FEH: "Posho, Beans",
+    provided_food: rand(20.0..100.0).round(2),
+    event_id: events.sample&.id,
+    district: districts.sample,
+    branch: branches.sample,
+    request: requests.sample
+  )
+end
+
+individuals = []
+
+10.times do |i|
+  individuals << IndividualBeneficiary.create!(
+    name: Faker::Name.name,
+    age: rand(1..90),
+    gender: GENDERS[i % GENDERS.size],
+    phone_number: "079#{rand(1000000..9999999)}",
+    case_name: "Indiv Case #{i + 1}",
+    case_description: "Individual #{i + 1} needs urgent medical assistance.",
+    father_name: Faker::Name.male_first_name,
+    mother_name: Faker::Name.female_first_name,
+    sur_name: Faker::Name.last_name,
+    provided_food: rand(5.0..20.0).round(2),
+    village: "Village Ind #{('A'..'Z').to_a[i % 26]}",
+    parish: "Parish #{rand(1..5)}",
+    address_note: "Behind the old church, block #{i}",
+    district: districts.sample,
+    county: counties.sample,
+    sub_county: sub_counties.sample,
+    request: requests.sample,
+    branch: branches.sample,
+    event_id: events.sample&.id
   )
 end

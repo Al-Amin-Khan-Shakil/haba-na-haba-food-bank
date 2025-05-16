@@ -55,11 +55,15 @@ module FilterMethods
     def filter_by_date_range(model, start_date, end_date)
       if start_date.present? && end_date.present?
         model.where(created_at: Date.parse(start_date)..Date.parse(end_date))
+      elsif start_date.present?
+        model.where('created_at >= ?', Date.parse(start_date))
+      elsif end_date.present?
+        model.where('created_at <= ?', Date.parse(end_date))
       else
         model
       end
     end
-  
+    
     def filter_by_branch_id(model, branch_id)
       branch_id.present? ? model.where(branch_id: branch_id) : model
     end
@@ -86,9 +90,13 @@ module FilterMethods
     # Additional unique filters for other contexts:
   
     def filter_by_gender(model, gender)
-      gender.present? ? model.where('gender = ?', gender) : model
+      if gender.present? && model.defined_enums['gender'].key?(gender)
+      model.where(gender: model.genders[gender])
+      else
+      model
+      end
     end
-  
+
     def filter_by_age(model, min_age, max_age)
       if min_age.present? && max_age.present?
         model.where(age: min_age..max_age)

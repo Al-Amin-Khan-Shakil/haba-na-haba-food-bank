@@ -49,10 +49,11 @@ class UsersController < ApplicationController
   private
   
   def filter_params
-    params.permit(:first_name, :phone_number, :gender,
+    params.permit(:commit,:first_name, :phone_number, :gender,
                   :role, :last_name,
     )
   end
+  
   def set_user
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound

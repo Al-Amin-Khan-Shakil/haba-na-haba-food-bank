@@ -8,7 +8,11 @@ class IndividualBeneficiariesController < ApplicationController
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
-    @individual_beneficiaries = IndividualBeneficiary.all
+    @individual_beneficiaries = FilterService.new(IndividualBeneficiary.all, filter_params).apply
+    @districts = District.all
+    @counties = County.all
+    @sub_counties = SubCounty.all
+    @branches = Branch.all
   end
 
   def show; end
@@ -90,6 +94,12 @@ class IndividualBeneficiariesController < ApplicationController
     @sub_counties = effective_county&.sub_counties || []
     @branches = Branch.all
     @events = Event.all
+  end
+
+  def filter_params
+    params.permit(:name, :gender, :min_age, :max_age,:fathers_name, :mothers_name, :case_name, :phone_number, 
+                  :min_member, :max_member, :district_id, :county_id, :sub_county_id, 
+                  :branch_id, :start_date, :end_date, :provided_food, :commit)
   end
 
   def individual_beneficiary_params
