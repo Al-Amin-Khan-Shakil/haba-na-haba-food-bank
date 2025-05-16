@@ -115,3 +115,39 @@ request_type = %w[food_request
        created_at: created_at_date
     )
   end
+
+  requests = Request.all.to_a
+events = [] # Populate if you have events
+families = []
+
+10.times do |i|
+  families << FamilyBeneficiary.create!(
+    family_members: rand(2..10),
+    male: rand(1..5),
+    female: rand(1..5),
+    children: rand(1..6),
+    adult_age_range: "18-60",
+    children_age_range: "2-17",
+    district: districts.sample,
+    county: counties.sample,
+    sub_county: sub_counties.sample,
+    address_note: "Near river bend, block #{i}",
+    village: "Village #{('A'..'Z').to_a[i % 26]}",
+    parish: "Parish #{rand(1..5)}",
+    phone_number: "070#{rand(1000000..9999999)}",
+    case_name: "Case #{i + 1}",
+    case_description: "Family #{i + 1} is in need of food assistance due to recent hardships.",
+    fathers_name: Faker::Name.male_first_name,
+    mothers_name: Faker::Name.female_first_name,
+    fathers_occupation: ["Farmer", "Driver", "Mason", "Fisherman"].sample,
+    mothers_occupation: ["Tailor", "Vendor", "Teacher", "Nurse"].sample,
+    number_of_meals_home: rand(1..3),
+    number_of_meals_school: rand(0..2),
+    basic_FEH: "Beans, Rice, Maize Flour",
+    basic_FES: "Cooking Oil, Salt",
+    provided_food: rand(10.0..50.0).round(2),
+    request: requests.sample,
+    event_id: events.sample&.id, # or remove this if you're not seeding events
+    branch: branches.sample
+  )
+end

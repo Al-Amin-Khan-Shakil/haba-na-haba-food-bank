@@ -3,149 +3,149 @@ module FilterMethods
   
     # General filters (first occurrences kept)
     
-    def filter_by_name(relation, name)
-        name.present? ? relation.where('name ILIKE ?', "%#{name}%") : relation
+    def filter_by_name(model, name)
+        name.present? ? model.where('name ILIKE ?', "%#{name}%") : model
     end
   
-    def filter_by_first_name(relation, first_name)
-      first_name.present? ? relation.where('first_name ILIKE ?', "%#{first_name}%") : relation
+    def filter_by_first_name(model, first_name)
+      first_name.present? ? model.where('first_name ILIKE ?', "%#{first_name}%") : model
     end
 
-    def filter_by_last_name(relation, last_name)
-      last_name.present? ? relation.where('last_name ILIKE ?', "%#{last_name}%") : relation
+    def filter_by_last_name(model, last_name)
+      last_name.present? ? model.where('last_name ILIKE ?', "%#{last_name}%") : model
     end
 
-    def filter_by_role(relation, role)
-      role.present? ? relation.where('role ILIKE ?', "%#{role}%") : relation
+    def filter_by_role(model, role)
+      role.present? ? model.where('role ILIKE ?', "%#{role}%") : model
     end
 
-    def filter_by_phone_number(relation, phone_number)
-      return relation unless phone_number.present?
+    def filter_by_phone_number(model, phone_number)
+      return model unless phone_number.present?
     
       digits = phone_number.gsub(/\D/, '')
-      relation.where('REGEXP_REPLACE(phone_number, \'\\D\', \'\', \'g\') ILIKE ?', "%#{digits}%")
+      model.where('REGEXP_REPLACE(phone_number, \'\\D\', \'\', \'g\') ILIKE ?', "%#{digits}%")
     end
     
     # Family beneficiary specific filters (non duplicated)
   
-    def filter_by_father_name(relation, fathers_name)
-      fathers_name.present? ? relation.where('fathers_name ILIKE ?', "%#{fathers_name}%") : relation
+    def filter_by_father_name(model, fathers_name)
+      fathers_name.present? ? model.where('fathers_name ILIKE ?', "%#{fathers_name}%") : model
     end
   
-    def filter_by_mother_name(relation, mothers_name)
-      mothers_name.present? ? relation.where('mothers_name ILIKE ?', "%#{mothers_name}%") : relation
+    def filter_by_mother_name(model, mothers_name)
+      mothers_name.present? ? model.where('mothers_name ILIKE ?', "%#{mothers_name}%") : model
     end
   
-    def filter_by_case_name(relation, case_name)
-      case_name.present? ? relation.where('case_name ILIKE ?', "%#{case_name}%") : relation
+    def filter_by_case_name(model, case_name)
+      case_name.present? ? model.where('case_name ILIKE ?', "%#{case_name}%") : model
     end
   
-    def filter_by_member_count(relation, min_member, max_member)
+    def filter_by_member_count(model, min_member, max_member)
       if min_member.present? && max_member.present?
-        relation.where(family_members: min_member..max_member)
+        model.where(family_members: min_member..max_member)
       elsif min_member.present?
-        relation.where('family_members >= ?', min_member)
+        model.where('family_members >= ?', min_member)
       elsif max_member.present?
-        relation.where('family_members <= ?', max_member)
+        model.where('family_members <= ?', max_member)
       else
-        relation
+        model
       end
     end
   
-    def filter_by_date_range(relation, start_date, end_date)
+    def filter_by_date_range(model, start_date, end_date)
       if start_date.present? && end_date.present?
-        relation.where(created_at: Date.parse(start_date)..Date.parse(end_date))
+        model.where(created_at: Date.parse(start_date)..Date.parse(end_date))
       else
-        relation
+        model
       end
     end
   
-    def filter_by_branch_id(relation, branch_id)
-      branch_id.present? ? relation.where(branch_id: branch_id) : relation
+    def filter_by_branch_id(model, branch_id)
+      branch_id.present? ? model.where(branch_id: branch_id) : model
     end
   
-    def filter_by_provided_food(relation, provided_food)
-      return relation unless provided_food.present?
+    def filter_by_provided_food(model, provided_food)
+      return model unless provided_food.present?
   
       if provided_food == 'provided'
-        relation.where('provided_food > 0')
+        model.where('provided_food > 0')
       elsif provided_food == 'not_provided'
-        relation.where('provided_food <= 0 OR provided_food IS NULL')
+        model.where('provided_food <= 0 OR provided_food IS NULL')
       else
-        relation
+        model
       end
     end
   
-    def filter_by_location(relation, district_id, county_id, sub_county_id)
-      relation = relation.where(district_id: district_id) if district_id.present?
-      relation = relation.where(county_id: county_id) if county_id.present?
-      relation = relation.where(sub_county_id: sub_county_id) if sub_county_id.present?
-      relation
+    def filter_by_location(model, district_id, county_id, sub_county_id)
+      model = model.where(district_id: district_id) if district_id.present?
+      model = model.where(county_id: county_id) if county_id.present?
+      model = model.where(sub_county_id: sub_county_id) if sub_county_id.present?
+      model
     end
   
     # Additional unique filters for other contexts:
   
-    def filter_by_gender(relation, gender)
-      gender.present? ? relation.where('gender = ?', gender) : relation
+    def filter_by_gender(model, gender)
+      gender.present? ? model.where('gender = ?', gender) : model
     end
   
-    def filter_by_age(relation, min_age, max_age)
+    def filter_by_age(model, min_age, max_age)
       if min_age.present? && max_age.present?
-        relation.where(age: min_age..max_age)
+        model.where(age: min_age..max_age)
       elsif min_age.present?
-        relation.where('age >= ?', min_age)
+        model.where('age >= ?', min_age)
       elsif max_age.present?
-        relation.where('age <= ?', max_age)
+        model.where('age <= ?', max_age)
       else
-        relation
+        model
       end
     end
   
-    def filter_by_organization_name(relation, organization_name)
-      organization_name.present? ? relation.where('organization_name ILIKE ?', "%#{organization_name}%") : relation
+    def filter_by_organization_name(model, organization_name)
+      organization_name.present? ? model.where('organization_name ILIKE ?', "%#{organization_name}%") : model
     end
   
-    def filter_by_registration_no(relation, registration_no)
-      registration_no.present? ? relation.where('registration_no ILIKE ?', "%#{registration_no}%") : relation
+    def filter_by_registration_no(model, registration_no)
+      registration_no.present? ? model.where('registration_no ILIKE ?', "%#{registration_no}%") : model
     end
   
-    def filter_by_people_count(relation, min_people, max_people)
+    def filter_by_people_count(model, min_people, max_people)
       min_people = min_people.presence || 0
       max_people = max_people.presence || (min_people.to_i + 100)
-      relation.where('(male + female) BETWEEN ? AND ?', min_people, max_people)
+      model.where('(male + female) BETWEEN ? AND ?', min_people, max_people)
     end
   
-    def filter_by_request_type(relation, request_types)
+    def filter_by_request_type(model, request_types)
         if request_types.present?
           request_types = Array.wrap(request_types)
           enum_values = request_types.map { |type| Request.request_types[type] }.compact
-          enum_values.any? ? relation.where(request_type: enum_values) : relation.none
+          enum_values.any? ? model.where(request_type: enum_values) : model.none
         else
-          relation
+          model
         end
       end
       
   
-    def filter_by_is_selected(relation, is_selected)
-      is_selected.present? ? relation.where(is_selected: is_selected) : relation
+    def filter_by_is_selected(model, is_selected)
+      is_selected.present? ? model.where(is_selected: is_selected) : model
     end
   
-    def filter_by_branch(relation, branch_id)
-      branch_id.present? ? relation.where(branch_id: branch_id) : relation
+    def filter_by_branch(model, branch_id)
+      branch_id.present? ? model.where(branch_id: branch_id) : model
     end
   
     # Inventories filters:
   
-    def filter_by_donation_type(relation, donation_type)
-      donation_type.present? ? relation.where('donation_type ILIKE ?', "%#{donation_type}%") : relation
+    def filter_by_donation_type(model, donation_type)
+      donation_type.present? ? model.where('donation_type ILIKE ?', "%#{donation_type}%") : model
     end
   
-    def filter_by_donor_type(relation, donor_type)
-      donor_type.present? ? relation.where('donor_type ILIKE ?', "%#{donor_type}%") : relation
+    def filter_by_donor_type(model, donor_type)
+      donor_type.present? ? model.where('donor_type ILIKE ?', "%#{donor_type}%") : model
     end
   
-    def filter_by_donor_name(relation, donor_name)
-      donor_name.present? ? relation.where('donor_name ILIKE ?', "%#{donor_name}%") : relation
+    def filter_by_donor_name(model, donor_name)
+      donor_name.present? ? model.where('donor_name ILIKE ?', "%#{donor_name}%") : model
     end
 end
   

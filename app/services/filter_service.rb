@@ -1,8 +1,8 @@
 class FilterService
   include FilterMethods
 
-  def initialize(relation, params)
-    @relation = relation
+  def initialize(model, params)
+    @model = model
     @params = params.to_h.symbolize_keys
 
     @complex_filters = {
@@ -13,7 +13,7 @@ class FilterService
   end
 
   def apply
-    base = @complex_filters.reduce(@relation) do |rel, (key, func)| 
+    base = @complex_filters.reduce(@model) do |rel, (key, func)| 
       func.call(rel, @params)
     end
 

@@ -2,8 +2,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update destroy]
 
+
   def index
-    @users = apply_filters(User.all, filter_params)
+    @users = FilterService.new(User.all, filter_params).apply
   end
 
   def show; end
