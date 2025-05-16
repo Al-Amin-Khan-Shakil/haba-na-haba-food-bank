@@ -17,7 +17,6 @@ class IndividualBeneficiariesController < ApplicationController
     @individual_beneficiary = if @event
                                 @event.individual_beneficiaries.build
                               else
-                                # Initialize a new beneficiary for the request
                                 @request.individual_beneficiary || @request.build_individual_beneficiary
                               end
   end
