@@ -98,8 +98,8 @@ class IndividualBeneficiariesController < ApplicationController
 
   def filter_params
     params.permit(:name, :gender, :min_age, :max_age,:fathers_name, :mothers_name, :case_name, :phone_number, 
-                  :min_member, :max_member, :district_id, :county_id, :sub_county_id, 
-                  :branch_id, :start_date, :end_date, :provided_food, :commit)
+                  :district_id, :county_id, :sub_county_id, 
+                  :branch_id, :start_date, :end_date, :provided_food, :action)
   end
 
   def individual_beneficiary_params
