@@ -4,7 +4,10 @@ class EventsController < ApplicationController
   before_action :set_form_dependencies, only: %i[new edit create update]
 
   def index
-    @events = Event.all
+    @events = FilterService.new(Event.all, filter_params).apply
+    @districts = District.all
+    @counties = County.all
+    @sub_counties = SubCounty.all
   end
 
   def show
@@ -65,6 +68,11 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def filter_params
+    params.permit(:title, :description, :start_date, :end_date,
+                  :district_id, :county_id,:sub_county_id,:commit)
   end
 
   def event_params

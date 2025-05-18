@@ -8,7 +8,7 @@ SubCounty.destroy_all
 County.destroy_all
 District.destroy_all
 Branch.destroy_all
-
+Event.all
 
 
 
@@ -121,7 +121,29 @@ request_type = %w[food_request
   end
 
   requests = Request.all.to_a
-events = [] # Populate if you have events
+events = [] 
+5.times do |i|
+  events << Event.create!(
+    title: "Event #{i + 1}",
+    description: "This is the description for Event #{i + 1}.",
+    start_date: Faker::Date.forward(days: 30),
+    end_date: Faker::Date.forward(days: 60),
+    created_at: Time.now,
+    updated_at: Time.now,
+    district: districts.sample,
+    county: counties.sample,
+    sub_county: sub_counties.sample,
+  )
+end
+
+events.each do |event|
+  users.sample(3).each do |user|
+    EventUser.create!(
+      user_id: user.id,
+      event_id: event.id
+    )
+  end
+end
 families = []
 
 10.times do |i|
