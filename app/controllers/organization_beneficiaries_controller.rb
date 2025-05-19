@@ -97,9 +97,9 @@ class OrganizationBeneficiariesController < ApplicationController
   end
 
   def filter_params
-    params.permit(:organization_name, :registration_no, :min_people, :max_people, :case_name, :phone_number, 
-                  :district_id, :county_id, :sub_county_id, 
-                  :branch_id, :start_date, :end_date, :provided_food, :action,:commit)
+    params.permit(:organization_name, :registration_no, :min_people, :max_people, :case_name, :phone_number,
+                  :district_id, :county_id, :sub_county_id,
+                  :branch_id, :start_date, :end_date, :provided_food, :action, :commit)
   end
 
   def organization_beneficiary_params

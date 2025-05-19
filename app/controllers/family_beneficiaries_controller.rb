@@ -95,11 +95,13 @@ class FamilyBeneficiariesController < ApplicationController
     @branches = Branch.all
     @events = Event.all
   end
+
   def filter_params
-    params.permit(:fathers_name, :mothers_name, :case_name, :phone_number, 
-                  :min_member, :max_member, :district_id, :county_id, :sub_county_id, 
+    params.permit(:fathers_name, :mothers_name, :case_name, :phone_number,
+                  :min_member, :max_member, :district_id, :county_id, :sub_county_id,
                   :branch_id, :start_date, :end_date, :provided_food, :commit)
   end
+
   def family_beneficiary_params
     params.require(:family_beneficiary).permit(:family_members, :male, :female, :children, :adult_age_range,
                                                :children_age_range, :district_id, :county_id, :sub_county_id,

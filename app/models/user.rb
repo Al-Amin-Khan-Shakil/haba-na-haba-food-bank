@@ -10,7 +10,7 @@ class User < ApplicationRecord
     other: 3
   }
 
-  validates :first_name,:last_name, :role, :gender, :address, presence: true
+  validates :first_name, :last_name, :role, :gender, :address, presence: true
   validates :phone_number, presence: true, format: { with: /\A\+?[0-9]+\z/, message: 'Must be a valid phone number' }
   validates :role, inclusion: { in: ROLES, message: '%<value>s is not a valid role' }
   validates :password,

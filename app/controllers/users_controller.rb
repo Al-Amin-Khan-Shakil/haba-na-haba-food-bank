@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update destroy]
 
-
   def index
     @users = FilterService.new(User.all, filter_params).apply
   end
@@ -47,13 +46,12 @@ class UsersController < ApplicationController
   end
 
   private
-  
+
   def filter_params
-    params.permit(:commit,:first_name, :phone_number, :gender,
-                  :role, :last_name,
-    )
+    params.permit(:commit, :first_name, :phone_number, :gender,
+                  :role, :last_name)
   end
-  
+
   def set_user
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound

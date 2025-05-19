@@ -72,7 +72,7 @@ class EventsController < ApplicationController
 
   def filter_params
     params.permit(:title, :description, :start_date, :end_date,
-                  :district_id, :county_id,:sub_county_id,:commit)
+                  :district_id, :county_id, :sub_county_id, :commit)
   end
 
   def event_params
