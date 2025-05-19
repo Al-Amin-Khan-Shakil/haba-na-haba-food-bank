@@ -6,6 +6,12 @@ module FilterMethods
     def filter_by_name(model, name)
         name.present? ? model.where('name ILIKE ?', "%#{name}%") : model
     end
+    def filter_by_title(model, title)
+      title.present? ? model.where('title ILIKE ?', "%#{title}%") : model
+    end
+    def filter_by_description(model, description)
+      description.present? ? model.where('Description ILIKE ?', "%#{title}%") : model
+    end
   
     def filter_by_first_name(model, first_name)
       first_name.present? ? model.where('first_name ILIKE ?', "%#{first_name}%") : model

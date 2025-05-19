@@ -6,7 +6,7 @@ class RequestsController < ApplicationController
     filtered = FilterService.new(Request.all, filter_params).apply
 
     @requests = if filter_params.blank? || filter_params.values.all?(&:blank?)
-      filtered.limit(3)
+      filtered.limit(6)
     else
       filtered
     end
