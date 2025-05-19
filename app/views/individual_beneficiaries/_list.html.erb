@@ -27,8 +27,8 @@
                 </div>
               </button>
               <div id="dropdown-<%= beneficiary.id %>" class="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold">
-                <%= link_to 'Details', individual_beneficiary_path(beneficiary), class: 'block px-4 py-2 text-lightGreen hover:bg-gray-100' %>
-                <%= link_to 'Edit', edit_individual_beneficiary_path(beneficiary), class: 'block px-4 py-2 text-darkBlue hover:bg-gray-100' %>
+                <%= link_to 'Details', individual_beneficiary_path(beneficiary), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
+                <%= link_to 'Edit', edit_individual_beneficiary_path(beneficiary), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
                 <%= button_to 'Delete', individual_beneficiary_path(beneficiary), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-10 py-2 text-red-600 hover:bg-gray-100 text-center' %>
               </div>
             </div>
