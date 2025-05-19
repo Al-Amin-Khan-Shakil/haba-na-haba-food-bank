@@ -53,15 +53,30 @@ module FilterMethods
     end
   
     def filter_by_date_range(model, start_date, end_date)
-      if start_date.present? && end_date.present?
-        model.where(created_at: Date.parse(start_date)..Date.parse(end_date))
-      elsif start_date.present?
-        model.where('created_at >= ?', Date.parse(start_date))
-      elsif end_date.present?
-        model.where('created_at <= ?', Date.parse(end_date))
+      # Parse dates (handle invalid formats gracefully)
+      parsed_start = start_date.present? ? Date.parse(start_date) : nil
+      parsed_end = end_date.present? ? Date.parse(end_date) : nil
+    
+      # Validate date range
+      if parsed_start && parsed_end && parsed_end < parsed_start
+        Rails.logger.warn "Invalid date range: end_date (#{parsed_end}) is before start_date (#{parsed_start}). Forcing end_date = today."
+        parsed_end = Date.current
+      end
+    
+      # Apply filters
+      if parsed_start && parsed_end
+        model.where(created_at: parsed_start..parsed_end)
+      elsif parsed_start
+        model.where('created_at >= ?', parsed_start)
+      elsif parsed_end
+        # Default start_date to beginning of year if only end_date is given
+        model.where(created_at: Date.current.beginning_of_year..parsed_end)
       else
         model
       end
+    rescue ArgumentError => e
+      Rails.logger.error "Invalid date format: #{e.message}"
+      model # Fallback to unfiltered query if date parsing fails
     end
     
     def filter_by_branch_id(model, branch_id)
