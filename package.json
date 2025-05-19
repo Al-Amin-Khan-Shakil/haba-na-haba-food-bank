@@ -6,7 +6,6 @@
     "stylelint-scss": "^3.21.0"
   },
   "dependencies": {
-    "flowbite": "^2.5.2",
-    "tailwindcss": "^4.1.5"
+    "flowbite": "^2.5.2"
   }
 }

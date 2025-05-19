@@ -8,6 +8,7 @@
 <% if @request.donation_request? && @request.donation %>
   <h2 class="text-lg font-semibold mt-4">Donation Details</h2>
   <p><strong>Donation Type:</strong> <%= @request.donation.donation_type.humanize %></p>
+  <p><strong>Donor Type:</strong> <%= @request.donation.donor_type.humanize %></p>
   <p><strong>Donation Name:</strong> <%= @request.donation.donation_name %></p>
   <p><strong>Amount:</strong> <%= @request.donation.amount %></p>
 <% end %>

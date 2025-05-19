@@ -1,19 +1,19 @@
-<%= form_with(
-  model: @organization_beneficiary,
-  url: @organization_beneficiary.persisted? ? organization_beneficiary_path(@organization_beneficiary) : request_organization_beneficiaries_path(@request),
-  method: @organization_beneficiary.persisted? ? :patch : :post,
-  local: true,
-  data: { controller: "location" }
-) do |f| %>
-
+<% form_url = if @organization_beneficiary&.persisted?
+                organization_beneficiary_path(@organization_beneficiary)
+              elsif @event
+                event_organization_beneficiaries_path(@event)
+              else
+                request_organization_beneficiary_path(@request)
+              end %>
+<% method = @organization_beneficiary&.persisted? ? :patch : :post %>
+<%= form_with(model: @organization_beneficiary, url: form_url, method: method, local: true, data: { controller: "location", turbo: true }) do |f| %>
   <section class="p-5">
     <div class="p-6 bg-white rounded-lg shadow-lg">
       <h2 class="mb-4 text-xl font-bold text-gray-900">
         <%= @organization_beneficiary.persisted? ? "Edit Organization Beneficiary" : "Create Organization Beneficiary" %>
       </h2>
       <div class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
-
-      <% [
+        <% [
         [:organization_name, :text_area],
         [:registration_no, :text_field],
         [:organization_no, :text_field],
@@ -29,46 +29,41 @@
         [:provided_food, :number_field, { step: 0.5 }],
         [:basic_FEH, :text_area]
       ].each do |attr, field_type, options = {}| %>
-        <div>
-          <%= f.label attr, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.send(field_type, attr, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full", **options) %>
-        </div>
-      <% end %>
-
+          <div>
+            <%= f.label attr, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.send(field_type, attr, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full", **options) %>
+          </div>
+        <% end %>
         <!-- Fallback Fields -->
         <div>
           <%= f.label :address_note, "Address", class: "block text-gray-700 font-bold mb-2" %>
           <%= f.text_field :address_note,
-                value: @organization_beneficiary.address_note.presence || @request.address_note,
+                value: @organization_beneficiary&.address_note.presence || @request&.address_note,
                 class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
         </div>
-
         <div>
           <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
           <%= f.text_field :phone_number,
-                value: @organization_beneficiary.phone_number.presence || @request.phone_number,
+                value: @organization_beneficiary&.phone_number.presence || @request&.phone_number,
                 class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
         </div>
-
         <div>
           <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
           <%= f.text_field :village,
-                value: @organization_beneficiary.village.presence || @request.village,
+                value: @organization_beneficiary&.village.presence || @request&.village,
                 class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
         </div>
-
         <div>
           <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
           <%= f.text_field :parish,
-                value: @organization_beneficiary.parish.presence || @request.parish,
+                value: @organization_beneficiary&.parish.presence || @request&.parish,
                 class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
         </div>
-
         <!-- Location Dropdowns -->
         <div>
           <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
           <%= f.collection_select :district_id, @districts, :id, :name,
-                { prompt: "Select District", selected: @organization_beneficiary.district_id || @request&.district_id },
+                { prompt: "Select District", selected: @organization_beneficiary&.district_id || @request&.district_id },
                 {
                   class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
                   data: {
@@ -77,38 +72,34 @@
                   }
                 } %>
         </div>
-
         <div>
           <%= f.label :county_id, "County", class: "block text-gray-700 font-bold mb-2" %>
           <%= f.select :county_id,
-                options_from_collection_for_select(@counties, :id, :name, @organization_beneficiary.county_id || @request&.county_id),
+                options_from_collection_for_select(@counties, :id, :name, @organization_beneficiary&.county_id || @request&.county_id),
                 {},
                 {
                   class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
                   data: {
                     location_target: "county",
                     action: "change->location#loadSubCounties",
-                    initial_selection: (@organization_beneficiary.county_id || @request&.county_id)
+                    initial_selection: (@organization_beneficiary&.county_id || @request&.county_id)
                   }
                 } %>
         </div>
-
         <div>
           <%= f.label :sub_county_id, "Sub County", class: "block text-gray-700 font-bold mb-2" %>
           <%= f.select :sub_county_id,
-                options_from_collection_for_select(@sub_counties, :id, :name, @organization_beneficiary.sub_county_id || @request&.sub_county_id),
+                options_from_collection_for_select(@sub_counties, :id, :name, @organization_beneficiary&.sub_county_id || @request&.sub_county_id),
                 {},
                 {
                   class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
                   data: {
                     location_target: "subCounty",
-                    initial_selection: (@organization_beneficiary.sub_county_id || @request&.sub_county_id)
+                    initial_selection: (@organization_beneficiary&.sub_county_id || @request&.sub_county_id)
                   }
                 } %>
         </div>
-
       </div>
-
       <div class="mt-6">
         <%= f.submit class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
       </div>

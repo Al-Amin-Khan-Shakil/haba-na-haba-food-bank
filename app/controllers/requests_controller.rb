@@ -114,7 +114,7 @@ class RequestsController < ApplicationController
       :village,
       :parish,
       :address_note,
-      donation_attributes: %i[id donation_type donation_name amount _destroy]
+      donation_attributes: %i[id donation_type donation_name amount donor_type _destroy]
     )
   end
 end

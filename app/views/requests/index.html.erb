@@ -1,3 +1,4 @@
+
 <div class="container mx-auto px-4 py-8">
   <h1 class="text-3xl font-bold mb-6">Requests</h1>
   <%= link_to 'New Request', new_request_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-6 inline-block" %>
@@ -86,6 +87,33 @@
         <%= form.submit "Filter", class: "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primarycolor hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primarycolor" %>
         <span class="self-center text-sm text-gray-600"><%= "#{@requests.size} results" %></span>
       </div>
+<h1 class="mb-4 text-xl font-bold">Requests</h1>
+<%= link_to 'New Request', new_request_path, class: "bg-orange-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-4 inline-block" %>
+<table class="mt-2 min-w-full border">
+  <thead>
+    <tr>
+      <th class="px-4 py-2 border">Name</th>
+      <th class="px-4 py-2 border">Phone Number</th>
+      <th class="px-4 py-2 border">Type</th>
+      <th class="px-4 py-2 border">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @requests.each do |request| %>
+      <tr>
+        <td class="px-4 py-2 border"><%= request.name %></td>
+        <td class="px-4 py-2 border"><%= request.phone_number %></td>
+        <td class="px-4 py-2 border"><%= request.request_type.humanize %></td>
+        <td class="px-4 py-2 border">
+          <%= link_to 'Show', request_path(request), class: "text-blue-600 hover:underline mr-2" %>
+          <%= link_to 'Edit', edit_request_path(request), class: "text-yellow-600 hover:underline mr-2" %>
+          <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
+          <%= link_to 'Family Beneficiary', new_request_family_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+          <%= link_to 'Organization Beneficiary', new_request_organization_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+          <%= link_to 'Individual Beneficiary', new_request_individual_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+          <%= link_to 'Inventory', new_request_inventory_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+        </td>
+      </tr>
     <% end %>
   </div>
 

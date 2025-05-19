@@ -1,6 +1,10 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :validatable
 
+  has_many :requests, dependent: :nullify
+  has_many :event_users, dependent: :destroy
+  has_many :events, through: :event_users
+
   has_one_attached :profile_picture
 
   ROLES = %w[super_admin admin branch_manager volunteer].freeze
@@ -21,7 +25,7 @@ class User < ApplicationRecord
                       message: 'must include at least one letter and one number' },
             if: :password_required?
   validates :profile_picture,
-            content_type: ['image/png', 'image/jpg', 'image/jpeg'],
+            content_type: ['image/png', 'image/jpeg'],
             size: { less_than: 2.megabytes, message: 'is too large (maximum size is 2MB)' }
 
   ROLES.each do |role_name|
