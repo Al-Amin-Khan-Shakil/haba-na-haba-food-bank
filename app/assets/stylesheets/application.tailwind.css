@@ -11,4 +11,22 @@
 }
 
 */
-@import "application.css";
+
+select {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+select:hover {
+  background-color: #f0f0f0;
+}
+
+select:focus {
+  border-color: #3182ce; /* Tailwind blue-600 */
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6);
+  outline: none;
+}
