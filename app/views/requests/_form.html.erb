@@ -1,8 +1,10 @@
 <%= form_with model: @request, local: true,
     data: {
       controller: "request-form location",
-      request_form_donation_values: (@request.donation_request? && @request.donation) ? @request.donation.to_json : 'null'
-    } do |f| %>
+      request_form_donation_values: (@request.donation_request? && @request.donation) ? @request.donation.to_json : 'null',
+      location_base_path_value: "requests",
+      location_context_path_value: requests_path
+} do |f| %>
   <% if @request.errors.any? %>
     <div class="text-red-600 mb-4"><%= @request.errors.full_messages.to_sentence %></div>
   <% end %>
@@ -48,9 +50,7 @@
           { class: "w-full p-2 border rounded district-select",
             data: {
               location_target: "district",
-              location_base_path_value: "requests",
-              action: "change->location#loadCounties",
-              location_context_path_value: requests_path
+              action: "change->location#loadCounties"
             }
           } %>
   </div>
@@ -61,10 +61,8 @@
           { class: "w-full p-2 border rounded county-select",
             data: {
               location_target: "county",
-              location_base_path_value: "requests",
               initial_selection: @request.county_id,
-              action: "change->location#loadSubCounties",
-              location_context_path_value: requests_path,
+              action: "change->location#loadSubCounties"
             }
           } %>
   </div>
@@ -101,6 +99,13 @@
           <%= df.label :donation_type %>
           <%= df.select :donation_type,
                 Donation.donation_types.keys.map { |k| [k.titleize, k] },
+                { include_blank: "Select type" },
+                class: "input" %>
+        </div>
+        <div class="mb-4">
+          <%= df.label :donor_type %>
+          <%= df.select :donor_type,
+                Donation.donor_types.keys.map { |k| [k.titleize, k] },
                 { include_blank: "Select type" },
                 class: "input" %>
         </div>

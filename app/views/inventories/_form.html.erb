@@ -1,0 +1,104 @@
+<% form_url = if @inventory&.persisted?
+                inventory_path(@inventory)
+              elsif @event
+                event_inventories_path(@event)
+              else
+                request_inventory_path(@request)
+              end %>
+<% method = @inventory&.persisted? ? :patch : :post %>
+<%= form_with(model: @inventory, url: form_url, method: method, local: true, data: { controller: "location", turbo: true }) do |f| %>
+  <section class="p-5">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-xl font-bold mb-4 text-gray-900">
+        <%= @inventory.persisted? ? "Edit Inventory" : "Create Inventory" %>
+      </h2>
+      <!-- Basic Fields -->
+      <div class="mb-4">
+        <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :name, value: @inventory&.name || @inventory&.donation&.donation_name || @request&.donation&.donation_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :amount, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.number_field :amount, value: @inventory&.amount || @inventory&.donation&.amount || @request&.donation&.amount, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :cost_of_item, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.number_field :cost_of_item, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :expire_date, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.date_field :expire_date, { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" } %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :collection_place, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :collection_place, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :phone_number, value: @inventory&.phone_number || @request&.donation&.phone_number, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :donor_name, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :donor_name, value: @inventory&.donor_name || @request&.donation&.donor_name, class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <!-- Location -->
+      <div data-controller="location" data-location-base-path-value="<%= controller.controller_name %>" class="mb-4">
+        <%= f.label :district_id, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.collection_select :district_id, @districts, :id, :name, {
+          include_blank: "Select District", selected: @inventory.district_id || @request&.district_id },
+          { class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full",
+            data: {
+              location_target: "district",
+              action: "change->location#loadCounties"
+            }
+          } %>
+        <%= f.label :county_id, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.select :county_id,
+          options_from_collection_for_select(@counties, :id, :name,
+            @inventory&.county_id || @request&.county_id),
+            {},
+            {
+              data: {
+                location_target: "county",
+                action: "change->location#loadSubCounties",
+                initial_selection: (@inventory&.county_id || @request&.county_id)
+              }
+            } %>
+        <%= f.label :sub_county_id, class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.select :sub_county_id,
+          options_from_collection_for_select(@sub_counties, :id, :name,
+            @inventory&.sub_county_id || @request&.sub_county_id),
+            {},
+            {
+              data: {
+                location_target: "subCounty",
+                initial_selection: (@inventory&.sub_county_id || @request&.sub_county_id)
+              }
+            } %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.collection_select :branch_id, @branches, :id, :name,
+          { selected: @inventory&.branch_id || @request&.branch_id, prompt: "Select Branch" },
+          class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :event_id, "Event", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.collection_select :event_id, @events, :id, :title,
+          { prompt: "Select Event" },
+          class: "bg-gray-200 border border-gray-300 rounded-lg p-2 w-full" %>
+      </div>
+      <div class="mb-4">
+        <%= f.hidden_field :donation_id, value: @inventory.donation_id || @request&.donation&.id %>
+        <label class="block text-gray-700 font-bold mb-2">Donation</label>
+        <p class="bg-gray-100 border border-gray-300 rounded-lg p-2">
+          <%= @inventory.donation&.donation_name || @request&.donation&.donation_name || "No donation" %>
+        </p>
+      </div>
+      <!-- Submit Button -->
+      <div class="flex">
+        <%= f.submit @inventory.persisted? ? "Update Inventory" : "Create Inventory", class: "bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600" %>
+      </div>
+    </div>
+  </section>
+<% end %>

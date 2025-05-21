@@ -6,6 +6,7 @@ class CreateOrganizationBeneficiaries < ActiveRecord::Migration[7.1]
       t.integer :female
       t.text :adult_age_range
       t.text :children_age_range
+      t.references :district, null: false, foreign_key: { to_table: :districts }, type: :uuid
       t.references :county, null: false, foreign_key: { to_table: :counties }, type: :uuid
       t.references :sub_county, null: false, foreign_key: { to_table: :sub_counties }, type: :uuid
       t.text :address_note
@@ -24,7 +25,6 @@ class CreateOrganizationBeneficiaries < ActiveRecord::Migration[7.1]
       t.datetime :updated_at, null: false
       t.decimal :provided_food
       t.integer :event_id
-      t.uuid :district_id
       t.uuid :branch_id
       t.uuid :request_id
 

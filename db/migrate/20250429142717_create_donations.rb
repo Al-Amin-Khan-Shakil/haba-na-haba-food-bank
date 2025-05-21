@@ -6,6 +6,7 @@ class CreateDonations < ActiveRecord::Migration[7.1]
       t.integer :donation_type
       t.string :donation_name
       t.integer :amount
+      t.integer :donor_type
       t.references :request, null: true, foreign_key: true, type: :uuid
 
       t.timestamps
