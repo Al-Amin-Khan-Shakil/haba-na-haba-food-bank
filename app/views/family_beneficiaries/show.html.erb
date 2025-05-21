@@ -1,91 +1,249 @@
-<div class="p-4 w-full bg-white rounded-lg shadow-md md:p-6">
-<% flash.each do |type, message| %>
-  <div class="flash <%= type %>"><%= message %></div>
-<% end %>
-
-
-  <h1 class="mb-6 text-2xl font-bold text-primarycolor">Family Beneficiary Details</h1>
-
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-    <!-- Left Column -->
-    <div class="space-y-6">
-      <!-- Demographics -->
-      <div>
-        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Demographics</h2>
-        <ul class="space-y-1 text-gray-700">
-          <li><strong>Total Members:</strong> <%= @family_beneficiary.family_members %></li>
-          <li><strong>Male:</strong> <%= @family_beneficiary.male %></li>
-          <li><strong>Female:</strong> <%= @family_beneficiary.female %></li>
-          <li><strong>Children:</strong> <%= @family_beneficiary.children %></li>
-          <li><strong>Adult Age Range:</strong> <%= @family_beneficiary.adult_age_range %></li>
-          <li><strong>Children Age Range:</strong> <%= @family_beneficiary.children_age_range %></li>
-        </ul>
-      </div>
-
-      <!-- Location -->
-      <div>
-        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Location</h2>
-        <ul class="space-y-1 text-gray-700">
-          <li><strong>District:</strong> <%= @family_beneficiary.district&.name %></li>
-          <li><strong>County:</strong> <%= @family_beneficiary.county&.name %></li>
-          <li><strong>Sub County:</strong> <%= @family_beneficiary.sub_county&.name %></li>
-          <li><strong>Parish:</strong> <%= @family_beneficiary.parish %></li>
-          <li><strong>Village:</strong> <%= @family_beneficiary.village %></li>
-          <li><strong> Address:</strong> <%= @family_beneficiary.address_note %></li>
-        </ul>
-      </div>
-
-      <!-- Contact -->
-      <div>
-        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Contact</h2>
-        <ul class="space-y-1 text-gray-700">
-          <li><strong>Phone Number:</strong> <%= @family_beneficiary.phone_number %></li>
-        </ul>
+<div class="md:p-6 sm:p-4 lg:p-8 bg-gray-50">
+  <div class="min-w-full bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% text-white shadow-xl rounded-xl p-3 sm:p-8 mb-8">
+    <div class="flex justify-between items-center mb-4">
+      <button onclick="history.go(-1)" class="flex items-center text-sm sm:text-base text-gray-500 py-1 px-4 rounded bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-300 ease-in-out">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span class="ml-2 hidden lg:inline-block">Back</span>
+      </button>
+      <h2 class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight">Details</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+      <div class="bg-white p-3 sm:p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out">
+        <h3 class="text-lg sm:text-xl font-semibold text-primarytext mb-4 underline">Parents Information</h3>
+        <div class="space-y-4">
+          <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+            <div class="flex items-start gap-1 sm:gap-3 w-fit">
+              <div class="w-[23px]"><i class="fa-solid fa-user-friends text-sm text-primarycolor sm:text-lg"></i></div>
+              <p class="font-medium text-sm sm:text-base text-gray-700">Father’s Name</p>
+            </div>
+            <div class="flex-1 flex justify-end items-start">
+              <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.fathers_name %></p>
+            </p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-toolbox text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700"> Occupation</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.fathers_occupation %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-user-friends text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Mother’s Name</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.mothers_name %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-toolbox text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700"> Occupation</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.mothers_occupation %></p>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Middle Column -->
-    <div class="space-y-6">
-      <!-- Case Information -->
-      <div>
-        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Case Information</h2>
-        <ul class="space-y-1 text-gray-700">
-          <li><strong>Case Name:</strong> <%= @family_beneficiary.case_name %></li>
-          <li><strong>Case Description:</strong> <%= @family_beneficiary.case_description %></li>
-        </ul>
-      </div>
-
-      <!-- Parental Details -->
-      <div>
-        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Parental Details</h2>
-        <ul class="space-y-1 text-gray-700">
-          <li><strong>Father's Name:</strong> <%= @family_beneficiary.fathers_name %></li>
-          <li><strong>Father's Occupation:</strong> <%= @family_beneficiary.fathers_occupation %></li>
-          <li><strong>Mother's Name:</strong> <%= @family_beneficiary.mothers_name %></li>
-          <li><strong>Mother's Occupation:</strong> <%= @family_beneficiary.mothers_occupation %></li>
-        </ul>
+    <div class="bg-white p-3 sm:p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out">
+      <h3 class="text-lg sm:text-xl font-semibold text-primarytext mb-4 underline">Address Information</h3>
+      <div class="space-y-4">
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-home text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Village</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.village %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-church text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Parish</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.parish %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-map-marker-alt text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Note</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.address_note %></p>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Right Column -->
-    <div class="space-y-6">
-      <!-- Meals & Basic Info -->
-      <div>
-        <h2 class="mb-2 text-xl font-semibold text-primarycolor">Meals & Basic Info</h2>
-        <ul class="space-y-1 text-gray-700">
-          <li><strong>Number of Meals at Home:</strong> <%= @family_beneficiary.number_of_meals_home %></li>
-          <li><strong>Number of Meals at School:</strong> <%= @family_beneficiary.number_of_meals_school %></li>
-          <li><strong>Basic FEH:</strong> <%= @family_beneficiary.basic_FEH %></li>
-          <li><strong>Basic FES:</strong> <%= @family_beneficiary.basic_FES %></li>
-          <li><strong>Provided Food</strong> <%= @family_beneficiary.provided_food %></li>
-        </ul>
+    <div class="bg-white p-3 sm:p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out">
+      <h3 class="text-lg sm:text-xl font-semibold text-primarytext mb-4 underline">Location Information</h3>
+      <div class="space-y-4">
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-map text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">District</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.district.name %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-map-pin text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">County</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.county.name %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-location text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Sub-County</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.sub_county.name %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white p-3 sm:p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out">
+      <h3 class="text-lg sm:text-xl font-semibold text-primarytext mb-4 underline">Members Information</h3>
+      <div class="space-y-4">
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-people-roof text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Total Members</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.family_members %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-mars-double text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Total Male</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.male %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-venus-double text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Total Female</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base font-medium text-[#5a607a]"><%= @family_beneficiary&.female %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-baby text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Total Child</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.children %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-up-right-and-down-left-from-center text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Adult Age Range</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.adult_age_range %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex items-start gap-1 sm:gap-3 w-fit">
+            <div class="w-[23px]"><i class="fa-solid fa-up-right-and-down-left-from-center text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Child Age Range</p>
+          </div>
+          <div class="flex-1 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.children_age_range %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white p-3 sm:p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out col-span-1 md:col-span-2 2xl:col-span-2 2xl:col-start-2">
+      <h3 class="text-lg sm:text-xl font-semibold text-primarytext mb-4 underline">Case Information</h3>
+      <div class="space-y-4">
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex-auto w-5/12 flex items-start gap-1 sm:gap-3">
+            <div class="w-[23px]"><i class="fa-solid fa-clipboard-list text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Case Name</p>
+          </div>
+          <div class="flex-auto w-7/12 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.case_name %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class=" flex-auto w-5/12 flex items-start gap-1.5 sm:gap-3">
+            <div class="w-[23px]"><i class="fa-solid fa-briefcase text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Description</p>
+          </div>
+          <div class="flex-auto w-7/12 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.case_description %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex-auto w-5/12 flex items-start gap-1 sm:gap-3">
+            <div class="w-[23px]"><i class="fa-solid fa-phone text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Phone</p>
+          </div>
+          <div class="flex-auto w-7/12 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.phone_number %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex-auto w-5/12 flex items-start gap-1 sm:gap-3">
+            <div class="w-[23px]"><i class="fa-solid fa-bowl-food text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Home Basic Food</p>
+          </div>
+          <div class="flex-auto w-7/12 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.basic_FEH %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex-auto w-5/12 flex items-start gap-1 sm:gap-3">
+            <div class="w-[23px]"><i class="fa-solid fa-bowl-rice text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Number of Meals</p>
+          </div>
+          <div class="flex-auto w-7/12 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.number_of_meals_home %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex-auto w-5/12 flex items-start gap-1 sm:gap-3">
+            <div class="w-[23px]"><i class="fa-solid fa-bowl-food text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">School Basic Food</p>
+          </div>
+          <div class="flex-auto w-7/12 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.basic_FEH %></p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+          <div class="flex-auto w-5/12 flex items-start gap-1 sm:gap-3">
+            <div class="w-[23px]"><i class="fa-solid fa-bowl-rice text-sm text-primarycolor sm:text-lg"></i></div>
+            <p class="font-medium text-sm sm:text-base text-gray-700">Number of Meals</p>
+          </div>
+          <div class="flex-auto w-7/12 flex justify-end items-start">
+            <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @family_beneficiary&.number_of_meals_school %></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Actions -->
-  <div class="pt-4 mt-8 space-x-4 text-sm border-t">
-    <%= link_to 'Edit', edit_family_beneficiary_path(@family_beneficiary), class: "text-white bg-primarycolor hover:bg-opacity-90 px-4 py-2 rounded" %>
-    <%= link_to 'Back', family_beneficiaries_path, class: "text-primarycolor underline" %>
+  <div class="mt-8 flex justify-end items-center gap-4">
+    <%= link_to 'Update', edit_family_beneficiary_path(@family_beneficiary), class: 'bg-primarycolor text-white py-1 px-4 w-fit rounded hover:bg-hoverprimarycolor transition-all text-sm sm:text-base' %>
+    <%= button_to 'Destroy', family_beneficiary_path(@family_beneficiary), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-600 text-white py-1 px-4 w-fit rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
   </div>
 </div>
