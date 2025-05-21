@@ -41,7 +41,7 @@
             </ul>
           </div>
         <% end %>
-        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Requester Information</h3>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Requester Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
             <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
@@ -66,7 +66,7 @@
                   } %>
           </div>
         </div>
-        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Location Information</h3>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Location Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
             <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
@@ -122,7 +122,7 @@
             </div>
           </div>
         </div>
-        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Assignment</h3>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Assignment</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
             <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
@@ -140,7 +140,7 @@
         <!-- Donation Fields Wrapper -->
         <div id="donation-fields-wrapper" data-request-form-target="donationFieldsWrapper">
           <% if @request.donation_request? %>
-            <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Donation Information</h3>
+            <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Donation Information</h3>
             <%= f.fields_for :donation, @request.donation || @request.build_donation do |df| %>
               <%= df.hidden_field :id if df.object.persisted? %>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

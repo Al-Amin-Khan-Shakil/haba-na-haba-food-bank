@@ -1,76 +1,129 @@
-<%= form_with model: @event, local: true, data: {
-    controller: "location",
-    location_base_path_value: "events",
-    location_context_path_value: events_path
-  } do |f| %>
-  <% if @event.errors.any? %>
-    <div class="text-red-600 mb-4"><%= @event.errors.full_messages.to_sentence %></div>
-  <% end %>
-  <div class="mb-4">
-    <%= f.label :title, class: "block font-semibold mb-1" %>
-    <%= f.text_field :title, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :description, class: "block font-semibold mb-1" %>
-    <%= f.text_area :description, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :start_date, class: "block font-semibold mb-1" %>
-    <%= f.datetime_field :start_date, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :end_date, class: "block font-semibold mb-1" %>
-    <%= f.datetime_field :end_date, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :district_id, "District", class: "block mb-2 text-sm font-medium text-gray-900" %>
-    <%= f.collection_select :district_id, @districts, :id, :name,
-      { selected: @event.district_id, prompt: "Select District" },
-      { class: "w-full p-2 border rounded district-select",
-        data: {
-          location_target: "district",
-          action: "change->location#loadCounties"
-        }
-      } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :county_id, "County", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :county_id, @counties, :id, :name,
-      { selected: @event.county_id, prompt: "Select County" },
-      { class: "w-full p-2 border rounded county-select",
-        data: {
-          location_target: "county",
-          initial_selection: @event.county_id,
-          action: "change->location#loadSubCounties"
-        }
-      } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :sub_county_id, "Sub County", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
-      { selected: @event.sub_county_id, prompt: "Select Sub County" },
-      { class: "w-full p-2 border rounded sub-county-select",
-        data: {
-          location_target: "subCounty",
-          initial_selection: @event.sub_county_id
-        }
-      } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :user_ids, "Select Users to Add", class: "block mb-2 text-sm font-medium text-gray-900" %>
-    <ul id="users-list">
-      <input type="hidden" name="event[user_ids][]" value="">
-      <% @users.each do |user| %>
-        <li class="user-item">
-          <input type="checkbox" name="event[user_ids][]" value="<%= user.id %>" <%= 'checked' if @event.users.include?(user) %> />
-          <span class="user-name"><%= user.first_name %> <%= user.last_name %></span> -
-          <span class="user-phone"><%= user.phone_number %></span> -
-          <span class="user-role"><%= user.role %></span>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-  <div class="mt-6">
-    <%= f.submit class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
-  </div>
+<% form_url = @event.persisted? ? event_path(@event) : events_path %>
+<% method = @event.persisted? ? :patch : :post %>
+<%= form_with(model: @event, url: form_url, method: method, local: true, data: { controller: "location", location_base_path_value: "events", location_context_path_value: events_path }) do |f| %>
+  <section class="custom-select md:p-10 sm:px-6 lg:px-8 py-8 sm:text-sm md:text-base lg:text-lg">
+    <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% transition duration-300 hover:shadow-xl md:p-12 p-4 rounded-lg shadow-lg">
+      <div class="flex justify-between items-center h-auto gap-4 my-4">
+        <button onclick="history.go(-1)" class="rounded-lg flex items-center text-sm sm:text-base bg-gray-50 px-5 py-2 transition duration-300 ease-in-out">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="ml-2 hidden lg:inline-block">Back</span>
+        </button>
+        <h2 class="text-lg lg:text-3xl text-primarytextcolor font-bold text-center leading-tight">
+          <span><%= @event.persisted? ? "Edit" : "Create" %></span>
+          <span class="hidden md:inline-block">Event</span>
+        </h2>
+      </div>
+      <div class="bg-white md:p-8 p-4 border rounded-lg">
+        <% if @event.errors.any? %>
+          <div class="text-red-600 mb-4 p-3 bg-red-50 rounded-lg">
+            <h3 class="font-bold">Please fix these errors:</h3>
+            <ul class="list-disc pl-5">
+              <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="mb-4">
+          <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Event Details</h3>
+          <%= f.label :title, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_field :title, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :description, class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.text_area :description, rows: 5, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <%= f.label :start_date, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.datetime_field :start_date, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div>
+            <%= f.label :end_date, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.datetime_field :end_date, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+        </div>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Location Information</h3>
+        <div class="mb-4">
+          <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :district_id, @districts, :id, :name,
+            { selected: @event.district_id, prompt: "Select District" },
+            { class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+              data: {
+                location_target: "district",
+                action: "change->location#loadCounties"
+              }
+            } %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :county_id, "County", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :county_id, @counties, :id, :name,
+            { selected: @event.county_id, prompt: "Select County" },
+            { class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+              data: {
+                location_target: "county",
+                initial_selection: @event.county_id,
+                action: "change->location#loadSubCounties"
+              }
+            } %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :sub_county_id, "Sub County", class: "block text-gray-700 font-bold mb-2" %>
+          <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
+            { selected: @event.sub_county_id, prompt: "Select Sub County" },
+            { class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+              data: {
+                location_target: "subCounty",
+                initial_selection: @event.sub_county_id
+              }
+            } %>
+        </div>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Participants</h3>
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-gray-200 bg-gray-50">
+            <h4 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Select Team Members</h4>
+            <p class="mt-1 text-xs text-gray-500">Select users to participate in this event</p>
+          </div>
+          <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+            <input type="hidden" name="event[user_ids][]" value="">
+            <% @users.group_by(&:role).each do |role, users| %>
+              <% if users.any? %>
+                <div class="bg-gray-50 px-4 py-2 sticky top-0 z-10">
+                  <h5 class="text-xs font-medium text-gray-500 uppercase tracking-wider"><%= role.titleize %></h5>
+                </div>
+                <% users.each do |user| %>
+                  <label class="flex items-center px-4 py-3 hover:bg-primarycolor/5 transition-colors duration-150 cursor-pointer">
+                    <div class="flex items-center h-5">
+                      <%= check_box_tag "event[user_ids][]", user.id, @event.users.include?(user), 
+                  class: "h-4 w-4 text-primarycolor focus:ring-primarycolor border-gray-300 rounded mr-4" %>
+                    </div>
+                    <div class="ml-3 flex-1 min-w-0">
+                      <div class="flex justify-between items-baseline">
+                        <span class="text-sm font-medium text-gray-900 truncate">
+                          <%= user.first_name %> <%= user.last_name %>
+                        </span>
+                        <span class="ml-2 text-xs text-gray-500"> <span class="underline"><i class="fas fa-phone-alt mr-1 text-gray-400"></i> Tel:</span> <%= user.phone_number %></span>
+                      </div>
+                      <div class="mt-1 flex items-center text-xs text-gray-500">
+                        <span class="truncate"><%= user.email %></span>
+                      </div>
+                    </div>
+                  </label>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 text-right">
+            <span class="text-xs text-gray-500">
+              Selected: <span class="font-medium" id="selected-count"><%= @event.users.count %></span>/<%= @users.count %>
+            </span>
+          </div>
+        </div>
+        <div class="flex justify-center md:justify-end text-sm items-center mt-12 mb-10">
+          <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
+          <%= f.submit @event.persisted? ? "Update Event" : "Create Event", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
+        </div>
+      </div>
+    </div>
+  </section>
 <% end %>
