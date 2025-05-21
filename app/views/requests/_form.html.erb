@@ -5,122 +5,179 @@
       location_base_path_value: "requests",
       location_context_path_value: requests_path
 } do |f| %>
-  <% if @request.errors.any? %>
-    <div class="text-red-600 mb-4"><%= @request.errors.full_messages.to_sentence %></div>
-  <% end %>
-  <div class="mb-4">
-    <%= f.label :name, class: "block font-semibold mb-1" %>
-    <%= f.text_field :name, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :phone_number, class: "block font-semibold mb-1" %>
-    <%= f.text_field :phone_number, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :request_type, class: "block font-semibold mb-1" %>
-    <%= f.select :request_type,
-          Request.request_types.keys.map { |k| [k.titleize, k] },
-          {},
-          class: "w-full p-2 border rounded",
-          data: {
-            request_form_target: "requestTypeSelect",
-            action: "change->request-form#toggleDonationFields"
-          } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :is_selected, class: "block font-semibold mb-1" %>
-    <%= f.check_box :is_selected, class: "mr-2" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :village, class: "block font-semibold mb-1" %>
-    <%= f.text_field :village, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :parish, class: "block font-semibold mb-1" %>
-    <%= f.text_field :parish, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :address_note, class: "block font-semibold mb-1" %>
-    <%= f.text_area :address_note, class: "w-full p-2 border rounded" %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :district_id, "District", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :district_id, @districts, :id, :name,
-          { selected: @request.district_id, prompt: "Select District" },
-          { class: "w-full p-2 border rounded district-select",
-            data: {
-              location_target: "district",
-              action: "change->location#loadCounties"
-            }
-          } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :county_id, "County", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :county_id, @counties, :id, :name,
-          { selected: @request.county_id, prompt: "Select County" },
-          { class: "w-full p-2 border rounded county-select",
-            data: {
-              location_target: "county",
-              initial_selection: @request.county_id,
-              action: "change->location#loadSubCounties"
-            }
-          } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :sub_county_id, "Sub-County", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
-          { selected: @request.sub_county_id, prompt: "Select Sub-County" },
-          { class: "w-full p-2 border rounded sub-county-select",
-            data: {
-              location_target: "subCounty",
-              initial_selection: @request.sub_county_id
-            }
-          } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :branch_id, "Branch", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :branch_id, Branch.all, :id, :name,
-        { prompt: "Select a Branch" },
-        { class: "w-full p-2 border rounded" } %>
-  </div>
-  <div class="mb-4">
-    <%= f.label :user_id, "Handled By (User)", class: "block font-semibold mb-1" %>
-    <%= f.collection_select :user_id, User.all, :id, :email,
-        { prompt: "Select a User" },
-        { class: "w-full p-2 border rounded" } %>
-  </div>
-  <!-- Donation Fields Wrapper -->
-  <div id="donation-fields-wrapper" data-request-form-target="donationFieldsWrapper">
-    <% if @request.donation_request? %>
-      <h3 class="font-bold mt-4">Donation Info</h3>
-      <%= f.fields_for :donation, @request.donation || @request.build_donation do |df| %>
-        <%= df.hidden_field :id if df.object.persisted? %>
-        <div class="mb-4">
-          <%= df.label :donation_type %>
-          <%= df.select :donation_type,
-                Donation.donation_types.keys.map { |k| [k.titleize, k] },
-                { include_blank: "Select type" },
-                class: "input" %>
+  <section class="custom-select md:p-10 sm:px-6 lg:px-8 py-8 sm:text-sm md:text-base lg:text-lg">
+    <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% transition duration-300 hover:shadow-xl md:p-12 p-4 rounded-lg shadow-lg">
+      <div class="flex justify-between">
+        <div class="flex items-center h-auto gap-4 my-4">
+          <button onclick="history.go(-1)" class="rounded-lg flex items-center text-sm sm:text-base bg-gray-50 px-5 py-2 transition duration-300 ease-in-out">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="ml-2 hidden lg:inline-block">Back</span>
+          </button>
+          <h2 class="text-xl font-bold text-gray-900">
+            <%= @request.persisted? ? "Edit Request" : "Create Request" %>
+          </h2>
         </div>
-        <div class="mb-4">
-          <%= df.label :donor_type %>
-          <%= df.select :donor_type,
-                Donation.donor_types.keys.map { |k| [k.titleize, k] },
-                { include_blank: "Select type" },
-                class: "input" %>
+        <div class="flex items-center gap-2">
+          <%= f.label :is_selected, "Approved?", class: "text-primarytextcolor font-bold" %>
+          <div class="flex justify-center items-center relative rounded-[0.5em] p-[0.125em] bg-gradient-to-b from-[#d5d5d5] to-[#e8e8e8] shadow-[0_1px_1px_rgba(255,255,255,0.6)] text-[1.5em]">
+            <%= f.check_box :is_selected, class: "toggle-checkbox appearance-none absolute z-10 rounded-inherit w-full h-full opacity-0 cursor-pointer" %>
+            <div class="toggle-container flex items-center relative rounded-[0.375em] w-[3em] h-[1.5em] bg-[#e8e8e8] shadow-[inset_0_0_0.0625em_0.125em_rgba(255,255,255,0.2),inset_0_0.0625em_0.125em_rgba(0,0,0,0.4)] transition-[background-color] duration-[0.4s] ease-linear">
+              <div class="toggle-button flex justify-center items-center absolute left-[0.0625em] rounded-[0.3125em] w-[1.375em] h-[1.375em] bg-[#e8e8e8] shadow-[inset_0_-0.0625em_0.0625em_0.125em_rgba(0,0,0,0.1),inset_0_-0.125em_0.0625em_rgba(0,0,0,0.2),inset_0_0.1875em_0.0625em_rgba(255,255,255,0.3),0_0.125em_0.125em_rgba(0,0,0,0.5)] transition-[left] duration-[0.4s]">
+                <div class="toggle-button-circles-container absolute grid grid-cols-3 gap-[0.125em] m-0 mx-auto">
+                  <div class="toggle-button-circle rounded-full w-[0.125em] h-[0.125em] bg-[radial-gradient(circle_at_50%_0,#f5f5f5,#c4c4c4)]"></div>
+                  <div class="toggle-button-circle rounded-full w-[0.125em] h-[0.125em] bg-[radial-gradient(circle_at_50%_0,#f5f5f5,#c4c4c4)]"></div>
+                  <div class="toggle-button-circle rounded-full w-[0.125em] h-[0.125em] bg-[radial-gradient(circle_at_50%_0,#f5f5f5,#c4c4c4)]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="mb-4">
-          <%= df.label :donation_name %>
-          <%= df.text_field :donation_name, class: "input" %>
+      </div>
+      <div class="bg-white md:p-8 p-4 border rounded-lg">
+        <% if @request.errors.any? %>
+          <div class="mb-6 p-4 bg-red-100 text-red-700 rounded-lg border border-red-200">
+            <h2 class="font-bold text-lg mb-2">Please fix the following errors:</h2>
+            <ul class="list-disc pl-5">
+              <% @request.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Requester Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :name, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :phone_number, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
         </div>
-        <div class="mb-4">
-          <%= df.label :amount %>
-          <%= df.number_field :amount, class: "input", step: "0.01" %>
+        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Request Details</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <%= f.label :request_type, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.select :request_type,
+                  Request.request_types.keys.map { |k| [k.titleize, k] },
+                  { include_blank: "Select Request Type" },
+                  class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+                  data: {
+                    request_form_target: "requestTypeSelect",
+                    action: "change->request-form#toggleDonationFields"
+                  } %>
+          </div>
         </div>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="mt-6">
-    <%= f.submit class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
-  </div>
+        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Location Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :village, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :parish, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="mb-4 md:col-span-2">
+            <%= f.label :address_note, "Address Details", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_area :address_note, rows: 3, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+        </div>
+        <div data-controller="location" data-location-base-path-value="<%= controller.controller_name %>">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="mb-4">
+              <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :district_id, @districts, :id, :name,
+                    { include_blank: "Select District", selected: @request.district_id },
+                    {
+                      class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+                      data: {
+                        location_target: "district",
+                        action: "change->location#loadCounties"
+                      }
+                    } %>
+            </div>
+            <div class="mb-4">
+              <%= f.label :county_id, "County", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :county_id, @counties, :id, :name,
+                    { include_blank: "Select County", selected: @request.county_id },
+                    {
+                      class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+                      data: {
+                        location_target: "county",
+                        action: "change->location#loadSubCounties",
+                        initial_selection: @request.county_id
+                      }
+                    } %>
+            </div>
+            <div class="mb-4">
+              <%= f.label :sub_county_id, "Sub-County", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :sub_county_id, @sub_counties, :id, :name,
+                    { include_blank: "Select Sub-County", selected: @request.sub_county_id },
+                    {
+                      class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+                      data: {
+                        location_target: "subCounty",
+                        initial_selection: @request.sub_county_id
+                      }
+                    } %>
+            </div>
+          </div>
+        </div>
+        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Assignment</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.collection_select :branch_id, Branch.all, :id, :name,
+                  { include_blank: "Select Branch" },
+                  class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :user_id, "Assigned To", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.collection_select :user_id, User.all, :id, :email,
+                  { include_blank: "Select User" },
+                  class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+        </div>
+        <!-- Donation Fields Wrapper -->
+        <div id="donation-fields-wrapper" data-request-form-target="donationFieldsWrapper">
+          <% if @request.donation_request? %>
+            <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Donation Information</h3>
+            <%= f.fields_for :donation, @request.donation || @request.build_donation do |df| %>
+              <%= df.hidden_field :id if df.object.persisted? %>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="mb-4">
+                  <%= df.label :donation_type, class: "block text-gray-700 font-bold mb-2" %>
+                  <%= df.select :donation_type,
+                        Donation.donation_types.keys.map { |k| [k.titleize, k] },
+                        { include_blank: "Select Donation Type" },
+                        class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+                </div>
+                <div class="mb-4">
+                  <%= df.label :donor_type, class: "block text-gray-700 font-bold mb-2" %>
+                  <%= df.select :donor_type,
+                        Donation.donor_types.keys.map { |k| [k.titleize, k] },
+                        { include_blank: "Select Donor Type" },
+                        class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+                </div>
+                <div class="mb-4">
+                  <%= df.label :donation_name, class: "block text-gray-700 font-bold mb-2" %>
+                  <%= df.text_field :donation_name, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+                </div>
+                <div class="mb-4">
+                  <%= df.label :amount, class: "block text-gray-700 font-bold mb-2" %>
+                  <%= df.number_field :amount, step: "0.01", class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="flex justify-center md:justify-end text-sm items-center mt-6">
+          <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
+          <%= f.submit @request.persisted? ? "Update Request" : "Create Request", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-4 rounded" %>
+        </div>
+      </div>
+    </div>
+  </section>
 <% end %>
