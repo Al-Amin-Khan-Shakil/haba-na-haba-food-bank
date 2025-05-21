@@ -18,19 +18,11 @@
           </h2>
         </div>
         <div class="flex items-center gap-2">
-          <%= f.label :is_selected, "Approved?", class: "text-primarytextcolor font-bold" %>
-          <div class="flex justify-center items-center relative rounded-[0.5em] p-[0.125em] bg-gradient-to-b from-[#d5d5d5] to-[#e8e8e8] shadow-[0_1px_1px_rgba(255,255,255,0.6)] text-[1.5em]">
-            <%= f.check_box :is_selected, class: "toggle-checkbox appearance-none absolute z-10 rounded-inherit w-full h-full opacity-0 cursor-pointer" %>
-            <div class="toggle-container flex items-center relative rounded-[0.375em] w-[3em] h-[1.5em] bg-[#e8e8e8] shadow-[inset_0_0_0.0625em_0.125em_rgba(255,255,255,0.2),inset_0_0.0625em_0.125em_rgba(0,0,0,0.4)] transition-[background-color] duration-[0.4s] ease-linear">
-              <div class="toggle-button flex justify-center items-center absolute left-[0.0625em] rounded-[0.3125em] w-[1.375em] h-[1.375em] bg-[#e8e8e8] shadow-[inset_0_-0.0625em_0.0625em_0.125em_rgba(0,0,0,0.1),inset_0_-0.125em_0.0625em_rgba(0,0,0,0.2),inset_0_0.1875em_0.0625em_rgba(255,255,255,0.3),0_0.125em_0.125em_rgba(0,0,0,0.5)] transition-[left] duration-[0.4s]">
-                <div class="toggle-button-circles-container absolute grid grid-cols-3 gap-[0.125em] m-0 mx-auto">
-                  <div class="toggle-button-circle rounded-full w-[0.125em] h-[0.125em] bg-[radial-gradient(circle_at_50%_0,#f5f5f5,#c4c4c4)]"></div>
-                  <div class="toggle-button-circle rounded-full w-[0.125em] h-[0.125em] bg-[radial-gradient(circle_at_50%_0,#f5f5f5,#c4c4c4)]"></div>
-                  <div class="toggle-button-circle rounded-full w-[0.125em] h-[0.125em] bg-[radial-gradient(circle_at_50%_0,#f5f5f5,#c4c4c4)]"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= f.label :is_selected, "Approved?", class: "text-primarytextcolor font-bold ms-3 text-sm font-medium" %>
+          <label class="inline-flex items-center cursor-pointer">
+            <%= f.check_box :is_selected, class: "sr-only peer" %>
+            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-200 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primarycolor"></div>
+          </label>
         </div>
       </div>
       <div class="bg-white md:p-8 p-4 border rounded-lg">
