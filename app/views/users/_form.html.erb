@@ -33,7 +33,7 @@
   </div>
   <div class="mb-4">
     <%= f.label :gender, "Gender", class: "block font-bold mb-2" %>
-    <%= f.select :gender, User::GENDERS, {}, class: "w-full p-2 border rounded" %>
+    <%= f.select :gender, User.genders, {}, class: "w-full p-2 border rounded" %>
   </div>
   <div class="mb-4">
     <%= f.label :address, "Address", class: "block font-bold mb-2" %>
