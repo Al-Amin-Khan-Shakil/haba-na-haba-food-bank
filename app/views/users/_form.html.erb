@@ -1,13 +1,18 @@
 <%= form_with model: @user, local: true, data: { turbo: false } do |f| %>
   <section class="custom-select md:p-10 sm:px-6 lg:px-8 py-8 sm:text-sm md:text-base lg:text-lg">
     <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% transition duration-300 hover:shadow-xl md:p-12 p-4 rounded-lg shadow-lg">
-      <div class="flex items-center h-auto gap-4 my-4">
-        <button onclick="history.go(-1)" class="rounded-lg flex items-center text-sm sm:text-base bg-gray-50 px-5 py-2 transition duration-300 ease-in-out">
+      <div class=" flex justify-between items-center h-auto gap-4 my-4">
+        <button onclick="history.go(-1)" class="rounded-lg flex items-center text-sm sm:text-base bg-gray-50 px-5 py-2  transition duration-300 ease-in-out">
           <i class="fa-solid fa-arrow-left"></i>
-          <span class="ml-2 hidden lg:inline-block">Back</span>
+          <span class="ml-2 hidden lg:inline-block ">Back</span>
         </button>
-        <h2 class="text-xl font-bold text-gray-900">
-          <%= @user.persisted? ? "Edit User" : "Create User" %>
+        <h2 class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight">
+          <span>
+            <%= @user&.persisted? ? "Edit" : "Create" %>
+          </span>
+          <span class= "hidden md:inline-block">
+            User
+          </span>
         </h2>
       </div>
       <div class="bg-white md:p-8 p-4 border rounded-lg">
@@ -27,7 +32,7 @@
         <% if alert %>
           <div class="mb-6 p-4 bg-yellow-100 text-yellow-700 rounded-lg border border-yellow-200"><%= alert %></div>
         <% end %>
-        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Basic Information</h3>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Basic Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
             <%= f.label :first_name, "First Name", class: "block text-gray-700 font-bold mb-2" %>
@@ -54,7 +59,7 @@
             <%= f.select :role, User::ROLES, { include_blank: "Select Role" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
         </div>
-        <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Profile Details</h3>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Profile Details</h3>
         <div class="grid grid-cols-1 gap-4">
           <div class="mb-4">
             <%= f.label :address, "Address", class: "block text-gray-700 font-bold mb-2" %>
@@ -71,7 +76,7 @@
           </div>
         </div>
         <% unless @user.persisted? %>
-          <h3 class="text-xl my-4 font-semibold text-gray-700 mb-3 hover:text-gray-900 transition duration-200 underline">Account Security</h3>
+          <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Account Security</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="mb-4">
               <%= f.label :password, "Password", class: "block text-gray-700 font-bold mb-2" %>
