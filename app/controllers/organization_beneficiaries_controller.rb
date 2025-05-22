@@ -8,7 +8,11 @@ class OrganizationBeneficiariesController < ApplicationController
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
-    @organization_beneficiaries = OrganizationBeneficiary.all
+    @organization_beneficiaries = FilterService.new(OrganizationBeneficiary.all, filter_params).apply
+    @districts = District.all
+    @counties = County.all
+    @sub_counties = SubCounty.all
+    @branches = Branch.all
   end
 
   def show; end
@@ -107,6 +111,12 @@ class OrganizationBeneficiariesController < ApplicationController
     @sub_counties = effective_county&.sub_counties || []
     @branches = Branch.all
     @events = Event.all
+  end
+
+  def filter_params
+    params.permit(:organization_name, :registration_no, :min_people, :max_people, :case_name, :phone_number,
+                  :district_id, :county_id, :sub_county_id,
+                  :branch_id, :start_date, :end_date, :provided_food, :action, :commit)
   end
 
   def organization_beneficiary_params
