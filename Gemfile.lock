@@ -113,8 +113,6 @@ GEM
     drb (2.2.1)
     error_highlight (0.7.0)
     erubi (1.13.1)
-    faker (3.5.1)
-      i18n (>= 1.8.11, < 2)
     ffi (1.17.2-x64-mingw-ucrt)
     ffi (1.17.2-x86_64-linux-gnu)
     font-awesome-sass (6.5.2)
@@ -301,7 +299,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   error_highlight (>= 0.4.0)
-  faker
   font-awesome-sass (~> 6.5.1)
   htmlbeautifier
   importmap-rails
@@ -312,7 +309,7 @@ DEPENDENCIES
   rubocop (>= 1.0, < 2.0)
   sprockets-rails
   stimulus-rails
-  tailwindcss-rails
+  tailwindcss-rails (~> 3.3.1)
   turbo-rails
   tzinfo-data
   web-console

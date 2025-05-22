@@ -24,7 +24,7 @@ gem 'turbo-rails'
 gem 'stimulus-rails'
 
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
-gem 'tailwindcss-rails'
+gem 'tailwindcss-rails', '~> 3.3.1'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
@@ -59,7 +59,6 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
   gem 'htmlbeautifier'
-  gem 'faker'
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
