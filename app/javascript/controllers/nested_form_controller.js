@@ -12,7 +12,7 @@ export default class extends Controller {
     event.preventDefault()
     const timestamp = new Date().getTime()
     const newFields = document.createElement("div")
-    newFields.classList.add("nested-fields", "my-4", "border","p-3", "border-gray-300", "rounded-lg", "bg-white", "space-y-4")
+    newFields.classList.add("nested-fields", "my-4", "border", "border-gray-300", "rounded-lg", "bg-gray-50", "space-y-4")
     newFields.innerHTML = this.getTemplate(timestamp)
     this.containerTarget.appendChild(newFields)
     this.setupRemoveButtons()
@@ -41,7 +41,7 @@ export default class extends Controller {
   getTemplate(timestamp) {
     if (this.element.dataset.association === "counties") {
       return `
-        <div class="county-fields space-y-4">
+        <div class="county-fields p-3 space-y-4">
           <div class="field">
             <div class="flex justify-between items-center">
               <label class="block text-gray-700 font-medium mb-1">County Name</label>
@@ -57,7 +57,7 @@ export default class extends Controller {
             <div class="flex justify-between items-center mb-2">
               <h4 class="text-lg font-medium text-gray-700 underline text-primarytextcolor">Sub-Countie</h4>
               <button type="button" data-action="nested-form#addAssociation" class="text-sm bg-primarycolor hover:bg-primarycolor/90 text-white py-1 px-3 rounded transition">
-                <i class="fa-solid fa-plus mr-1"></i>Add Sub-County
+                <i class="fa-solid fa-plus "></i> <span class="ml-1 hidden md:inline-block">Add Sub-County</span>
               </button>
             </div>
             <div data-nested-form-target="container" class="space-y-3">
@@ -69,7 +69,7 @@ export default class extends Controller {
     } else {
       return `
         
-          <div class="sub-county-fields field bg-white  rounded-lg">
+          <div class="sub-county-fields field bg-white p-3 rounded-lg">
             <label class="block text-gray-700 font-bold text-sm font-medium mb-1">Sub-County Name</label>
             <input type="text" name="${this.getSubCountyNameAttribute(timestamp)}" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
             <input type="hidden" name="${this.getSubCountyDestroyAttribute(timestamp)}" value="0">
