@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :validatable
 
+  belongs_to :branch, optional:true
+
   has_many :requests, dependent: :nullify
   has_many :event_users, dependent: :destroy
   has_many :events, through: :event_users

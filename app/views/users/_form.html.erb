@@ -59,6 +59,10 @@
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Profile Details</h3>
         <div class="grid grid-cols-1 gap-4">
           <div class="mb-4">
+            <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.collection_select :branch_id, Branch.all, :id, :name, { prompt: "Select Branch" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="mb-4">
             <%= f.label :address, "Address", class: "block text-gray-700 font-bold mb-2" %>
             <%= f.text_area :address, rows: 3, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
