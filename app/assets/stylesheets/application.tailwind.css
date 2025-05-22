@@ -12,9 +12,3 @@
 
 */
 
-  .toggle-checkbox:checked + .toggle-container {
-    background-color: #f3b519;
-  }
-  .toggle-checkbox:checked + .toggle-container > .toggle-button {
-    left: 1.5625em;
-  }
