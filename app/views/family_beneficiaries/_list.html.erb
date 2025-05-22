@@ -1,25 +1,37 @@
 <div class="overflow-x-auto">
-  <table class="min-w-full divide-y divide-gray-200">
-    <thead class="bg-gray-50">
-      <tr>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fathar Name</th>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mother Name</th>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Case Name</th>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+  <table class="min-w-full max-h-fit bg-white shadow-md rounded-lg border-x border-gray-100 data-table">
+    <thead>
+      <tr class="text-primarytext bg-sky-50">
+        <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/5">Father</th>
+        <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/5">Mother</th>
+        <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-auto">Members</th>
+        <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/6">Case</th>
+        <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/6">Phone</th>
+        <th class="px-6 py-3 text-center font-Outfit text-base font-bold tracking-wider w-1/6">Actions</th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
-      <% beneficiaries.each do |beneficiary| %>
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.fathers_name %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.mothers_name %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.case_name %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= beneficiary.phone_number %></td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <%= link_to 'View', beneficiary, class: 'text-blue-600 hover:text-blue-800' %>
-            <%= link_to 'Edit', edit_family_beneficiary_path(beneficiary), class: "text-indigo-600 hover:text-indigo-900" %>
-            <%= button_to 'Delete', family_beneficiary_path(beneficiary), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-red-600 hover:text-red-900" %>
+    <tbody>
+      <% @family_beneficiaries.each do |beneficiary| %>
+        <tr class="border-b border-b-gray-100 hover:bg-gray-100">
+          <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= beneficiary.fathers_name %></td>
+          <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= beneficiary.mothers_name %></td>
+          <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-auto"><%= beneficiary.family_members %></td>
+          <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/6"><%= beneficiary.case_name %></td>
+          <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/6"><%= beneficiary.phone_number %></td>
+          <td class="px-6 py-3 text-center text-sm font-Outfit text-[#5a607a] w-1/6">
+            <div class="relative">
+              <button data-dropdown-toggle="dropdown-<%= beneficiary.id %>" class="text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 border border-lightGreen rounded" type="button">
+                <div class="p-1 flex flex-row justify-center items-center  space-between">
+                  <span class="hidden md:block lg:block mr-1" >Actions</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
+              </button>
+              <div id="dropdown-<%= beneficiary.id %>" class="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold">
+                <%= link_to 'Details', family_beneficiary_path(beneficiary), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
+                <%= link_to 'Edit', edit_family_beneficiary_path(beneficiary), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                <%= button_to 'Delete', family_beneficiary_path(beneficiary), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-10 py-2 text-red-600 hover:bg-gray-100 text-center' %>
+              </div>
+            </div>
           </td>
         </tr>
       <% end %>

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
-    @users = User.all
+    @users = FilterService.new(User.all, filter_params).apply
   end
 
   def show; end
@@ -46,6 +46,11 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def filter_params
+    params.permit(:commit, :first_name, :phone_number, :gender,
+                  :role, :last_name)
+  end
 
   def set_user
     @user = User.find(params[:id])
