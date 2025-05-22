@@ -47,7 +47,7 @@
                   <%= county_fields.hidden_field :_destroy %>
                 </div>
                 <!-- Sub-Counties -->
-                <div class=" sub-counties-container border-l-2 border-gray-300 pl-4 ml-2" data-controller="nested-form" data-association="sub_counties">
+                <div class=" sub-counties-container" data-controller="nested-form" data-association="sub_counties">
                   <div class="justify-between flex items-center">
                     <h4 class="text-lg font-medium text-gray-700 mb-2 underline text-primarytextcolor">
                       <%= @sub_counties&.any?(&:persisted?) ? "Sub-counties" : "" %>
@@ -60,7 +60,7 @@
                       </span>
                     </button>
                   </div>
-                  <div data-nested-form-target="container" class="">
+                  <div data-nested-form-target="container" class="space-y-4 border-l-2 border-gray-300 pl-4 ml-2">
                     <%= county_fields.fields_for :sub_counties do |sub_county_fields| %>
                       <div class="nested-fields sub-county-fields border border-gray-200 bg-white p-3 rounded-lg">
                         <div class="field border-gray-300 ">
