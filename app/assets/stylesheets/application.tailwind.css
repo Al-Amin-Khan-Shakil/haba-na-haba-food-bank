@@ -11,3 +11,38 @@
 }
 
 */
+
+/* Custom animations for grow and shrink effects */
+.animate-grow {
+  animation: grow 0.5s ease-in-out forwards;
+}
+
+.animate-shrink {
+  animation: shrink 0.3s ease-in-out forwards;
+}
+
+@keyframes grow {
+  from {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+  to {
+    max-height: 800px;
+    opacity: 1;
+    overflow: hidden;
+  }
+}
+
+@keyframes shrink {
+  from {
+    max-height: 800px;
+    opacity: 1;
+    overflow: hidden;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+}

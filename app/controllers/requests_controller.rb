@@ -3,17 +3,11 @@ class RequestsController < ApplicationController
   before_action :set_request, only: %i[show edit update destroy]
 
   def index
-    filtered = FilterService.new(Request.all, filter_params).apply
-
-    @requests = if filter_params.blank? || filter_params.values.all?(&:blank?)
-                  filtered.limit(6)
-                else
-                  filtered
-                end
-
+    @requests = FilterService.new(Request.all, filter_params).apply
     @districts = District.all
     @counties = County.all
     @sub_counties = SubCounty.all
+    @branches = Branch.all
   end
 
   def show; end
