@@ -6,11 +6,11 @@
           <i class="fa-solid fa-arrow-left"></i>
           <span class="ml-2 hidden lg:inline-block ">Back</span>
         </button>
-        <h2 class="text-lg lg:text-3xl text-primarytextcolor font-bold text-center leading-tight">
+        <h2 class="text-3xl text-primarytextcolor font-bold text-center leading-tight">
           <%= district.persisted? ? "Edit" : "Create" %> <span class="hidden md:inline-block">District</span>
         </h2>
       </div>
-      <div class="bg-white md:p-8 p-4 border rounded-lg">
+      <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
         <!-- District Name -->
         <div class="mb-6">
           <%= f.label :name, "District Name", class: "block text-gray-700 font-bold mb-2" %>
@@ -25,16 +25,16 @@
               </div>
               <div>
                 <!-- Add County Button -->
-                <button type="button" data-action="nested-form#addAssociation" data-nested-form-target="addButton" class="flex justify-center items-center md:w-auto bg-primarycolor hover:bg-hoverprimarycolor text-white font-medium py-2 px-4 rounded transition transform hover:scale-105">
+                <button type="button" data-action="nested-form#addAssociation" data-nested-form-target="addButton" class="flex justify-center items-center md:w-auto bg-primarycolor hover:bg-hoverprimarycolor text-white text-base font-medium py-1 px-2 rounded transition transform hover:scale-105">
                   <i class="fa-solid fa-plus"></i>
-                  <span class="ml-2 hidden md:inline-block w-fit">
+                  <span class="ml-2 inline-block w-fit">
                     Add County
                   </span>
                 </button>
               </div>
             </div>
             <%= f.fields_for :counties do |county_fields| %>
-              <div class="nested-fields county-fields border border-gray-300 rounded-lg bg-gray-50 p-4 space-y-4">
+              <div class="nested-fields county-fields border border-gray-300 rounded-lg bg-gray-50/40 p-4 space-y-4">
                 <!-- County Name -->
                 <div class="field">
                   <div class="flex justify-between items-center">
@@ -53,16 +53,16 @@
                       <%= @sub_counties&.any?(&:persisted?) ? "Sub-counties" : "" %>
                     </h4>
                     <!-- Add Sub-County Button -->
-                    <button type="button" data-action="nested-form#addAssociation" class="text-left mb-2 text-sm text-white bg-primarycolor hover:bg-primarycolor text-gray-700 py-1 px-3 rounded transition">
+                    <button type="button" data-action="nested-form#addAssociation" class="text-left mb-2 text-sm text-white bg-primarycolor hover:bg-primarycolor py-1 px-3 rounded transition">
                       <i class="fa-solid fa-plus "></i>
-                      <span class="hidden ml-2 md:inline-block">
+                      <span class="ml-2 inline-block">
                         Add Sub-County
                       </span>
                     </button>
                   </div>
                   <div data-nested-form-target="container" class="space-y-4 border-l-2 border-gray-300 pl-4 ml-2">
                     <%= county_fields.fields_for :sub_counties do |sub_county_fields| %>
-                      <div class="nested-fields sub-county-fields border border-gray-200 bg-white p-3 rounded-lg">
+                      <div class="nested-fields sub-county-fields border border-gray-200 bg-white/40 p-3 rounded-lg">
                         <div class="field border-gray-300 ">
                           <%= sub_county_fields.label :name, "Sub-County Name", class: "block text-gray-700 font-bold text-sm font-medium mb-1" %>
                           <%= sub_county_fields.text_field :name, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
@@ -82,7 +82,7 @@
           </div>
         </div>
         <!-- Submit Button -->
-        <div class="flex justify-center md:justify-end text-sm items-center mt-12 mb-6">
+        <div class="flex justify-center md:justify-end text-sm items-center mt-12 mb-2">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit district.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
         </div>

@@ -14,7 +14,7 @@
           <i class="fa-solid fa-arrow-left"></i>
           <span class="ml-2 hidden lg:inline-block ">Back</span>
         </button>
-        <h2 class="text-lg lg:text-3xl text-primarytextcolor font-bold text-center leading-tight">
+        <h2 class="text-3xl text-primarytextcolor font-bold text-center leading-tight">
           <span>
             <%= @individual_beneficiary&.persisted? ? "Edit" : "Create" %>
           </span>
@@ -23,7 +23,7 @@
           </span>
         </h2>
       </div>
-      <div class= "bg-white md:p-8 p-4 border  rounded-lg">
+      <div class= "bg-white/50 md:px-8 md:py-4 py-2 px-4 border  rounded-lg">
         <div class="mb-4">
           <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Personal Information</h3>
           <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
@@ -71,20 +71,20 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
             <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.text_field :village, 
-          value: @individual_beneficiary&.village.presence || @request&.village, 
+            <%= f.text_field :village,
+          value: @individual_beneficiary&.village.presence || @request&.village,
           class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
           <div class="mb-4">
             <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.text_field :parish, 
-          value: @individual_beneficiary&.parish.presence || @request&.parish, 
+            <%= f.text_field :parish,
+          value: @individual_beneficiary&.parish.presence || @request&.parish,
           class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
           <div class="mb-4 md:col-span-2">
             <%= f.label :address_note, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.text_area :address_note, 
-          value: @individual_beneficiary&.address_note.presence || @request&.address_note, 
+            <%= f.text_area :address_note,
+          value: @individual_beneficiary&.address_note.presence || @request&.address_note,
           rows: 3,
           class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
@@ -138,7 +138,7 @@
           <%= f.collection_select :branch_id, @branches, :id, :name,
           { selected: @individual_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
           class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          <div class="flex justify-center md:justify-end text-sm items-center mt-12 mb-10">
+          <div class="flex justify-center md:justify-end text-sm items-center mt-12 ">
             <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
             <%= f.submit @individual_beneficiary.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor  hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
           </div>

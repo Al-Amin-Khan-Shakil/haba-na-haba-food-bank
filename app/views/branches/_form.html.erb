@@ -6,11 +6,11 @@
           <i class="fa-solid fa-arrow-left"></i>
           <span class="ml-2 hidden lg:inline-block">Back</span>
         </button>
-        <h2 class="text-lg lg:text-3xl text-primarytextcolor font-bold text-center leading-tight">
+        <h2 class="text-3xl text-primarytextcolor font-bold text-center leading-tight">
           <%= branch.persisted? ? "Edit Branch" : "Create Branch" %>
         </h2>
       </div>
-      <div class="bg-white md:p-8 p-4 border rounded-lg">
+      <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
         <% if branch.errors.any? %>
           <div class="text-red-600 mb-4 p-3 bg-red-50 rounded-lg">
             <h3 class="font-bold">Please fix these errors:</h3>
@@ -48,7 +48,7 @@
             <p class="text-sm text-gray-600 italic mt-2">All districts are already assigned. No available districts to assign.</p>
           <% end %>
         </div>
-        <div class="flex justify-center md:justify-end text-sm items-center mt-12 mb-4">
+        <div class="flex justify-center md:justify-end text-sm items-center mt-12">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= form.submit branch.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
         </div>
