@@ -9,6 +9,11 @@ class InventoriesController < ApplicationController
 
   def index
     @inventories = Inventory.all
+    @districts = District.all
+    @counties = County.all
+    @sub_counties = SubCounty.all
+    @branches = Branch.all
+    @events = Event.all
   end
 
   def show; end

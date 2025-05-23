@@ -3,17 +3,19 @@ class RequestsController < ApplicationController
   before_action :set_request, only: %i[show edit update destroy]
 
   def index
-    filtered = FilterService.new(Request.all, filter_params).apply
+    filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
-    @requests = if filter_params.blank? || filter_params.values.all?(&:blank?)
-                  filtered.limit(6)
-                else
-                  filtered
-                end
+    if filter_applied
+      @requests = FilterService.new(Request.all, filter_params).apply.order(created_at: :desc)
+    else
+      default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
+      @requests = FilterService.new(Request.all, default_params).apply.order(created_at: :desc)
+    end
 
     @districts = District.all
     @counties = County.all
     @sub_counties = SubCounty.all
+    @branches = Branch.all
   end
 
   def show; end

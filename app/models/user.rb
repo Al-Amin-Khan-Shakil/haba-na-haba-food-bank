@@ -10,15 +10,12 @@ class User < ApplicationRecord
   has_one_attached :profile_picture
 
   ROLES = %w[super_admin admin branch_manager volunteer].freeze
-  enum gender: {
-    male: 1,
-    female: 2,
-    other: 3
-  }
+  GENDERS = %w[male female others].freeze
 
   validates :first_name, :last_name, :role, :gender, :address, presence: true
   validates :phone_number, presence: true, format: { with: /\A\+?[0-9]+\z/, message: 'Must be a valid phone number' }
   validates :role, inclusion: { in: ROLES, message: '%<value>s is not a valid role' }
+  validates :gender, inclusion: { in: GENDERS, message: '%<value>s is not in database.' }
   validates :password,
             presence: { message: 'Password can not be blank' },
             confirmation: { message: 'Password confirmation does not match' },
@@ -33,6 +30,12 @@ class User < ApplicationRecord
   ROLES.each do |role_name|
     define_method "#{role_name.gsub(' ', '_')}?" do
       role == role_name.tr('_', ' ')
+    end
+  end
+
+  GENDERS.each do |gender_name|
+    define_method "#{gender_name.gsub(' ', '_')}?" do
+      gender == gender_name.tr('_', ' ')
     end
   end
 

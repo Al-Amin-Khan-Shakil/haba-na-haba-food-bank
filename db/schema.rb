@@ -133,6 +133,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_22_212839) do
     t.uuid "request_id"
     t.uuid "event_id"
     t.uuid "branch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["branch_id"], name: "index_family_beneficiaries_on_branch_id"
     t.index ["county_id"], name: "index_family_beneficiaries_on_county_id"
     t.index ["district_id"], name: "index_family_beneficiaries_on_district_id"
