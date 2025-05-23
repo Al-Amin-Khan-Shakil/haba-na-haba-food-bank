@@ -6,11 +6,11 @@
           <i class="fa-solid fa-arrow-left"></i>
           <span class="ml-2 hidden lg:inline-block ">Back</span>
         </button>
-        <h2 class="text-lg lg:text-3xl text-primarytextcolor font-bold text-center leading-tight">
+        <h2 class="text-3xl text-primarytextcolor font-bold text-center leading-tight">
           <%= district.persisted? ? "Edit" : "Create" %> <span class="hidden md:inline-block">District</span>
         </h2>
       </div>
-      <div class="bg-white md:p-8 p-4 border rounded-lg">
+      <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
         <!-- District Name -->
         <div class="mb-6">
           <%= f.label :name, "District Name", class: "block text-gray-700 font-bold mb-2" %>
@@ -82,7 +82,7 @@
           </div>
         </div>
         <!-- Submit Button -->
-        <div class="flex justify-center md:justify-end text-sm items-center mt-12 mb-6">
+        <div class="flex justify-center md:justify-end text-sm items-center mt-12 mb-2">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit district.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
         </div>

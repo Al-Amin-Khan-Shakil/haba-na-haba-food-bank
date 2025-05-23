@@ -1,144 +1,116 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6">Requests</h1>
-  <%= link_to 'New Request', new_request_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-6 inline-block" %>
-  <div class="filter-form bg-white p-6 rounded-lg shadow-md my-5">
-    <%= form_with url: requests_path, method: :get, local: true, class: "space-y-6", data: { controller: "filter", action: "submit->filter#handleFilterSubmit" } do |form| %>
-      <h3 class="text-lg font-semibold text-gray-800 mb-4">Filter Requests</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Basic Information -->
-        <div class="space-y-2">
-          <%= form.label :name, "Name", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.text_field :name, value: params[:name], class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <div class="space-y-2">
-          <%= form.label :phone_number, "Phone Number", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.text_field :phone_number, value: params[:phone_number], class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <div class="space-y-2">
-          <%= form.label :request_type, "Request Type", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :request_type,
-              options_for_select(Request.request_types.keys.map { |k| [k.humanize.titleize, k] }, params[:request_type]),
-              { include_blank: "Select" },
-              class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <!-- Location Information -->
-        <div class="space-y-2">
-          <%= form.label :district_id, "District", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :district_id,
-              options_from_collection_for_select(@districts, :id, :name, params[:district_id]),
-              { prompt: "Select District" },
-              class: "district-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <div class="space-y-2">
-          <%= form.label :county_id, "County", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :county_id,
-              options_from_collection_for_select(@counties, :id, :name, params[:county_id]),
-              { prompt: "Select County" },
-              class: "county-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <div class="space-y-2">
-          <%= form.label :sub_county_id, "Sub County", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :sub_county_id,
-              options_from_collection_for_select(@sub_counties, :id, :name, params[:sub_county_id]),
-              { prompt: "Select Sub-County" },
-              class: "sub-county-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <!-- Status and Branch -->
-        <div class="space-y-2">
-          <%= form.label :is_selected, "Approved?", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :is_selected,
-              options_for_select([["Yes", true], ["No", false]], params[:is_selected]),
-              { include_blank: "Select" },
-              class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <div class="space-y-2">
-          <%= form.label :branch_id, "Branch", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :branch_id,
-              options_from_collection_for_select(Branch.all, :id, :name, params[:branch_id]),
-              { prompt: "Select Branch" },
-              class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <!-- Date Range -->
-        <div class="space-y-2">
-          <%= form.label :start_date, "Start Date", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.date_field :start_date, value: params[:start_date], class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-        <div class="space-y-2">
-          <%= form.label :end_date, "End Date", class: "block text-sm font-medium text-gray-700" %>
-          <%= form.date_field :end_date, value: params[:end_date], class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primarycolor focus:ring focus:ring-primarycolor focus:ring-opacity-50" %>
-        </div>
-      </div>
-      <!-- Action Buttons -->
-      <div class="flex justify-end space-x-3 pt-4">
-        <%= link_to "Reset", requests_path, class: "px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primarycolor" %>
-        <%= form.submit "Filter", class: "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primarycolor hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primarycolor" %>
-        <span class="self-center text-sm text-gray-600"><%= "#{@requests.size} results" %></span>
-      </div>
-    <% end %>
-    <h1 class="mb-4 text-xl font-bold">Requests</h1>
-    <%= link_to 'New Request', new_request_path, class: "bg-orange-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-4 inline-block" %>
-    <table class="mt-2 min-w-full border">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 border">Name</th>
-          <th class="px-4 py-2 border">Phone Number</th>
-          <th class="px-4 py-2 border">Type</th>
-          <th class="px-4 py-2 border">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @requests.each do |request| %>
-          <tr>
-            <td class="px-4 py-2 border"><%= request.name %></td>
-            <td class="px-4 py-2 border"><%= request.phone_number %></td>
-            <td class="px-4 py-2 border"><%= request.request_type.humanize %></td>
-            <td class="px-4 py-2 border">
-              <%= link_to 'Show', request_path(request), class: "text-blue-600 hover:underline mr-2" %>
-              <%= link_to 'Edit', edit_request_path(request), class: "text-yellow-600 hover:underline mr-2" %>
-              <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
-              <%= link_to 'Family Beneficiary', new_request_family_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
-              <%= link_to 'Organization Beneficiary', new_request_organization_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
-              <%= link_to 'Individual Beneficiary', new_request_individual_beneficiary_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
-              <%= link_to 'Inventory', new_request_inventory_path(request), class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
-            </td>
-          </tr>
+<div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
+  <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% shadow-xl rounded-xl p-2 sm:p-3 lg:p-8" data-controller="filter-form">
+    <div class="flex justify-between items-end mt-2 mb-4">
+      <%= link_to new_request_path, class: "flex items-center gap-2 bg-primarycolor text-white px-1.5 py-1 lg:px-1 rounded hover:bg-hoverprimarycolor" do %>
+        <i class="fa-regular fa-plus text-2xl"></i>
+        <span class="hidden lg:inline-block">Add New</span>
+      <% end %>
+      <h2 class="text-xl md:text-2xl lg:text-3xl text-primarytext font-bold text-center">Requests</h2>
+      <div class="flex justify-end gap-2">
+        <button data-filter-form-target="filterButton" data-action="click->filter-form#toggleForm" class="bg-primarycolor text-white py-1 px-2 rounded hover:bg-hoverprimarycolor">
+          <i class="fa-solid fa-filter"></i>
+          <span class="hidden mr-1 lg:inline-block">Filter</span>
+        </button>
+        <%= link_to requests_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
+          <i class="fa-solid fa-arrows-rotate"></i> <span class="ml-1 hidden lg:inline-block">Clear</span>
         <% end %>
       </div>
-      <div class="overflow-x-auto">
-        <table class="min-w-full bg-white rounded-lg overflow-hidden">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="py-3 px-4 text-left">Name</th>
-              <th class="py-3 px-4 text-left">Phone Number</th>
-              <th class="py-3 px-4 text-left">Type</th>
-              <th class="py-3 px-4 text-left">Created Date</th>
-              <th class="py-3 px-4 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @requests.each do |request| %>
-              <tr class="border-t border-gray-200 hover:bg-gray-50">
-                <td class="py-3 px-4"><%= request.name %></td>
-                <td class="py-3 px-4"><%= request.phone_number %></td>
-                <td class="py-3 px-4"><%= request.request_type.humanize %></td>
-                <td class="py-3 px-4"><%= request.created_at.to_formatted_s %></td>
-                <td class="py-3 px-4 flex flex-wrap gap-2">
-                  <%= link_to 'Show', request_path(request), class: "text-blue-600 hover:text-blue-800" %>
-                  <%= link_to 'Edit', edit_request_path(request), class: "text-yellow-600 hover:text-yellow-800" %>
-                  <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
-                  <div class="w-full mt-1">
-                    <%= link_to 'Family Beneficiary', new_request_family_beneficiary_path(request), class: "text-sm text-gray-600 hover:text-gray-800" %>
-                  </div>
-                  <div class="w-full">
-                    <%= link_to 'Organization Beneficiary', new_request_organization_beneficiary_path(request), class: "text-sm text-gray-600 hover:text-gray-800" %>
-                  </div>
-                  <div class="w-full">
-                    <%= link_to 'Individual Beneficiary', new_request_individual_beneficiary_path(request), class: "text-sm text-gray-600 hover:text-gray-800" %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
     </div>
+    <div data-filter-form-target="form" class="space-y-4 hidden bg-white/50 my-4 rounded-lg p-4 shadow-md text-gray-600">
+      <%= form_with url: requests_path, method: :get, local: true, class: "space-y-4" do |form| %>
+        <div class="flex flex-wrap gap-4">
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :name, "Name", class: "block text-gray-700" %>
+            <%= form.text_field :name, value: params[:name], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :phone_number, "Phone", class: "block text-gray-700" %>
+            <%= form.text_field :phone_number, value: params[:phone_number], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :request_type, "Request Type", class: "block text-gray-700" %>
+            <%= form.select :gender, options_for_select(Request.request_types.keys.map { |k| [k.titleize, k] }, params[:request_type]), { prompt: "Select Request Type" }, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :is_selected, "Approved?", class: "block text-gray-700" %>
+            <%= form.select :is_selected, options_for_select([["Yes", true], ["No", false]], params[:is_selected]),
+              { include_blank: "Select" }, class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :branch_id, "Branch", class: "block text-gray-700" %>
+            <%= form.collection_select :branch_id, @branches, :id, :name, { prompt: "Select branch" }, { class: 'form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor' } %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :district_id, "District", class: "block text-gray-700" %>
+            <%= form.collection_select :district_id, @districts, :id, :name, { prompt: "Select District" }, { class: 'district-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor', 'data-context-path': "individual_beneficiaries" } %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :county_id, "County", class: "block text-gray-700" %>
+            <%= form.collection_select :county_id, @counties, :id, :name, { prompt: "Select County" }, { class: 'county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor', 'data-context-path': "individual_beneficiaries" } %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :sub_county_id, "Sub-County", class: "block text-gray-700" %>
+            <%= form.collection_select :sub_county_id, @sub_counties, :id, :name, { prompt: "Select Sub-County" }, { class: 'sub-county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor' } %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :start_date, "Start Date", class: "block text-gray-700" %>
+            <%= form.date_field :start_date, value: params[:start_date], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :end_date, "End Date", class: "block text-gray-700" %>
+            <%= form.date_field :end_date, value: params[:end_date], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+        </div>
+        <div class="mt-4">
+          <%= form.submit "Filter", data: { filter_form_target: "submitButton", action: "click->filter-form#hideForm" }, class: "inline-block bg-primarycolor text-white py-1 px-4 rounded hover:bg-hoverprimarycolor" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="overflow-x-auto rounded-lg">
+      <table class="min-w-full max-h-fit bg-white/80 shadow-md rounded-lg border-x border-gray-100 data-table">
+        <thead>
+          <tr class="text-primarytext bg-sky-50">
+            <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/4">Name</th>
+            <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/5">Phone</th>
+            <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/5">Assigned Branch</th>
+            <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/5">Request Type</th>
+            <th class="px-6 py-3 text-center font-Outfit text-base font-bold tracking-wider w-1/6">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @requests.each do |request| %>
+            <tr class="hover:bg-gray-100 border-b border-b-gray-100">
+              <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.name %></td>
+              <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.phone_number %></td>
+              <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.branch.name %></td>
+              <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.request_type.humanize %></td>
+              <td class="px-6 py-3 text-center text-sm font-Outfit text-[#5a607a] w-1/6">
+                <div class="relative">
+                  <button data-dropdown-toggle="dropdown-<%= request.id %>" class="text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 border border-primarycolor rounded" type="button">
+                    <div class="p-1 flex flex-row justify-center items-center  space-between">
+                      <span class="hidden md:block lg:block mr-1" >Actions</span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                  </button>
+                  <div id="dropdown-<%= request.id %>" class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
+                    <%= link_to 'Details', request_path(request), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
+                    <%= link_to 'Edit', edit_request_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                    <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
+                    <% if request.request_type == 'food_request' %>
+                      <%= link_to '+ Individual', new_request_individual_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Family', new_request_family_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Organization', new_request_organization_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                    <% end %>
+                    <% if request.request_type == 'donation_request' %>
+                      <%= link_to '+ Inventory', new_request_inventory_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

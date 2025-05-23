@@ -48,8 +48,8 @@ export default class extends Controller {
               <button type="button" class="remove-nested text-gray-600 hover:text-gray-800 transition">
                 <i class="fa-solid fa-xmark text-lg"></i>
               </button>
-            </div>        
-            <input placeholder="County Name" type="text" name="district[counties_attributes][${timestamp}][name]" class="w-full bg-white border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
+            </div>
+            <input placeholder="County Name" type="text" name="district[counties_attributes][${timestamp}][name]" class="w-full bg-white/50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
             <input type="hidden" name="district[counties_attributes][${timestamp}][_destroy]" value="0">
           </div>
 
@@ -67,8 +67,8 @@ export default class extends Controller {
       `
     } else {
       return `
-        
-          <div class="sub-county-fields field bg-white p-3 rounded-lg">
+
+          <div class="sub-county-fields field bg-white/50 p-3 rounded-lg">
             <label class="block text-gray-700 font-bold text-sm font-medium mb-1">Sub-County Name</label>
             <input type="text" name="${this.getSubCountyNameAttribute(timestamp)}" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
             <input type="hidden" name="${this.getSubCountyDestroyAttribute(timestamp)}" value="0">
@@ -77,7 +77,7 @@ export default class extends Controller {
           </button>
           </div>
 
-    
+
       `
     }
   }

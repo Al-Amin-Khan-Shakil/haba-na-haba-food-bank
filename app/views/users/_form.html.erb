@@ -15,7 +15,7 @@
           </span>
         </h2>
       </div>
-      <div class="bg-white md:p-8 p-4 border rounded-lg">
+      <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
         <% if @user.errors.any? %>
           <div class="mb-6 p-4 bg-red-100 text-red-700 rounded-lg border border-red-200">
             <h2 class="font-bold text-lg mb-2">Please fix the following errors:</h2>
@@ -49,7 +49,7 @@
           </div>
           <div class="mb-4">
             <%= f.label :gender, "Gender", class: "block text-gray-700 font-bold mb-2" %>
-            <%=  f.select :gender,  User.genders.keys.map { |g| [g.humanize, g] }, { include_blank: "Select Gender" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            <%=  f.select :gender,  User::GENDERS, { include_blank: "Select Gender" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
           <div class="mb-4">
             <%= f.label :role, "Role", class: "block text-gray-700 font-bold mb-2" %>
@@ -95,4 +95,4 @@
         </div>
       </div>
     </div>
-<% end %>
+  <% end %>

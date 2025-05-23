@@ -14,16 +14,16 @@
           <i class="fa-solid fa-arrow-left"></i>
           <span class="ml-2 hidden lg:inline-block ">Back</span>
         </button>
-        <h2 class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight">
+        <h2 class="text-3xl text-primarytext font-bold text-center leading-tight">
           <span>
             <%= @organization_beneficiary&.persisted? ? "Edit" : "Create" %>
           </span>
           <span class= "hidden md:inline-block">
-            organization Beneficiary
+            Organization Beneficiary
           </span>
         </h2>
       </div>
-      <div class="bg-white md:p-8 p-4 border rounded-lg">
+      <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Organization Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <% [
@@ -67,7 +67,7 @@
         </div>
         <div class="mb-4">
           <%= f.label :basic_FEH, "Basic FEH Information", class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_area :basic_FEH, rows: 3, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          <%= f.text_field :basic_FEH, rows: 3, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
         </div>
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Location Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
