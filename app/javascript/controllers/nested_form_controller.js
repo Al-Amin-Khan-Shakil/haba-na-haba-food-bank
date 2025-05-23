@@ -12,7 +12,7 @@ export default class extends Controller {
     event.preventDefault()
     const timestamp = new Date().getTime()
     const newFields = document.createElement("div")
-    newFields.classList.add("nested-fields", "my-4", "border", "border-gray-300", "rounded-lg", "bg-gray-50", "space-y-4")
+    newFields.classList.add("nested-fields", "my-4", "border", "border-gray-300", "rounded-lg", "bg-gray-50/40", "space-y-4")
     newFields.innerHTML = this.getTemplate(timestamp)
     this.containerTarget.appendChild(newFields)
     this.setupRemoveButtons()
@@ -49,14 +49,14 @@ export default class extends Controller {
                 <i class="fa-solid fa-xmark text-lg"></i>
               </button>
             </div>
-            <input placeholder="County Name" type="text" name="district[counties_attributes][${timestamp}][name]" class="w-full bg-white/50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
+            <input placeholder="County Name" type="text" name="district[counties_attributes][${timestamp}][name]" class="w-full bg-white/40 border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor">
             <input type="hidden" name="district[counties_attributes][${timestamp}][_destroy]" value="0">
           </div>
 
           <div class="sub-counties-container " data-controller="nested-form" data-association="sub_counties">
             <div class="flex justify-end items-center mb-2">
-              <button type="button" data-action="nested-form#addAssociation" class="text-left text-sm bg-primarycolor hover:bg-primarycolor/90 text-white py-1 px-3 rounded transition">
-                <i class="fa-solid fa-plus "></i> <span class="ml-1 hidden md:inline-block">Add Sub-County</span>
+              <button type="button" data-action="nested-form#addAssociation" class="text-left text-sm bg-primarycolor hover:bg-primarycolor/90 text-white py-1 px-2 rounded transition">
+                <i class="fa-solid fa-plus "></i> <span class="ml-1 inline-block">Add Sub-County</span>
               </button>
             </div>
             <div data-nested-form-target="container" class="space-y-3">
@@ -68,12 +68,12 @@ export default class extends Controller {
     } else {
       return `
 
-          <div class="sub-county-fields field bg-white/50 p-3 rounded-lg">
-            <label class="block text-gray-700 font-bold text-sm font-medium mb-1">Sub-County Name</label>
-            <input type="text" name="${this.getSubCountyNameAttribute(timestamp)}" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
+          <div class="sub-county-fields field bg-white/40 p-3 rounded-lg">
+            <label class="block text-gray-700 text-sm font-medium mb-1">Sub-County Name</label>
+            <input type="text" name="${this.getSubCountyNameAttribute(timestamp)}" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor">
             <input type="hidden" name="${this.getSubCountyDestroyAttribute(timestamp)}" value="0">
             <button type="button" class="remove-nested mt-2 text-sm text-red-600 hover:text-red-800 transition">
-            <i class="fa-solid fa-trash mr-1"></i>Remove Sub-County
+            <i class="fa-solid fa-trash mr-1"></i><span>Remove</span><span class="hidden md:inline">Sub-County</span>
           </button>
           </div>
 
