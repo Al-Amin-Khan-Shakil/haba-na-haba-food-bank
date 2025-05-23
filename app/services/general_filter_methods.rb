@@ -30,14 +30,14 @@ module GeneralFilterMethods
   end
 
   def filter_with_both_dates(model, start_date, end_date)
-    model.where(created_at: start_date..end_date)
+    model.where(created_at: start_date.beginning_of_day..end_date.end_of_day)
   end
 
   def filter_with_start_date(model, start_date)
-    model.where('created_at >= ?', start_date)
+    model.where('created_at >= ?', start_date.beginning_of_day)
   end
 
   def filter_with_end_date(model, end_date)
-    model.where(created_at: Date.current.beginning_of_year..end_date)
+    model.where(created_at: Date.current.beginning_of_year..end_date.end_of_day)
   end
 end
