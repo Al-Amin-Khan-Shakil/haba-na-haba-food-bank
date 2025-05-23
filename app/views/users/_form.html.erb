@@ -29,11 +29,11 @@
   </div>
   <div class="mb-4">
     <%= f.label :role, "Role", class: "block font-bold mb-2" %>
-    <%= f.select :role, User::ROLES, {}, class: "w-full p-2 border rounded" %>
+    <%= f.select :role, User::ROLES.map { |r| [r.humanize, r] }, {}, class: "w-full p-2 border rounded" %>
   </div>
   <div class="mb-4">
     <%= f.label :gender, "Gender", class: "block font-bold mb-2" %>
-    <%= f.select :gender, User.genders, {}, class: "w-full p-2 border rounded" %>
+    <%= f.select :gender, User::GENDERS.map { |g| [g.humanize, g] }, {}, class: "w-full p-2 border rounded" %>
   </div>
   <div class="mb-4">
     <%= f.label :address, "Address", class: "block font-bold mb-2" %>
