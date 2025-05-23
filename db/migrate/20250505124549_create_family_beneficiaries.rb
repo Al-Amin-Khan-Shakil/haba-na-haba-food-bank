@@ -28,6 +28,8 @@ class CreateFamilyBeneficiaries < ActiveRecord::Migration[7.1]
       t.references :request, null: true, foreign_key: true, type: :uuid
       t.references :event, null: true, foreign_key: true, type: :uuid
       t.references :branch, null: true, foreign_key: true, type: :uuid
+
+      t.timestamps
     end
   end
 end
