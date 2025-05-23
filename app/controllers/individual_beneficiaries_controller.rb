@@ -8,7 +8,17 @@ class IndividualBeneficiariesController < ApplicationController
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
-    @individual_beneficiaries = FilterService.new(IndividualBeneficiary.all, filter_params).apply
+    filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
+
+    if filter_applied
+      @individual_beneficiaries = FilterService.new(IndividualBeneficiary.all,
+                                                    filter_params).apply.order(created_at: :desc)
+    else
+      default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
+      @individual_beneficiaries = FilterService.new(IndividualBeneficiary.all,
+                                                    default_params).apply.order(created_at: :desc)
+    end
+
     @districts = District.all
     @counties = County.all
     @sub_counties = SubCounty.all
