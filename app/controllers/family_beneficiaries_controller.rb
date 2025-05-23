@@ -21,6 +21,7 @@ class FamilyBeneficiariesController < ApplicationController
     @counties = County.all
     @sub_counties = SubCounty.all
     @branches = Branch.all
+    @events = Event.all
   end
 
   def show; end
@@ -124,7 +125,7 @@ class FamilyBeneficiariesController < ApplicationController
   def filter_params
     params.permit(:fathers_name, :mothers_name, :case_name, :phone_number,
                   :min_member, :max_member, :district_id, :county_id, :sub_county_id,
-                  :branch_id, :start_date, :end_date, :provided_food, :commit)
+                  :branch_id, :event_id, :start_date, :end_date, :provided_food, :commit)
   end
 
   def family_beneficiary_params
