@@ -27,6 +27,7 @@
     opacity: 0;
     overflow: hidden;
   }
+
   to {
     max-height: 800px;
     opacity: 1;
@@ -40,6 +41,7 @@
     opacity: 1;
     overflow: hidden;
   }
+
   to {
     max-height: 0;
     opacity: 0;
@@ -77,4 +79,3 @@
 .animate-float-2 {
   animation: float-2 10s ease-in-out infinite;
 }
-

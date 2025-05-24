@@ -32,15 +32,35 @@ class FilterService
 
   def sanitize_params(params)
     params.each do |key, value|
-      params[key] = case key
-                    when :district_id, :county_id, :sub_county_id, :branch_id, :request_id, :event_id
-                      value.to_s.match?(/\A[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}\z/i) ? value : nil
-                    when :min_age, :max_age, :min_member, :max_member
-                      value.to_i if value.present? && value.to_s.match?(/\A\d+\z/)
-                    else
-                      value
-                    end
+      params[key] = sanitize_value(key, value)
     end
+
     params.reject { |_, v| v.nil? || (v.is_a?(String) && v.empty?) }
+  end
+
+  def sanitize_value(key, value)
+    if uuid_key?(key)
+      valid_uuid?(value) ? value : nil
+    elsif integer_range_key?(key)
+      valid_integer_string?(value) ? value.to_i : nil
+    else
+      value
+    end
+  end
+
+  def uuid_key?(key)
+    %i[district_id county_id sub_county_id branch_id request_id event_id].include?(key)
+  end
+
+  def integer_range_key?(key)
+    %i[min_age max_age min_member max_member].include?(key)
+  end
+
+  def valid_uuid?(value)
+    value.to_s.match?(/\A[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}\z/i)
+  end
+
+  def valid_integer_string?(value)
+    value.present? && value.to_s.match?(/\A\d+\z/)
   end
 end

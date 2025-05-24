@@ -12,11 +12,11 @@ class OrganizationBeneficiariesController < ApplicationController
 
     if filter_applied
       @organization_beneficiaries = FilterService.new(OrganizationBeneficiary.all,
-                                                    filter_params).apply.order(created_at: :desc)
+                                                      filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
       @organization_beneficiaries = FilterService.new(OrganizationBeneficiary.all,
-                                                    default_params).apply.order(created_at: :desc)
+                                                      default_params).apply.order(created_at: :desc)
     end
 
     @districts = District.all
