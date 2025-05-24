@@ -4,7 +4,7 @@ class FilterService
 
   def initialize(model, params)
     @model = model
-    @params = sanitize_params(params.to_h.symbolize_keys)
+    @params = params.to_h.symbolize_keys
 
     @complex_filters = {
       member_count: ->(rel, p) { filter_by_member_count(rel, p[:min_member], p[:max_member]) },
@@ -26,21 +26,5 @@ class FilterService
   rescue StandardError => e
     Rails.logger.error("FilterService error: #{e.message}")
     @model
-  end
-
-  private
-
-  def sanitize_params(params)
-    params.each do |key, value|
-      params[key] = case key
-                    when :district_id, :county_id, :sub_county_id, :branch_id, :request_id, :event_id
-                      value.to_s.match?(/\A[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}\z/i) ? value : nil
-                    when :min_age, :max_age, :min_member, :max_member
-                      value.to_i if value.present? && value.to_s.match?(/\A\d+\z/)
-                    else
-                      value
-                    end
-    end
-    params.reject { |_, v| v.nil? || (v.is_a?(String) && v.empty?) }
   end
 end

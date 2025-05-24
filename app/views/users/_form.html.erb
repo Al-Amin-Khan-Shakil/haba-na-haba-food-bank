@@ -6,7 +6,7 @@
           <i class="fa-solid fa-arrow-left"></i>
           <span class="ml-2 hidden lg:inline-block ">Back</span>
         </button>
-        <h2 class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight">
+        <h2 class="text-3xl text-primarytext font-bold text-center leading-tight">
           <span>
             <%= @user&.persisted? ? "Edit" : "Create" %>
           </span>
@@ -76,7 +76,6 @@
               hover:file:bg-hoverprimarycolor" %>
           </div>
         </div>
-        <% unless @user.persisted? %>
           <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Account Security</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="mb-4">
@@ -88,7 +87,6 @@
               <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
             </div>
           </div>
-        <% end %>
         <div class="flex justify-center md:justify-end text-sm items-center mt-6">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit @user.persisted? ? "Update User" : "Create User", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-4 rounded" %>
