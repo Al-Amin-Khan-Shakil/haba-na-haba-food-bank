@@ -2,7 +2,7 @@ class DistrictsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @districts = District.all
+    @districts = District.order(:name)
   end
 
   def show
