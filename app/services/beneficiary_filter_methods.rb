@@ -1,11 +1,15 @@
 module BeneficiaryFilterMethods
   private
 
-  # Request Filters 
-
-   def filter_by_request_type(model, request_type)
+  # Request Filters
+  def filter_by_request_type(model, request_type)
     request_type.present? ? model.where(request_type: request_type) : model
   end
+
+  def filter_by_is_selected(model, is_selected)
+    is_selected.present? ? model.where(is_selected: is_selected) : model
+  end
+
 
   # Common beneficiary filters
   def filter_by_first_name(model, first_name)
@@ -19,15 +23,16 @@ module BeneficiaryFilterMethods
   def filter_by_name(model, name)
     name.present? ? model.where('name ILIKE ?', "%#{name}%") : model
   end
-    ROLES = %w[super_admin admin branch_manager volunteer].freeze
 
-    def filter_by_role(model, role)
-      if role.present? && ROLES.include?(role)
-        model.where(role: role)
-      else
-        model
-      end
+  ROLES = %w[super_admin admin branch_manager volunteer].freeze
+
+  def filter_by_role(model, role)
+    if role.present? && ROLES.include?(role)
+      model.where(role: role)
+    else
+      model
     end
+  end
 
 
   def filter_by_age(model, min_age, max_age)
