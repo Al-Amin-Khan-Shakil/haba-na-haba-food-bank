@@ -1,26 +1,45 @@
-<h1>Branches</h1>
-<%= link_to 'New Branch', new_branch_path, class: "bg-green-500 text-white py-2 px-4 rounded" %>
-<table class="table-auto w-full mt-4">
-  <thead>
-    <tr>
-      <th class="px-4 py-2">Name</th>
-      <th class="px-4 py-2">Phone</th>
-      <th class="px-4 py-2">Address</th>
-      <th class="px-4 py-2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @branches.each do |branch| %>
-      <tr>
-        <td class="border px-4 py-2"><%= branch.name %></td>
-        <td class="border px-4 py-2"><%= branch.phone_number %></td>
-        <td class="border px-4 py-2"><%= branch.address %></td>
-        <td class="border px-4 py-2">
-          <%= link_to 'Show', branch_path(branch), class: "text-blue-500" %> |
-          <%= link_to 'Edit', edit_branch_path(branch), class: "text-yellow-500" %> |
-          <%= link_to 'Destroy', branch_path(branch), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-500" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
+  <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% shadow-xl rounded-xl p-2 sm:p-3 lg:p-8">
+    <div class="flex justify-between items-end mt-2 mb-4">
+      <%= link_to new_branch_path, class: "flex items-center gap-2 bg-primarycolor text-white px-1.5 py-1 lg:px-1 rounded hover:bg-hoverprimarycolor" do %>
+        <i class="fa-regular fa-plus text-2xl lg:text-base"></i>
+        <span class="hidden lg:inline-block">Add New</span>
+      <% end %>
+      <h2 class="text-3xl lg:text-4xl text-primarytext font-bold text-center">Branches</h2>
+    </div>
+    <div class="overflow-x-auto rounded-lg">
+      <table class="min-w-full max-h-fit bg-white/80 shadow-md rounded-lg border-x border-gray-100 data-table">
+        <thead>
+          <tr class="text-primarytext bg-sky-50">
+            <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-3/10">Branch</th>
+            <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-4/10">Address</th>
+            <th class="px-6 py-3 text-center font-Outfit text-base font-bold tracking-wider w-2/10">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @branches.each do |branch| %>
+            <tr class="hover:bg-gray-100 border-b border-b-gray-100">
+              <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-3/10"><%= branch&.name %></td>
+              <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-4/10"><%= branch&.address %></td>
+              <td class="px-6 py-3 text-center text-sm font-Outfit text-[#5a607a] w-3/10">
+                <div class="relative">
+                  <button data-dropdown-toggle="dropdown-<%= branch.id %>" class="text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 border border-primarycolor rounded" type="button">
+                    <div class="p-1 flex flex-row justify-center items-center  space-between">
+                      <span class="hidden md:block lg:block mr-1" >Actions</span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                  </button>
+                  <div id="dropdown-<%= branch.id %>" class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
+                    <%= link_to 'Details', branch_path(branch), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
+                    <%= link_to 'Edit', edit_branch_path(branch), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                    <%= button_to 'Delete', branch_path(branch), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

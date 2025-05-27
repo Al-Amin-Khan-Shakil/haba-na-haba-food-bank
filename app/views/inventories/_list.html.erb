@@ -14,7 +14,7 @@
         <tr class="hover:bg-gray-100 border-b border-b-gray-100">
           <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= inventory&.name %></td>
           <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= inventory&.amount %></td>
-          <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= inventory&.expire_date %></td>
+          <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= inventory&.expire_date.to_formatted_s(:long) %></td>
           <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= inventory&.phone_number %></td>
           <td class="px-6 py-3 text-center text-sm font-Outfit text-[#5a607a] w-1/5">
             <div class="relative">

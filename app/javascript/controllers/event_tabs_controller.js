@@ -21,8 +21,8 @@ export default class extends Controller {
 
     this.buttonTargets.forEach(btn => {
       btn.classList.remove(
-        'border-blue-500',
-        'text-blue-600'
+        'border-primarycolor',
+        'text-primarycolor'
       )
       btn.classList.add(
         'border-transparent',
@@ -37,7 +37,7 @@ export default class extends Controller {
       const content = this.element.querySelector(tabId)
       if (content) {
         content.classList.remove('hidden')
-        button.classList.add('border-blue-500', 'text-blue-600')
+        button.classList.add('border-primarycolor', 'text-primarycolor')
         button.classList.remove(
           'border-transparent',
           'text-gray-500',
