@@ -1,110 +1,129 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold"><%= @event.title %></h1>
-    <div class="flex space-x-2">
-      <%= link_to 'Edit', edit_event_path(@event), class: "bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" %>
-      <%= link_to 'Back', events_path, class: "bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" %>
+<div class="md:p-6 sm:p-4 lg:p-8 bg-gray-50">
+  <div class="min-w-full bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% shadow-xl rounded-xl p-3 sm:p-8 mb-8">
+    <div class="flex justify-between items-center mb-4">
+      <%= link_to events_path, class: "flex items-center text-sm sm:text-base text-gray-500 py-1 px-4 rounded bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-300 ease-in-out" do %>
+        <i class="fa-solid fa-arrow-left"></i>
+        <span class="ml-2 hidden lg:inline-block">Back</span>
+      <% end %>
+      <h2 class="text-3xl text-primarytext font-bold text-center leading-tight">Details</h2>
     </div>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <h2 class="text-xl font-semibold mb-4">Event Details</h2>
-        <div class="space-y-3">
-          <p><strong>Description:</strong> <%= @event.description %></p>
-          <p><strong>Location:</strong>
-            <%= @event.district.name %>,
-            <%= @event.county.name %>,
-            <%= @event.sub_county.name %>
-          </p>
-          <p><strong>Start:</strong> <%= @event.start_date.to_formatted_s(:long) %></p>
-          <p><strong>End:</strong> <%= @event.end_date.to_formatted_s(:long) %></p>
-        </div>
-      </div>
-      <div>
-        <h2 class="text-xl font-semibold mb-4">Participants (<%= @event_users.count %>)</h2>
+    <div class="bg-white/50 rounded-lg shadow-md p-6 mb-8">
+      <p class="text-primarytext text-2xl font-bold text-center leading-tight p-2 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out rounded-lg mb-4"><%= @event.title %></p>
+      <div class="flex flex-col gap-y-2 text-[#5a607a] bg-white/20 md:p-4 p-2 border-l border-b rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out">
+        <p><%= @event.description %></p>
+        <p><span class="inline-block w-[85px] font-bold">Location:</span>
+          <%= @event.district.name %>,
+          <%= @event.county.name %>,
+          <%= @event.sub_county.name %>
+        </p>
+        <p><span class="inline-block w-[85px] font-bold">Starts at:</span> <%= @event.start_date.to_formatted_s(:long) %></p>
+        <p><span class="inline-block w-[85px] font-bold">Ends at:</span> <%= @event.end_date.to_formatted_s(:long) %></p>
         <% if @event_users.any? %>
           <div class="space-y-2">
-            <% @event_users.each do |event_user| %>
-              <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <p class="font-medium"><%= event_user.user.email %></p>
-                  <p class="text-sm text-gray-500">
-                    Added <%= time_ago_in_words(event_user.created_at) %> ago
-                  </p>
-                </div>
-              </div>
-            <% end %>
+            <details class="">
+              <summary class="flex items-center p-2 rounded-lg cursor-pointer hover:bg-gray-100 group">
+                <i class="text-sm fa-solid fa-users group-hover:text-gray-800"></i>
+                <span class="text-base ms-3 text-primarytext  group-hover:text-primarytext">Participants - <%= @event_users.count %></span>
+                <i class="ml-2 text-xs transition-transform duration-200 fa-solid fa-chevron-down group-hover:text-primarytext"></i>
+              </summary>
+              <ul class="mt-2 flex flex-wrap gap-2">
+                <% @event_users.each do |event_user| %>
+                  <div class="shadow rounded w-full md:w-[49%] lg:w-[32.3%] xl:[24%] p-2">
+                    <p class="font-medium"><span class="inline-block w-[65px] font-bold">Name:</span><%= event_user.user.first_name %> <%= event_user.user.last_name %></p>
+                    <p class="font-medium"><span class="inline-block w-[65px] font-bold">Phone:</span><%= event_user.user.phone_number %></p>
+                    <p class="font-medium text-xs bg-primarycolor/20 rounded-full w-fit p-2"><%= event_user.user.role.humanize %></p>
+                  </div>
+                <% end %>
+              </ul>
+            </details>
           </div>
         <% else %>
-          <p class="text-gray-500">No participants yet.</p>
+          <p class="text-red-500">No participants yet, add participants.</p>
         <% end %>
       </div>
     </div>
-  </div>
-  <div class="mb-6 flex justify-around items-center">
-    <%= link_to 'Add Individual Beneficiary',
-              new_event_individual_beneficiary_path(@event),
-              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
-    <%= link_to 'Add Family Beneficiary',
-              new_event_family_beneficiary_path(@event),
-              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
-    <%= link_to 'Add Organization Beneficiary',
-              new_event_organization_beneficiary_path(@event),
-              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
-    <%= link_to 'Add Inventory',
-              new_event_inventory_path(@event),
-              class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
-  </div>
-  <div data-controller="event-tabs" class="bg-white rounded-lg shadow overflow-hidden">
-    <div class="border-b border-gray-200">
-      <nav class="flex -mb-px">
-        <button
+    <div class="my-8 flex justify-between items-center gap-4">
+      <div class="relative">
+        <button data-dropdown-toggle="dropdown-<%= @event.id %>" class="text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 border border-primarycolor rounded" type="button">
+          <div class="p-1 flex flex-row justify-center items-center  space-between">
+            <span class="hidden md:block lg:block mr-1" >Add Info</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </button>
+        <div id="dropdown-<%= @event.id %>" class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
+          <%= link_to '+ Individual', new_event_individual_beneficiary_path(@event), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+          <%= link_to '+ Family', new_event_family_beneficiary_path(@event), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+          <%= link_to '+ Organization', new_event_organization_beneficiary_path(@event), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+          <%= link_to '+ Inventory', new_event_inventory_path(@event), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+        </div>
+      </div>
+      <div class="flex justify-end items-center gap-4">
+        <%= link_to 'Edit', edit_event_path(@event), class: 'bg-primarycolor text-white py-1 px-4 w-fit rounded hover:bg-hoverprimarycolor transition-all text-sm sm:text-base' %>
+        <%= button_to 'Destroy', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-600 text-white py-1 px-4 w-fit rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
+      </div>
+    </div>
+    <div data-controller="event-tabs" class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="border-b border-gray-200 flex justify-center items-center">
+        <nav class="flex -mb-px">
+          <button
         data-event-tabs-target="button"
           data-action="click->event-tabs#switch"
-          data-tab="#individual-tab"
-          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
-          >
-          Individual Beneficiaries
-        </button>
-        <button
+            data-tab="#individual-tab"
+            class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+            >
+            <i class="fa-solid fa-user mr-2"></i>
+            <span class="hidden md:inline-block">
+              Individual
+            </span>
+          </button>
+          <button
         data-event-tabs-target="button"
           data-action="click->event-tabs#switch"
-          data-tab="#family-tab"
-          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
-          >
-          Family Beneficiaries
-        </button>
-        <button
+            data-tab="#family-tab"
+            class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+            >
+            <i class="fa-solid fa-people-roof"></i>
+            <span class="hidden md:inline-block">
+              Family
+            </span>
+          </button>
+          <button
         data-event-tabs-target="button"
           data-action="click->event-tabs#switch"
-          data-tab="#organization-tab"
-          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
-          >
-          Organization Beneficiaries
-        </button>
-        <button
+            data-tab="#organization-tab"
+            class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+            >
+            <i class="fa-solid fa-building mr-2"></i>
+            <span class="hidden md:inline-block">
+              Organization
+            </span>
+          </button>
+          <button
         data-event-tabs-target="button"
           data-action="click->event-tabs#switch"
-          data-tab="#inventory-tab"
-          class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
-          >
-          Inventories
-        </button>
-      </nav>
-    </div>
-    <!-- Tab Contents -->
-    <div id="individual-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
-      <%= render "individual_beneficiaries/list", beneficiaries: @individual_beneficiaries %>
-    </div>
-    <div id="family-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
-      <%= render "family_beneficiaries/list", beneficiaries: @family_beneficiaries %>
-    </div>
-    <div id="organization-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
-      <%= render "organization_beneficiaries/list", beneficiaries: @organization_beneficiaries %>
-    </div>
-    <div id="inventory-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
-      <%= render "inventories/list", inventories: @inventories %>
+            data-tab="#inventory-tab"
+            class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm"
+            >
+            <i class="fa-solid fa-boxes-stacked mr-2"></i>
+            <span class="hidden md:inline-block">
+              Inventories
+            </span>
+          </button>
+        </nav>
+      </div>
+      <!-- Tab Contents -->
+      <div id="individual-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+        <%= render "individual_beneficiaries/list", beneficiaries: @individual_beneficiaries %>
+      </div>
+      <div id="family-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+        <%= render "family_beneficiaries/list", beneficiaries: @family_beneficiaries %>
+      </div>
+      <div id="organization-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+        <%= render "organization_beneficiaries/list", beneficiaries: @organization_beneficiaries %>
+      </div>
+      <div id="inventory-tab" data-event-tabs-target="content" class="tab-content p-6 hidden">
+        <%= render "inventories/list", inventories: @inventories %>
+      </div>
     </div>
   </div>
 </div>
