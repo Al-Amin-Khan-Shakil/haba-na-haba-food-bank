@@ -117,14 +117,7 @@ module BeneficiaryFilterMethods
 
   def filter_by_provided_food(model, provided_food)
     return model unless provided_food.present?
-
-    if provided_food == 'provided'
-      model.where('provided_food > 0')
-    elsif provided_food == 'not_provided'
-      model.where('provided_food <= 0 OR provided_food IS NULL')
-    else
-      model
-    end
+ provided_food.present? ? model.where(provided_food: provided_food) : model
   end
 
   # OrganizationBeneficiary-specific

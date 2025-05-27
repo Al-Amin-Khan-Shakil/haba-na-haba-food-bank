@@ -100,7 +100,13 @@
           </div>
         </div>
         <div data-controller="location" data-location-base-path-value="<%= controller.controller_name %>">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-4">
+              <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :branch_id, @branches, :id, :name,
+          { selected: @family_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
+          class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            </div>
             <!-- District -->
             <div class="mb-4">
               <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
