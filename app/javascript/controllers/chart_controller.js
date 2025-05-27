@@ -1,4 +1,3 @@
-// app/javascript/controllers/chart_controller.js
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
@@ -14,9 +13,10 @@ export default class extends Controller {
       return;
     }
 
-    console.log("Food Data:", this.foodDataValue);
-    console.log("Donation Data:", this.donationDataValue);
-    console.log("Dates:", this.datesValue);
+    // Determine the maximum value across both datasets
+    const allData = [...this.foodDataValue, ...this.donationDataValue];
+    const maxValue = Math.max(...allData, 1); // Default to 1 if no data to avoid division by zero
+    const yAxisMax = maxValue * 1.2; // Add 20% buffer to the top
 
     const options = {
       chart: {
@@ -27,13 +27,25 @@ export default class extends Controller {
         dropShadow: { enabled: false },
         toolbar: { show: false },
       },
-      tooltip: { enabled: true, x: { show: false } },
+      tooltip: {
+        enabled: true,
+        x: {
+          formatter: (index) => {
+            return this.datesValue[index - 1];
+          },
+        },
+      },
       dataLabels: { enabled: false },
       stroke: { width: 6, curve: "smooth" },
       grid: {
         show: true,
         strokeDashArray: 4,
-        padding: { left: 2, right: 2, top: -26 },
+        padding: {
+          left: 2,
+          right: 2,
+          top: -26,
+          bottom: 20,
+        },
       },
       series: [
         { name: "Food Requests", data: this.foodDataValue, color: "#1A56DB" },
@@ -43,16 +55,19 @@ export default class extends Controller {
       xaxis: {
         categories: this.datesValue,
         labels: {
-          show: true,
-          style: {
-            fontFamily: "Inter, sans-serif",
-            cssClass: "text-xs font-normal fill-gray-500 dark:fill-gray-400",
-          },
+          show: false,
         },
         axisBorder: { show: false },
         axisTicks: { show: false },
       },
-      yaxis: { show: false },
+      yaxis: {
+        show: true,
+        min: 0,
+        max: yAxisMax,
+        labels: {
+          show: false,
+        },
+      },
     };
 
     const chart = new ApexCharts(this.element.querySelector("#line-chart"), options);
