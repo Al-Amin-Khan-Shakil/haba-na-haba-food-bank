@@ -28,10 +28,6 @@
             <%= form.text_field :case_name, value: params[:case_name], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= form.label :gender, "Gender", class: "block text-gray-700" %>
-            <%= form.select :gender, options_for_select([["Male", "male"], ["Female", "female"]], selected: params[:gender]), { prompt: "Select Gender" }, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
-          </div>
-          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= form.label :phone_number, "Phone", class: "block text-gray-700" %>
             <%= form.text_field :phone_number, value: params[:phone_number], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
           </div>
@@ -60,10 +56,6 @@
             <%= form.collection_select :branch_id, @branches, :id, :name, { prompt: "Select branch" }, { class: 'form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor' } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= form.label :event_id, "Event", class: "block text-gray-700" %>
-            <%= form.collection_select :event_id, @events, :id, :title, { prompt: "Select event" }, { class: 'form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor' } %>
-          </div>
-          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= form.label :start_date, "Start Date", class: "block text-gray-700" %>
             <%= form.date_field :start_date, value: params[:start_date], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
           </div>
@@ -72,11 +64,9 @@
             <%= form.date_field :end_date, value: params[:end_date], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= form.label :provided_food, "Provided", class: "block text-gray-700" %>
-            <%= form.select :provided_food,
-                            [["-- Select --", ""], ["Provided", "provided"], ["Not Provided", "not_provided"]],
-                            {},
-                            class: "form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+            <%= form.label :provided_food, "Provided Food", class: "block text-gray-700" %>
+            <%= form.text_field :provided_food,
+                            class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
           </div>
         </div>
         <div class="mt-4">
