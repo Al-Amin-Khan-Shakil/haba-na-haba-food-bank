@@ -10,6 +10,31 @@ module BeneficiaryFilterMethods
     is_selected.present? ? model.where(is_selected: is_selected) : model
   end
 
+# Inventories Filters
+ def filter_by_donor_type(model, donor_type)
+  return model unless donor_type.present?
+
+  model.joins(:donation).where(donations: { donor_type: donor_type })
+ end
+
+
+   def filter_by_donation_type(model, donation_type)
+ return model unless donation_type.present?
+
+  model.joins(:donation).where(donations: { donation_type: donation_type })
+ end
+
+
+    def filter_by_donor_name(model, donor_name)
+    donor_name.present? ? model.where('donor_name ILIKE ?', "%#{donor_name}%") : model
+  end
+
+  def filter_by_amount(model, amount)
+    amount.present? ? model.where(amount: amount) : model
+  end
+   def filter_by_event_id(model, event_id)
+    event_id.present? ? model.where(event_id: event_id) : model
+  end
 
   # Common beneficiary filters
   def filter_by_first_name(model, first_name)
