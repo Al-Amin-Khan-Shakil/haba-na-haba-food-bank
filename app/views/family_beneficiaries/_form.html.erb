@@ -123,7 +123,8 @@
                       class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
                       data: {
                         location_target: "county",
-                        action: "change->location#loadSubCounties"
+                        action: "change->location#loadSubCounties",
+                        initial_selection: (@family_beneficiary&.county_id || @request&.county_id)
                       }
                     } %>
             </div>
@@ -135,7 +136,8 @@
                     {
                       class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
                       data: {
-                        location_target: "subCounty"
+                        location_target: "subCounty",
+                         initial_selection: (@family_beneficiary&.sub_county_id || @request&.sub_county_id)
                       }
                     } %>
             </div>
@@ -147,5 +149,15 @@
         </div>
       </div>
     </div>
+    <% if @family_beneficiary.errors.any? %>
+      <div class="mb-6 p-4 bg-red-100 text-red-700 rounded-lg border border-red-200">
+        <h2 class="font-bold text-lg mb-2">Please fix the following errors:</h2>
+        <ul class="list-disc pl-5">
+          <% @family_beneficiary.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </section>
 <% end %>

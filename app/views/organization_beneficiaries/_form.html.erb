@@ -114,7 +114,8 @@
                       class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
                       data: {
                         location_target: "county",
-                        action: "change->location#loadSubCounties"
+                        action: "change->location#loadSubCounties",
+                        initial_selection: (@organization_beneficiary&.county_id || @request&.county_id)
                       }
                     } %>
             </div>
@@ -126,7 +127,8 @@
                     {
                       class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
                       data: {
-                        location_target: "subCounty"
+                        location_target: "subCounty",
+                        initial_selection: (@organization_beneficiary&.sub_county_id || @request&.sub_county_id)
                       }
                     } %>
             </div>
