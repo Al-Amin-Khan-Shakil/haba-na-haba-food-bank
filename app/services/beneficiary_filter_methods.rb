@@ -1,6 +1,12 @@
 module BeneficiaryFilterMethods
   private
 
+  # Request Filters 
+
+   def filter_by_request_type(model, request_type)
+    request_type.present? ? model.where(request_type: request_type) : model
+  end
+
   # Common beneficiary filters
   def filter_by_first_name(model, first_name)
     first_name.present? ? model.where('first_name ILIKE ?', "%#{first_name}%") : model
@@ -105,4 +111,6 @@ module BeneficiaryFilterMethods
     max_people = max_people.presence || (min_people.to_i + 100)
     model.where('(male + female) BETWEEN ? AND ?', min_people, max_people)
   end
+
+ 
 end
