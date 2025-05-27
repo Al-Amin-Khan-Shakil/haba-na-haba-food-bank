@@ -13,14 +13,16 @@ module BeneficiaryFilterMethods
   def filter_by_name(model, name)
     name.present? ? model.where('name ILIKE ?', "%#{name}%") : model
   end
+    ROLES = %w[super_admin admin branch_manager volunteer].freeze
 
-  def filter_by_gender(model, gender)
-    if gender.present? && model.defined_enums['gender'].key?(gender)
-      model.where(gender: model.genders[gender])
-    else
-      model
+    def filter_by_role(model, role)
+      if role.present? && ROLES.include?(role)
+        model.where(role: role)
+      else
+        model
+      end
     end
-  end
+
 
   def filter_by_age(model, min_age, max_age)
     if min_age.present? && max_age.present?
