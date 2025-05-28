@@ -1,36 +1,43 @@
-<div class="max-w-6xl mx-auto my-8 ">
-  <!-- Page Title -->
-  <h1 class="text-4xl font-bold text-gray-800 mb-6">Districts</h1>
-  <!-- Add District Button -->
-  <div class="flex justify-end mb-4">
-    <%= link_to "Add District", new_district_path, class: "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow" %>
-  </div>
-  <!-- Districts Table -->
-  <div class="shadow-md rounded-lg">
-    <table class="w-full table-auto">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="px-6 py-3 text-left text-gray-600 font-medium">#</th>
-          <th class="px-6 py-3 text-left text-gray-600 font-medium">Name</th>
-          <th class="px-6 py-3 text-left text-gray-600 font-medium">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200">
-        <% @districts.each_with_index do |district, index| %>
-          <tr>
-            <td class="px-6 py-4 text-gray-700"><%= index + 1 %></td>
-            <td class="px-6 py-4 text-gray-700"><%= district.name %></td>
-            <td class="px-6 py-4">
-              <!-- Actions: Show, Edit, Delete -->
-              <div class="flex space-x-2">
-                <%= link_to "Show", district_path(district), class: "text-blue-500 hover:text-blue-700 font-medium" %>
-                <%= link_to "Edit", edit_district_path(district), class: "text-yellow-500 hover:text-yellow-700 font-medium" %>
-                <%= button_to "Delete", district_path(district), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-500 hover:text-red-700 font-medium" %>
-              </div>
-            </td>
+<div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
+  <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% shadow-xl rounded-xl p-2 sm:p-3 lg:p-8">
+    <div class="flex justify-between items-end mt-2 mb-4">
+      <%= link_to new_district_path, class: "flex items-center gap-2 bg-primarycolor text-white px-1.5 py-1 lg:px-1 rounded hover:bg-hoverprimarycolor" do %>
+        <i class="fa-regular fa-plus text-2xl lg:text-base"></i>
+        <span class="hidden lg:inline-block">Add New</span>
+      <% end %>
+      <h2 class="text-3xl lg:text-4xl text-primarytext font-bold text-center">Districts</h2>
+    </div>
+    <div class="overflow-x-auto rounded-lg">
+      <table class="min-w-full max-h-fit bg-white/80 shadow-md rounded-lg border-x border-gray-100 data-table">
+        <thead>
+          <tr class="text-primarytext bg-sky-50">
+            <th class="px-6 py-3 text-left font-Outfit text-base font-bold tracking-wider w-1/2">District</th>
+            <th class="px-6 py-3 text-center font-Outfit text-base font-bold tracking-wider w-1/2">Actions</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @districts.each do |district| %>
+            <tr class="hover:bg-gray-100 border-b border-b-gray-100">
+              <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/2"><%= district&.name %></td>
+              <td class="px-6 py-3 text-center text-sm font-Outfit text-[#5a607a] w-1/2">
+                <div class="relative">
+                  <button data-dropdown-toggle="dropdown-<%= district.id %>" class="text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 border border-primarycolor rounded" type="button">
+                    <div class="p-1 flex flex-row justify-center items-center  space-between">
+                      <span class="hidden md:block lg:block mr-1" >Actions</span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                  </button>
+                  <div id="dropdown-<%= district.id %>" class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
+                    <%= link_to 'Details', district_path(district), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
+                    <%= link_to 'Edit', edit_district_path(district), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                    <%= button_to 'Delete', district_path(district), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

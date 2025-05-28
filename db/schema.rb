@@ -95,9 +95,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_22_212839) do
     t.text "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.uuid "district_id", null: false
-    t.uuid "county_id", null: false
-    t.uuid "sub_county_id", null: false
+    t.uuid "district_id"
+    t.uuid "county_id"
+    t.uuid "sub_county_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["county_id"], name: "index_events_on_county_id"
