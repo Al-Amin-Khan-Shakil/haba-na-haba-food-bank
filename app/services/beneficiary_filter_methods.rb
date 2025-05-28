@@ -10,30 +10,40 @@ module BeneficiaryFilterMethods
     is_selected.present? ? model.where(is_selected: is_selected) : model
   end
 
-# Inventories Filters
- def filter_by_donor_type(model, donor_type)
-  return model unless donor_type.present?
+  # Inventories Filters
+  def filter_by_donor_type(model, donor_type)
+    return model unless donor_type.present?
+    model.joins(:donation).where(donations: { donor_type: donor_type })
+  end
 
-  model.joins(:donation).where(donations: { donor_type: donor_type })
- end
+  def filter_by_expire_date(model, expire_date)
+    expire_date.present? ? model.where(expire_date: expire_date) : model
+  end
 
+  def filter_by_donation_type(model, donation_type)
+    return model unless donation_type.present?
+    model.joins(:donation).where(donations: { donation_type: donation_type })
+  end
 
-   def filter_by_donation_type(model, donation_type)
- return model unless donation_type.present?
-
-  model.joins(:donation).where(donations: { donation_type: donation_type })
- end
-
-
-    def filter_by_donor_name(model, donor_name)
+  def filter_by_donor_name(model, donor_name)
     donor_name.present? ? model.where('donor_name ILIKE ?', "%#{donor_name}%") : model
   end
 
   def filter_by_amount(model, amount)
     amount.present? ? model.where(amount: amount) : model
   end
-   def filter_by_event_id(model, event_id)
+
+  def filter_by_event_id(model, event_id)
     event_id.present? ? model.where(event_id: event_id) : model
+  end
+
+  # Events filter 
+  def filter_start_date(model, start_date)
+    start_date.present? ? model.where(start_date: start_date) : model
+  end
+
+  def filter_end_date(model, end_date)
+    end_date.present? ? model.where(end_date: end_date) : model
   end
 
   # Common beneficiary filters
@@ -58,7 +68,6 @@ module BeneficiaryFilterMethods
       model
     end
   end
-
 
   def filter_by_age(model, min_age, max_age)
     if min_age.present? && max_age.present?
@@ -116,8 +125,7 @@ module BeneficiaryFilterMethods
   end
 
   def filter_by_provided_food(model, provided_food)
-    return model unless provided_food.present?
- provided_food.present? ? model.where(provided_food: provided_food) : model
+    provided_food.present? ? model.where(provided_food: provided_food) : model
   end
 
   # OrganizationBeneficiary-specific
@@ -134,6 +142,4 @@ module BeneficiaryFilterMethods
     max_people = max_people.presence || (min_people.to_i + 100)
     model.where('(male + female) BETWEEN ? AND ?', min_people, max_people)
   end
-
- 
 end

@@ -24,8 +24,12 @@
             <%= f.text_field :organization_name, value: params[:organization_name], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= f.label :registration_no, "Reg No.", class: "block text-gray-700" %>
+            <%= f.label :registration_no, "Registration No.", class: "block text-gray-700" %>
             <%= f.text_field :registration_no, value: params[:registration_no], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= f.label :organization_no, "Organization No.", class: "block text-gray-700" %>
+            <%= f.text_field :organization_no, value: params[:organization_no], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :case_name, "Case", class: "block text-gray-700" %>
@@ -34,14 +38,6 @@
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :phone_number, "Phone", class: "block text-gray-700" %>
             <%= f.text_field :phone_number, value: params[:phone_number], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
-          </div>
-          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= f.label :min_people, "Min People", class: "block text-gray-700" %>
-            <%= f.number_field :min_people, value: params[:min_people], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
-          </div>
-          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= f.label :max_people, "Max People", class: "block text-gray-700" %>
-            <%= f.number_field :max_people, value: params[:max_people], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :district_id, "District", class: "block text-gray-700" %>
@@ -60,10 +56,6 @@
             <%= f.collection_select :branch_id, @branches, :id, :name, { prompt: "Select branch" }, { class: 'form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen' } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= f.label :event_id, "Event", class: "block text-gray-700" %>
-            <%= f.collection_select :event_id, @events, :id, :title, { prompt: "Select event" }, { class: 'form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor' } %>
-          </div>
-          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :start_date, "Start Date", class: "block text-gray-700" %>
             <%= f.date_field :start_date, value: params[:start_date], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
           </div>
@@ -72,11 +64,9 @@
             <%= f.date_field :end_date, value: params[:end_date], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-            <%= f.label :provided_food, "Provided", class: "block text-gray-700" %>
-            <%= f.select :provided_food,
-                            [["-- Select --", ""], ["Provided", "provided"], ["Not Provided", "not_provided"]],
-                            {},
-                            class: "form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
+            <%= f.label :provided_food, "Provided Food", class: "block text-gray-700" %>
+            <%= f.text_field :provided_food,
+                            class: " mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
           </div>
         </div>
         <div class="mt-4">
