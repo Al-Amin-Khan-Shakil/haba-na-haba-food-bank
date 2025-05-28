@@ -53,9 +53,9 @@ class DashboardDataService
 
   def generate_dates
     @dates = if time_range == :current_year
-               (1..12).map { |month| Date.new(end_date.year, month, 1).strftime("%b") }
+               (1..12).map { |month| Date.new(end_date.year, month, 1).strftime('%b') }
              else
-               (start_date..end_date).map { |date| date.strftime("%d %b") }
+               (start_date..end_date).map { |date| date.strftime('%d %b') }
              end
   end
 
