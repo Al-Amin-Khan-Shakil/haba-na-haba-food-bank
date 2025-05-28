@@ -11,8 +11,6 @@ export default class extends Controller {
       return;
     }
 
-    console.log("Percentages:", this.percentagesValue);
-
     const options = {
       series: this.percentagesValue,
       colors: ["#1C64F2", "#16BDCA", "#9061F9", "#6dc13d"],
