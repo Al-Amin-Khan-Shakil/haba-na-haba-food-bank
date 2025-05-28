@@ -1,4 +1,3 @@
-// app/javascript/controllers/pie_chart_controller.js
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
@@ -16,7 +15,7 @@ export default class extends Controller {
 
     const options = {
       series: this.percentagesValue,
-      colors: ["#1C64F2", "#16BDCA", "#9061F9", "#FACA15"], // Four distinct colors
+      colors: ["#1C64F2", "#16BDCA", "#9061F9", "#6dc13d"],
       chart: {
         height: 300,
         width: "100%",
@@ -83,6 +82,6 @@ export default class extends Controller {
   changeTimeRange(event) {
     event.preventDefault();
     const timeRange = event.currentTarget.dataset.timeRange;
-    window.location = `/dashboard?time_range=${timeRange}`; // Updated to redirect to index
+    window.location = `/dashboard?time_range=${timeRange}`;
   }
 }

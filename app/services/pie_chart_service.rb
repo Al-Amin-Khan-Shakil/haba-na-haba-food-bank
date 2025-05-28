@@ -36,9 +36,9 @@ class PieChartService
 
   def fetch_counts
     range = start_date.beginning_of_day..end_date.end_of_day
-    @individual_count = Individual.where(created_at: range).count
-    @family_count = Family.where(created_at: range).count
-    @organization_count = Organization.where(created_at: range).count
+    @individual_count = IndividualBeneficiary.where(created_at: range).count
+    @family_count = FamilyBeneficiary.where(created_at: range).count
+    @organization_count = OrganizationBeneficiary.where(created_at: range).count
     @inventory_count = Inventory.where(created_at: range).count
   end
 

@@ -13,10 +13,9 @@ export default class extends Controller {
       return;
     }
 
-    // Determine the maximum value across both datasets
     const allData = [...this.foodDataValue, ...this.donationDataValue];
-    const maxValue = Math.max(...allData, 1); // Default to 1 if no data to avoid division by zero
-    const yAxisMax = maxValue * 1.2; // Add 20% buffer to the top
+    const maxValue = Math.max(...allData, 1);
+    const yAxisMax = maxValue * 1.2;
 
     const options = {
       chart: {
@@ -77,6 +76,6 @@ export default class extends Controller {
   changeTimeRange(event) {
     event.preventDefault();
     const timeRange = event.currentTarget.dataset.timeRange;
-    window.location = `?time_range=${timeRange}`;
+    window.location = `/dashboard?time_range=${timeRange}`;
   }
 }

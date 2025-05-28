@@ -15,4 +15,12 @@ class DashboardController < ApplicationController
     pie_chart_service = PieChartService.new(params[:time_range])
     @percentages = pie_chart_service.percentages
   end
+
+  def pie_chart
+    service = PieChartService.new(params[:time_range])
+    @percentages = service.percentages
+    @current_time_range = service.time_range
+    @start_date = service.start_date
+    @end_date = service.end_date
+  end
 end
