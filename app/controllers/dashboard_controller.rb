@@ -41,6 +41,7 @@ class DashboardController < ApplicationController
 
   def calculate_percentage(part, total)
     return 0.0 if total.zero?
+
     ((part.to_f / total) * 100).round(0)
   end
 end
