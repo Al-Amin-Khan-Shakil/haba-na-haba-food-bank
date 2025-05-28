@@ -30,6 +30,7 @@ class DashboardDataService
                  when :current_year
                    Date.new(end_date.year, 1, 1)
                  else
+                   Rails.logger.warn "Unrecognized time_range: #{@time_range}, defaulting to last 7 days"
                    7.days.ago.to_date
                  end
     @start_date = start_date
