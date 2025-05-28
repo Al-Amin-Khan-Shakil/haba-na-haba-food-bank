@@ -162,6 +162,71 @@
           </div>
         </div>
       </div>
+      <div class="md:max-w-[50%] w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-3 md:p-6">
+        <!-- Metrics Cards Section (Single Column) -->
+        <div class="grid grid-cols-1 gap-2 ">
+          <div class="bg-primarytext w-full dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-700">
+            <div class="flex justify-between items-center w-[100%]">
+              <div class="flex flex-col justify-center w-3/4">
+                <h5 class="text-gray-50 leading-none font-normal text-base sm:text-xl mb-1">
+                  Number of Branches:
+                </h5>
+                <div class="w-full bg-gray-200 rounded-full h-4 mt-1">
+                  <div class="bg-primarycolor h-4 rounded-full" style="width: 80%"></div>
+                </div>
+              </div>
+              <div class="w-1/4 text-right p-2">
+                <span class="inline-block text-white font-bold text-2xl lg:text-4xl"><%= @branch_count %></span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-primarytext w-full dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-700">
+            <div class="flex justify-between items-center w-[100%]">
+              <div class="flex flex-col justify-center w-3/4">
+                <h5 class="text-gray-50 leading-none font-normal text-base sm:text-xl mb-1">
+                  Number of Users:
+                </h5>
+                <div class="w-full bg-gray-200 rounded-full h-4 mt-1">
+                  <div class="bg-primarycolor h-4 rounded-full" style="width: 80%"></div>
+                </div>
+              </div>
+              <div class="w-1/4 text-right p-2">
+                <span class="inline-block text-white font-bold text-2xl lg:text-4xl"><%= @user_count %></span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-primarytext w-full dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-700">
+            <div class="flex justify-between items-center w-[100%]">
+              <div class="flex flex-col justify-center w-3/4">
+                <h5 class="text-gray-50 leading-none font-normal text-base sm:text-xl mb-1">
+                  Branch Managers:
+                </h5>
+                <div class="w-full bg-gray-200 rounded-full h-4 mt-1">
+                  <div class="bg-primarycolor h-4 rounded-full" style="width: <%= @branch_manager_percentage %>%"></div>
+                </div>
+              </div>
+              <div class="w-1/4 text-right p-2">
+                <span class="inline-block text-white font-bold text-2xl lg:text-4xl"><%= @branch_manager_percentage %>%</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-primarytext w-full dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-700">
+            <div class="flex justify-between items-center w-[100%]">
+              <div class="flex flex-col justify-center w-3/4">
+                <h5 class="text-gray-50 leading-none font-normal text-base sm:text-xl mb-1">
+                  Volunteers:
+                </h5>
+                <div class="w-full bg-gray-200 rounded-full h-4 mt-1">
+                  <div class="bg-primarycolor h-4 rounded-full" style="width: <%= @volunteer_percentage %>%"></div>
+                </div>
+              </div>
+              <div class="w-1/4 text-right p-2">
+                <span class="inline-block text-white font-bold text-2xl lg:text-4xl"><%= @volunteer_percentage %>%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
