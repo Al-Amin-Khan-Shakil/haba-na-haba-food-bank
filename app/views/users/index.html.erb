@@ -1,60 +1,50 @@
 <div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
   <!-- Header with Add New, Title, and Filter/Clear Buttons -->
   <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% shadow-xl rounded-xl p-2 sm:p-3 lg:p-8" data-controller="filter-form">
-    <%= link_to new_user_path, class: "flex items-center gap-2 bg-primarycolor text-white px-1.5 py-1 lg:px-1 rounded hover:bg-hoverprimarycolor" do %>
-      <i class="fa-regular fa-plus text-2xl lg:text-base"></i>
-      <span class="hidden lg:inline-block">Add New</span>
-    <% end %>
-    <h2 class="text-2xl md:text-3xl lg:text-4xl text-primarytext font-extrabold text-center">Users</h2>
-    <!-- This div now wraps both buttons and form -->
-    <div data-controller="filter-form">
+    <div class="flex justify-between items-end mt-2 mb-4">
+      <%= link_to new_user_path, class: "flex items-center gap-2 bg-primarycolor text-white px-1.5 py-1 lg:px-1 rounded hover:bg-hoverprimarycolor" do %>
+        <i class="fa-regular fa-plus text-2xl lg:text-base"></i>
+        <span class="hidden lg:inline-block">Add New</span>
+      <% end %>
+      <h2 class="text-xl md:text-2xl lg:text-3xl text-primarytext font-bold text-center">Users</h2>
       <div class="flex justify-end gap-2">
-        <button data-filter-form-target="filterButton" data-action="click->filter-form#toggleForm"
-          class="bg-primarycolor text-white py-1 px-2 rounded hover:bg-hoverprimarycolor">
+        <button data-filter-form-target="filterButton" data-action="click->filter-form#toggleForm" class="bg-primarycolor text-white py-1 px-2 rounded hover:bg-hoverprimarycolor">
           <i class="fa-solid fa-filter"></i>
           <span class="hidden mr-1 lg:inline-block">Filter</span>
         </button>
-        <%= link_to users_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" },
-            class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
+        <%= link_to users_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
           <i class="fa-solid fa-arrows-rotate"></i>
           <span class="ml-1 hidden lg:inline-block">Clear</span>
         <% end %>
       </div>
-      <!-- Filter Form (Initially Hidden) - Now properly nested within controller -->
-      <div data-filter-form-target="form"
-           class="space-y-4 hidden bg-white/50 my-4 rounded-lg p-4 shadow-md text-gray-600">
-        <%= form_with url: users_path, method: :get, local: true, class: "space-y-4" do |form| %>
-          <div class="flex flex-wrap gap-4">
-            <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-              <%= form.label :first_name, "First Name", class: "block text-gray-700" %>
-              <%= form.text_field :first_name, value: params[:first_name], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
-            </div>
-            <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-              <%= form.label :last_name, "Last Name", class: "block text-gray-700" %>
-              <%= form.text_field :last_name, value: params[:last_name], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
-            </div>
-            <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-              <%= form.label :phone_number, "Phone Number", class: "block text-gray-700" %>
-              <%= form.text_field :phone_number, value: params[:phone_number], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
-            </div>
-            <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
-              <%= form.label :gender, "Gender", class: "block text-gray-700" %>
-              <%= form.select :gender,
-                  options_for_select(IndividualBeneficiary.genders.keys.map { |k| [k.humanize.titleize, k] }, params[:gender]),
-                  { include_blank: "Select Gender" },
-                  class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
-            </div>
-          </div>
-          <!-- Submit -->
-          <div class="mt-4">
-            <%= form.submit "Filter", data: { filter_form_target: "submitButton", action: "click->filter-form#hideForm" },
-                class: "inline-block bg-primarycolor text-white py-1 px-4 rounded hover:bg-hoverprimarycolor" %>
-          </div>
-        <% end %>
-      </div>
     </div>
-  </div>
-  <div class="bg-gradient-to-br from-white via-primarycolor/10 to-red-600/10 transition duration-300 hover:shadow-2xl md:p-10 p-6 rounded-3xl shadow-xl border border-gray-100">
+    <!-- Filter Form (Initially Hidden) -->
+    <div data-filter-form-target="form" class="space-y-4 hidden bg-white/50 my-4 rounded-lg p-4 shadow-md text-gray-600">
+      <%= form_with url: users_path, method: :get, local: true, class: "space-y-4" do |form| %>
+        <div class="flex flex-wrap gap-4">
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :first_name, "First Name", class: "block text-gray-700" %>
+            <%= form.text_field :first_name, value: params[:first_name], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :last_name, "Last Name", class: "block text-gray-700" %>
+            <%= form.text_field :last_name, value: params[:last_name], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :phone_number, "Phone Number", class: "block text-gray-700" %>
+            <%= form.text_field :phone_number, value: params[:phone_number], class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+          <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
+            <%= form.label :role, "Role", class: "block text-gray-700" %>
+            <%= form.select :role, options_for_select(User::ROLES.map { |k| [k.humanize.titleize, k] }, params[:role]), { include_blank: "Select Role" }, class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
+          </div>
+        </div>
+        <!-- Submit -->
+        <div class="mt-4">
+          <%= form.submit "Filter", data: { filter_form_target: "submitButton", action: "click->filter-form#hideForm" }, class: "inline-block bg-primarycolor text-white py-1 px-4 rounded hover:bg-hoverprimarycolor" %>
+        </div>
+      <% end %>
+    </div>
     <% if @users.any? %>
       <div class="mt-8 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
         <% @users.each do |user| %>
@@ -72,7 +62,7 @@
               <div id="dropdownMenu-<%= user.id %>" class="hidden z-30 mt-2 w-28 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton-<%= user.id %>">
                   <li>
-                    <%= link_to 'View', user_path(user), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+                    <%= link_to 'User details', user_path(user), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
                   </li>
                   <li>
                     <%= link_to 'Edit', edit_user_path(user), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
@@ -93,7 +83,7 @@
             </div>
             <!-- User Info (Bottom Left) -->
             <div class="mt-8 absolute bottom-5 left-5">
-              <p class="text-gray-800 font-semibold text-sm md:text-base">
+              <p class="text-gray-800 font-semibold text-sm md:text-base max-w-32">
                 <%= "#{user.first_name} #{user.last_name}" %>
                 <span class="text-sm text-gray-600 capitalize italic"><%= user.role.humanize %></span>
               </p>
