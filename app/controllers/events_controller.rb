@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     if filter_applied
       @events = FilterService.new(Event.all,filter_params).apply.order(created_at: :desc)
     else
-      default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
+      default_params = filter_params.merge(start_date: 3.days.ago.to_date.to_s, end_date: 7.days.from_now.to_date.to_s)
       @events = FilterService.new(Event.all, default_params).apply.order(created_at: :desc)
     end
     @districts = District.all
