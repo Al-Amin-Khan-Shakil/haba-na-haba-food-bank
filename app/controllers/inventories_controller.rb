@@ -8,7 +8,14 @@ class InventoriesController < ApplicationController
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
 
   def index
-    @inventories = Inventory.all
+        filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
+
+    if filter_applied
+      @inventories = FilterService.new(Inventory.all, filter_params).apply.order(created_at: :desc)
+    else
+      default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
+      @inventories = FilterService.new(Inventory.all, default_params).apply.order(created_at: :desc)
+    end
     @districts = District.all
     @counties = County.all
     @sub_counties = SubCounty.all
@@ -111,6 +118,12 @@ class InventoriesController < ApplicationController
     @sub_counties = effective_county&.sub_counties || []
     @branches = Branch.all
     @events = Event.all
+  end
+
+   def filter_params
+    params.permit(:donation_type, :name, :donor_name, :donor_type,
+                  :phone_number, :amount, :expire_date, :county_id, :sub_county_id,
+                  :district_id, :branch_id, :start_date, :end_date, :event_id, :commit)
   end
 
   def inventory_params
