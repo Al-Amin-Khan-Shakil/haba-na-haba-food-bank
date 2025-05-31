@@ -26,9 +26,6 @@
             </ul>
           </div>
         <% end %>
-        <% if alert %>
-          <div class="mb-6 p-4 bg-yellow-100 text-yellow-700 rounded-lg border border-yellow-200"><%= alert %></div>
-        <% end %>
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Basic Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
@@ -76,17 +73,17 @@
               hover:file:bg-hoverprimarycolor" %>
           </div>
         </div>
-          <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Account Security</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="mb-4">
-              <%= f.label :password, "Password", class: "block text-gray-700 font-bold mb-2" %>
-              <%= f.password_field :password, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-            </div>
-            <div class="mb-4">
-              <%= f.label :password_confirmation, "Password Confirmation", class: "block text-gray-700 font-bold mb-2" %>
-              <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-            </div>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Account Security</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <%= f.label :password, "Password", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.password_field :password, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
+          <div class="mb-4">
+            <%= f.label :password_confirmation, "Password Confirmation", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+        </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-6">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit @user.persisted? ? "Update User" : "Create User", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-4 rounded" %>
