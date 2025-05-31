@@ -17,7 +17,12 @@ module BeneficiaryFilterMethods
   end
 
   def filter_by_expire_date(model, expire_date)
-    expire_date.present? ? model.where(expire_date: expire_date) : model
+    return model unless expire_date.present?
+
+    parsed_expire_date = Date.parse(expire_date.to_s) rescue nil
+    return model unless parsed_expire_date
+
+    model.where(expire_date: Date.current.beginning_of_day..parsed_expire_date.end_of_day)
   end
 
   def filter_by_donation_type(model, donation_type)
@@ -37,7 +42,7 @@ module BeneficiaryFilterMethods
     event_id.present? ? model.where(event_id: event_id) : model
   end
 
-  # Events filter 
+  # Events filter
   def filter_start_date(model, start_date)
     start_date.present? ? model.where(start_date: start_date) : model
   end
