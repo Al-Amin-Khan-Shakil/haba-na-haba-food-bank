@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users,  skip: [:registrations]
 
   get 'home/index'
+  get "dashboard", to: "dashboard#index"
   post '/ussd', to: 'ussd#recive'
   resources :users
   resources :branches
@@ -66,7 +67,7 @@ Rails.application.routes.draw do
 
   # Conditional root route
   authenticated :user do
-    root to: 'users#index', as: :authenticated_root
+    root to: 'dashboard#index', as: :authenticated_root
   end
 
   unauthenticated do
