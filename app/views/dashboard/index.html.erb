@@ -1,6 +1,6 @@
 <div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
   <div class="flex flex-col items-center justify-center gap-4">
-    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6"
+    <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6"
        data-controller="chart"
        data-chart-food-data-value="<%= @food_data.to_json %>"
        data-chart-donation-data-value="<%= @donation_data.to_json %>"
@@ -94,7 +94,7 @@
       </div>
     </div>
     <div class="w-full flex flex-col md:flex-row gap-2 lg:gap-4">
-      <div class="md:max-w-[50%] w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6"
+      <div class="md:max-w-[50%] w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6"
        data-controller="pie-chart"
        data-pie-chart-percentages-value="<%= @percentages.to_json %>">
         <div class="flex justify-between items-start w-full">
@@ -162,7 +162,7 @@
           </div>
         </div>
       </div>
-      <div class="md:max-w-[50%] w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-3 md:p-6">
+      <div class="md:max-w-[50%] w-full bg-white rounded-lg shadow dark:bg-gray-800 p-3 md:p-6">
         <!-- Metrics Cards Section (Single Column) -->
         <div class="grid grid-cols-1 gap-2 ">
           <div class="bg-primarytext w-full dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-700">
