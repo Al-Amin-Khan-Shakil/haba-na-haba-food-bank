@@ -39,7 +39,12 @@
             <%= form.select :role, options_for_select(User::ROLES.map { |k| [k.humanize.titleize, k] }, params[:role]), { include_blank: "Select Role" }, class: "mt-1 block w-full border border-gray-300 rounded focus:ring-1 focus:ring-primarycolor focus:border-primarycolor" %>
           </div>
         </div>
-
+        <!-- Submit -->
+        <div class="mt-4">
+          <%= form.submit "Filter", data: { filter_form_target: "submitButton", action: "click->filter-form#hideForm" }, class: "inline-block bg-primarycolor text-white py-1 px-4 rounded hover:bg-hoverprimarycolor" %>
+        </div>
+      <% end %>
+    </div>
     <% if @users.any? %>
       <div class="mt-8 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
         <% @users.each do |user| %>
