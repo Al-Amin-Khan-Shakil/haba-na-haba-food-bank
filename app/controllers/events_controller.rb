@@ -4,10 +4,10 @@ class EventsController < ApplicationController
   before_action :set_form_dependencies, only: %i[new edit create update]
 
   def index
-     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
+    filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
     if filter_applied
-      @events = FilterService.new(Event.all,filter_params).apply.order(created_at: :desc)
+      @events = FilterService.new(Event.all, filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
       @events = FilterService.new(Event.all, default_params).apply.order(created_at: :desc)
