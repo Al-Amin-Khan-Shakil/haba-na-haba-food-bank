@@ -37,6 +37,7 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
+      create_notifications(@request, :created)
       redirect_to @request, notice: 'Request was successfully created.'
     else
       render :new, status: :unprocessable_entity
@@ -53,12 +54,12 @@ class RequestsController < ApplicationController
   def update
     if @request.update(request_params)
       if @request.donation_request? && @request.donation.present?
-        # Update donor info from request
         @request.donation.update(
           donor_name: @request.name,
           phone_number: @request.phone_number
         )
       end
+      create_notifications(@request, :updated)
       redirect_to @request, notice: 'Request updated successfully'
     else
       @request.build_donation if @request.donation_request? && @request.donation.blank?
@@ -119,4 +120,24 @@ class RequestsController < ApplicationController
       donation_attributes: %i[id donation_type donation_name amount donor_type _destroy]
     )
   end
+
+  def create_notifications(request, action)
+    branch_managers = User.where(role: 'branch_manager', branch_id: request.branch_id)
+    branch_managers.each do |manager|
+      Notification.create(
+        user: manager,
+        notifiable: request,
+        message: "A (#{request.request_type}) request was#{action} for your branch."
+      )
+    end
+
+    if request.user_id.present?
+      volunteer = User.find_by(id: request.user_id, role: 'volunteer')
+      if volunteer
+        Notification.create(
+          user: volunteer,
+          notifiable: request,
+          message: "A (#{request.request_type}) request has been assigned to you."
+        )
+      end
 end
