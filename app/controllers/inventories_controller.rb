@@ -122,7 +122,7 @@ class InventoriesController < ApplicationController
 
   def filter_params
     params.permit(:donation_type, :name, :donor_name, :donor_type,
-                  :phone_number, :amount, :expire_date, :county_id, :sub_county_id,:created_at,
+                  :phone_number, :amount, :expire_date, :county_id, :sub_county_id, :created_at,
                   :district_id, :branch_id, :start_date, :end_date, :event_id, :commit)
   end
 
