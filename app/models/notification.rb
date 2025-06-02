@@ -12,6 +12,6 @@ class Notification < ApplicationRecord
   end
 
   def mark_as_read!
-    update(read_at: Time.current) unsess read?
+    update(read_at: Time.current) unless read?
   end
 end
