@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def index
     @users = FilterService.new(User.all, filter_params).apply
+    @branches = Branch.all
   end
 
   def show; end
@@ -49,7 +50,7 @@ class UsersController < ApplicationController
 
   def filter_params
     params.permit(:commit, :first_name, :phone_number, :gender,
-                  :role, :last_name)
+                  :role, :last_name, :branch_id)
   end
 
   def set_user
@@ -60,6 +61,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :profile_picture, :phone_number, :role, :gender, :address,
-                                 :email, :password, :password_confirmation)
+                                 :email, :password, :password_confirmation, :branch_id)
   end
 end

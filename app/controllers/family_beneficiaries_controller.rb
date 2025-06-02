@@ -134,6 +134,6 @@ class FamilyBeneficiariesController < ApplicationController
                                                :address_note, :village, :parish, :fathers_name, :mothers_name,
                                                :fathers_occupation, :mothers_occupation, :number_of_meals_home,
                                                :number_of_meals_school, :provided_food, :basic_FEH, :basic_FES,
-                                               :case_name, :case_description, :phone_number, :request_id,:branch_id)
+                                               :case_name, :case_description, :phone_number, :request_id, :branch_id)
   end
 end

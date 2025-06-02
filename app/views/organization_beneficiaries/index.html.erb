@@ -41,19 +41,19 @@
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :district_id, "District", class: "block text-gray-700" %>
-            <%= f.collection_select :district_id, @districts, :id, :name, { prompt: "Select District" }, { class: 'district-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries" } %>
+            <%= f.collection_select :district_id, @districts, :id, :name, { prompt: "Select District", selected: params[:district_id] }, { class: 'district-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries" } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :county_id, "County", class: "block text-gray-700" %>
-            <%= f.collection_select :county_id, @counties, :id, :name, { prompt: "Select County" }, { class: 'county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries" } %>
+            <%= f.collection_select :county_id, @counties, :id, :name, { prompt: "Select County", selected: params[:county_id] }, { class: 'county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries" } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :sub_county_id, "Sub-County", class: "block text-gray-700" %>
-            <%= f.collection_select :sub_county_id, @sub_counties, :id, :name, { prompt: "Select Sub-County" }, { class: 'sub-county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen' } %>
+            <%= f.collection_select :sub_county_id, @sub_counties, :id, :name, { prompt: "Select Sub-County", selected: params[:sub_county_id] }, { class: 'sub-county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen' } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :branch_id, "Branch", class: "block text-gray-700" %>
-            <%= f.collection_select :branch_id, @branches, :id, :name, { prompt: "Select branch" }, { class: 'form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen' } %>
+            <%= f.collection_select :branch_id, @branches, :id, :name, { prompt: "Select branch", selected: params[:branch_id] }, { class: 'form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen' } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :start_date, "Start Date", class: "block text-gray-700" %>
@@ -65,7 +65,7 @@
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :provided_food, "Provided Food", class: "block text-gray-700" %>
-            <%= f.text_field :provided_food,
+            <%= f.text_field :provided_food,value: params[:provided_food],
                             class: " mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen" %>
           </div>
         </div>

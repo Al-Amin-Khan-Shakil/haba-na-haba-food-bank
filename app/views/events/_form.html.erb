@@ -14,16 +14,6 @@
         </h2>
       </div>
       <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
-        <% if @event.errors.any? %>
-          <div class="text-red-600 mb-4 p-3 bg-red-50 rounded-lg">
-            <h3 class="font-bold">Please fix these errors:</h3>
-            <ul class="list-disc pl-5">
-              <% @event.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
         <div class="mb-4">
           <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Event Details</h3>
           <%= f.label :title, class: "block text-gray-700 font-bold mb-2" %>

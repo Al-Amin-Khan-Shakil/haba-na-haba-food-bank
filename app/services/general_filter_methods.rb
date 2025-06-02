@@ -1,9 +1,7 @@
 module GeneralFilterMethods
-  private
-
   def filter_by_date_range(model, start_date, end_date, column = nil)
     # Fallback to :start_date if it exists, else :created_at
-    column ||= model.column_names.include?("start_date") ? :start_date : :created_at
+    column ||= model.column_names.include?('start_date') ? :start_date : :created_at
 
     parsed_start = parse_date(start_date)
     parsed_end = parse_date(end_date)
@@ -24,11 +22,13 @@ module GeneralFilterMethods
 
   def parse_date(date_string)
     return nil unless date_string.present?
+
     Date.parse(date_string)
   end
 
   def fix_end_date_if_before_start(start_date, end_date)
     return end_date unless start_date && end_date && end_date < start_date
+
     Date.current
   end
 

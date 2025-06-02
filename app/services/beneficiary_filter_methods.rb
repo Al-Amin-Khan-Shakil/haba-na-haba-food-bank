@@ -1,4 +1,6 @@
 module BeneficiaryFilterMethods
+  ROLES = %w[super_admin admin branch_manager volunteer].freeze
+
   private
 
   # Request Filters
@@ -13,6 +15,7 @@ module BeneficiaryFilterMethods
   # Inventories Filters
   def filter_by_donor_type(model, donor_type)
     return model unless donor_type.present?
+
     model.joins(:donation).where(donations: { donor_type: donor_type })
   end
 
@@ -22,22 +25,25 @@ module BeneficiaryFilterMethods
 
   def filter_by_donation_type(model, donation_type)
     return model unless donation_type.present?
+
     model.joins(:donation).where(donations: { donation_type: donation_type })
   end
 
   def filter_by_donor_name(model, donor_name)
-    donor_name.present? ? model.where('donor_name ILIKE ?', "%#{donor_name}%") : model
+    return model unless donor_name.present?
+
+    model.where('donor_name ILIKE ?', "%#{donor_name}%")
   end
 
   def filter_by_amount(model, amount)
-    amount.present? ? model.where(amount: amount) : model
+    amount.present? ? model.where('amount <= ?', amount) : model
   end
 
   def filter_by_event_id(model, event_id)
     event_id.present? ? model.where(event_id: event_id) : model
   end
 
-  # Events filter 
+  # Events filter
   def filter_start_date(model, start_date)
     start_date.present? ? model.where(start_date: start_date) : model
   end
@@ -58,8 +64,6 @@ module BeneficiaryFilterMethods
   def filter_by_name(model, name)
     name.present? ? model.where('name ILIKE ?', "%#{name}%") : model
   end
-
-  ROLES = %w[super_admin admin branch_manager volunteer].freeze
 
   def filter_by_role(model, role)
     if role.present? && ROLES.include?(role)
