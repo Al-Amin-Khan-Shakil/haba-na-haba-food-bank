@@ -50,7 +50,7 @@ class UsersController < ApplicationController
 
   def filter_params
     params.permit(:commit, :first_name, :phone_number, :gender,
-                  :role, :last_name)
+                  :role, :last_name, :branch_id)
   end
 
   def set_user
