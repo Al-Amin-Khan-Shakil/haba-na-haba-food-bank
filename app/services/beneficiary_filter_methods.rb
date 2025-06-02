@@ -29,9 +29,12 @@ module BeneficiaryFilterMethods
     model.joins(:donation).where(donations: { donation_type: donation_type })
   end
 
-  def filter_by_donor_name(model, donor_name)
-    donor_name.present? ? model.where('donor_name ILIKE ?', "%#{donor_name}%") : model
-  end
+ def filter_by_donor_name(model, donor_name)
+  return model unless donor_name.present?
+
+  model.where('donors.donor_name ILIKE ?', "%#{donor_name}%")
+end
+
 
   def filter_by_amount(model, amount)
     amount.present? ? model.where(amount: amount) : model
