@@ -16,7 +16,9 @@
       <% if user_signed_in? %>
         <%= render "layouts/sidebar" %>
       <% else %>
-        <%= yield %>
+        <div class="p-0 m-0 flex justify-center items-center h-screen">
+          <%= yield %>
+        </div>
       <% end %>
     </main>
   </body>
