@@ -11,16 +11,6 @@
         </h2>
       </div>
       <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
-        <% if branch.errors.any? %>
-          <div class="text-red-600 mb-4 p-3 bg-red-50 rounded-lg">
-            <h3 class="font-bold">Please fix these errors:</h3>
-            <ul class="list-disc pl-5">
-              <% branch.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
         <div class="mb-4">
           <%= form.label :name, class: "block text-gray-700 font-bold mb-2" %>
           <%= form.text_field :name, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
