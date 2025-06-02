@@ -140,4 +140,6 @@ class RequestsController < ApplicationController
           message: "A (#{request.request_type}) request has been assigned to you."
         )
       end
+    end
+  end
 end

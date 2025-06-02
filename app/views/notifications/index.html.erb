@@ -1,0 +1,18 @@
+<div class="bg-white shadow-md rounded-lg p-6">
+  <h1 class="text-2xl font-bold text-gray-800 mb-4">Notifications</h1>
+  <% if @notifications.any? %>
+    <ul class="space-y-4">
+      <% @notifications.each do |notification| %>
+        <li class="<%= notification.read? ? 'bg-gray-50' : 'bg-blue-50' %> p-4 rounded-md shadow-sm">
+          <%= link_to notification.message, notification_path(notification), class: "text-blue-600 hover:text-blue-800" %>
+          <p class="text-sm text-gray-500 mt-1"><%= time_ago_in_words(notification.created_at) %> ago</p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-gray-600">No notifications available.</p>
+  <% end %>
+  <div class="mt-6">
+    <%= link_to "Back", root_path, class: "text-blue-600 hover:text-blue-800 font-medium" %>
+  </div>
+</div>
