@@ -103,6 +103,13 @@ class EventsController < ApplicationController
 
     user_ids.each do |user_id|
       event.event_users.find_or_create_by(user_id: user_id)
+      if event_user.persisted?
+        user = User.find(user_id)
+        Notification.create(
+          user: user,
+          notifiable: event,
+          message: "You were added to the event '#{event.title}' starting on #{event.start_date.strftime('%B %d, %Y')}."
+        )
     end
   end
 end
