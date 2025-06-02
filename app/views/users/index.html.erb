@@ -78,9 +78,9 @@
               </div>
             </div>
             <!-- Profile Picture (Top Right) -->
-            <div class="absolute top-0 right-0 md:w-52 md:h-52 w-44 h-44 rounded-bl-full bg-primarycolor/50 overflow-hidden">
+            <div class="absolute top-0 right-0 md:w-52 md:h-52 w-44 h-44 rounded-bl-full rounded-tl-lg  bg-primarycolor/50 overflow-hidden">
               <% if user.profile_picture.attached? %>
-                <%= image_tag user.profile_picture, class: "w-full h-full object-cover rounded-bl-full border-2 border-primarycolor/20" %>
+                <%= image_tag user.profile_picture, class: " w-full h-full object-cover border-2 border-primarycolor/20" %>
               <% else %>
                 <div class="w-full h-full rounded-bl-full bg-gray-100 flex items-center justify-center text-gray-500"></div>
               <% end %>
