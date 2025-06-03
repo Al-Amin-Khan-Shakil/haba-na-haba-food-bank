@@ -8,8 +8,8 @@ class NotificationsController < ApplicationController
   def show
     @notification = current_user.notifications.find(params[:id])
     @notification.mark_as_read!
-    redirect_to polymorphic_path(@notification.notifiable), notice: "Notification marked as read."
+    redirect_to polymorphic_path(@notification.notifiable), notice: 'Notification marked as read.'
   rescue ActiveRecord::RecordNotFound
-    redirect_to notifications_path, alert: "Notification not found."
+    redirect_to notifications_path, alert: 'Notification not found.'
   end
 end

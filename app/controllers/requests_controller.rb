@@ -122,24 +122,29 @@ class RequestsController < ApplicationController
   end
 
   def create_notifications(request, action)
-    branch_managers = User.where(role: 'branch_manager', branch_id: request.branch_id)
-    branch_managers.each do |manager|
-      Notification.create(
-        user: manager,
-        notifiable: request,
-        message: "A (#{request.request_type}) request was#{action} for your branch."
-      )
+    action = action.to_s.downcase
+
+    branch_message = if action == 'updated'
+                       "A #{request.request_type.humanize.downcase} has been transferred to your branch."
+                     else
+                       "A new #{request.request_type.humanize.downcase} has been assigned to your branch."
+                     end
+
+    volunteer_message = if action == 'updated'
+                          "A #{request.request_type.humanize.downcase} has been transferred to you."
+                        else
+                          "You have been assigned a new #{request.request_type.humanize.downcase}."
+                        end
+
+    User.where(role: 'branch_manager', branch_id: request.branch_id).each do |manager|
+      Notification.create(user: manager, notifiable: request, message: branch_message)
     end
 
-    if request.user_id.present?
-      volunteer = User.find_by(id: request.user_id, role: 'volunteer')
-      if volunteer
-        Notification.create(
-          user: volunteer,
-          notifiable: request,
-          message: "A (#{request.request_type}) request has been assigned to you."
-        )
-      end
-    end
+    return unless request.user_id.present?
+
+    volunteer = User.find_by(id: request.user_id, role: 'volunteer')
+    return unless volunteer
+
+    Notification.create(user: volunteer, notifiable: request, message: volunteer_message)
   end
 end

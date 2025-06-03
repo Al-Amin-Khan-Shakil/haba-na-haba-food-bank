@@ -1,4 +1,6 @@
 module BeneficiaryFilterMethods
+  ROLES = %w[super_admin admin branch_manager volunteer].freeze
+
   private
 
   # Request Filters
@@ -13,13 +15,18 @@ module BeneficiaryFilterMethods
   # Inventories Filters
   def filter_by_donor_type(model, donor_type)
     return model unless donor_type.present?
+
     model.joins(:donation).where(donations: { donor_type: donor_type })
   end
 
   def filter_by_expire_date(model, expire_date)
     return model unless expire_date.present?
 
-    parsed_expire_date = Date.parse(expire_date.to_s) rescue nil
+    parsed_expire_date = begin
+      Date.parse(expire_date.to_s)
+    rescue StandardError
+      nil
+    end
     return model unless parsed_expire_date
 
     model.where(expire_date: Date.current.beginning_of_day..parsed_expire_date.end_of_day)
@@ -27,6 +34,7 @@ module BeneficiaryFilterMethods
 
   def filter_by_donation_type(model, donation_type)
     return model unless donation_type.present?
+
     model.joins(:donation).where(donations: { donation_type: donation_type })
   end
 
@@ -63,8 +71,6 @@ module BeneficiaryFilterMethods
   def filter_by_name(model, name)
     name.present? ? model.where('name ILIKE ?', "%#{name}%") : model
   end
-
-  ROLES = %w[super_admin admin branch_manager volunteer].freeze
 
   def filter_by_role(model, role)
     if role.present? && ROLES.include?(role)

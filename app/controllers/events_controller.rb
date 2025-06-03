@@ -4,10 +4,10 @@ class EventsController < ApplicationController
   before_action :set_form_dependencies, only: %i[new edit create update]
 
   def index
-     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
+    filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
     if filter_applied
-      @events = FilterService.new(Event.all,filter_params).apply.order(created_at: :desc)
+      @events = FilterService.new(Event.all, filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 3.days.ago.to_date.to_s, end_date: 7.days.from_now.to_date.to_s)
       @events = FilterService.new(Event.all, default_params).apply.order(created_at: :desc)
@@ -103,14 +103,16 @@ class EventsController < ApplicationController
 
     user_ids.each do |user_id|
       event_user = event.event_users.find_or_create_by(user_id: user_id)
-      if event_user.persisted?
-        user = User.find(user_id)
-        Notification.create(
-          user: user,
-          notifiable: event,
-          message: "You were added to the event '#{event.title}' starting on #{event.start_date.strftime('%B %d, %Y')}."
-        )
-      end
+      next unless event_user.persisted?
+
+      date_str = event.start_date.strftime('%B %d, %Y at %I:%M %p')
+
+      user = User.find(user_id)
+      Notification.create(
+        user: user,
+        notifiable: event,
+        message: "You’ve been invited to the event \"#{event.title}\" scheduled for #{date_str}."
+      )
     end
   end
 end
