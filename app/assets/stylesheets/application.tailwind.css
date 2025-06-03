@@ -91,14 +91,14 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover; /* Ensures the image covers the area without distortion */
-        z-index: -1; /* Places the image behind the content */
+        width: 100dvw;
+        height: 100dvh;
+        object-fit: cover;
+        z-index: -1; 
       }
-      /* Ensure main content is above the background */
+     
       main {
         position: relative;
-        min-height: 100vh; /* Ensure main takes full viewport height */
+        min-height: 100vh;
       }
     
