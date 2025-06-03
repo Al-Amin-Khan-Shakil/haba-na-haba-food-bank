@@ -46,11 +46,11 @@
           </div>
           <div class="mb-4">
             <%= f.label :gender, "Gender", class: "block text-gray-700 font-bold mb-2" %>
-            <%=  f.select :gender,  User::GENDERS, { include_blank: "Select Gender" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            <%=  f.select :gender,  User::GENDERS.map{|k| [k.humanize.titleize, k]}, { include_blank: "Select Gender" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
           <div class="mb-4">
             <%= f.label :role, "Role", class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.select :role, User::ROLES, { include_blank: "Select Role" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            <%= f.select :role, User::ROLES.map{|k| [k.humanize.titleize, k]}, { include_blank: "Select Role" }, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
         </div>
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Profile Details</h3>
