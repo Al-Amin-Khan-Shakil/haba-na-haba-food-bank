@@ -16,11 +16,11 @@
       <% if user_signed_in? %>
         <%= render "layouts/sidebar" %>
       <% else %>
-        <div class="p-0 m-0 flex flex-col justify-center items-center h-screen">
+        <div class="p-0 m-0 flex flex-col justify-center items-center min-h-screen">
           <%= image_tag "hnh_admin_mobile_logo", class: "text-white md:w-20 md:h-20 w-10 h-10"%>
           <p class="text-white  mt-3 font-bold text-3xl">Haba Na Haba</p>
           <p class="text-white mb-5  text-sm">Little by Little the pot is filled </p>
-          <%= image_tag "bg.svg", class: "full-screen-bg" %>
+          <%= image_tag "bg.svg", class: "absolute inset-0 w-full h-full -z-10 object-cover" %>
           <%= yield %>
         </div>
       <% end %>

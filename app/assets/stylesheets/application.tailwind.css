@@ -80,25 +80,5 @@
   animation: float-2 10s ease-in-out infinite;
 }
 
-      /* Ensure the body and html take full height */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      /* Style for the background image */
-      .full-screen-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100dvw;
-        height: 100dvh;
-        object-fit: cover;
-        z-index: -1; 
-      }
-     
-      main {
-        position: relative;
-        min-height: 100vh;
-      }
+
     
