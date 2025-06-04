@@ -93,6 +93,7 @@ GEM
     bootsnap (1.18.6)
       msgpack (~> 1.2)
     builder (3.3.0)
+    cancancan (3.6.1)
     cgi (0.4.2)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.3)
@@ -294,6 +295,7 @@ PLATFORMS
 DEPENDENCIES
   active_storage_validations
   bootsnap
+  cancancan
   debug
   devise
   dotenv-rails
