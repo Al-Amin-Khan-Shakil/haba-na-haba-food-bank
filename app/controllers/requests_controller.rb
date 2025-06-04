@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[new create load_counties load_sub_counties]
   before_action :set_request, only: %i[show edit update destroy]
 
   def index
@@ -38,7 +38,7 @@ class RequestsController < ApplicationController
 
     if @request.save
       create_notifications(@request, :created)
-      redirect_to @request, notice: 'Request was successfully created.'
+      redirect_to(user_signed_in? ? @request : unauthenticated_root_path, notice: 'Request was successfully created.')
     else
       render :new, status: :unprocessable_entity
     end
