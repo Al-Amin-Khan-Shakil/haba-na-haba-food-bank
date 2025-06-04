@@ -1,6 +1,6 @@
 <div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
   <div class="bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% shadow-xl rounded-xl p-2 sm:p-3 lg:p-8">
-    <div class="flex justify-between items-end mt-2 mb-4">
+    <div class="flex justify-between items-end mt-2 mb-4 cursor-pointer">
       <%= link_to new_branch_path, class: "flex items-center gap-2 bg-primarycolor text-white px-1.5 py-1 lg:px-1 rounded hover:bg-hoverprimarycolor" do %>
         <i class="fa-regular fa-plus text-2xl lg:text-base"></i>
         <span class="hidden lg:inline-block">Add New</span>
@@ -29,10 +29,10 @@
                       <i class="fa-solid fa-chevron-down"></i>
                     </div>
                   </button>
-                  <div id="dropdown-<%= branch.id %>" class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
+                  <div id="dropdown-<%= branch.id %>" class="cursor-pointer absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left cursor-pointer">
                     <%= link_to 'Details', branch_path(branch), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
                     <%= link_to 'Edit', edit_branch_path(branch), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
-                    <%= button_to 'Delete', branch_path(branch), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
+                    <%= button_to 'Delete', branch_path(branch), method: :delete, data: { confirm: 'Are you sure?' }, class: 'cursor-pointer block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
                   </div>
                 </div>
               </td>

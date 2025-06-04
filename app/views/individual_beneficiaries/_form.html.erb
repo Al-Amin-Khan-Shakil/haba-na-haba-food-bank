@@ -138,7 +138,7 @@
           <%= f.collection_select :branch_id, @branches, :id, :name,
           { selected: @individual_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
           class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          <div class="flex justify-center md:justify-end text-sm items-center mt-12 ">
+          <div class="flex justify-center md:justify-end text-sm items-center mt-12 cursor-pointer">
             <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
             <%= f.submit @individual_beneficiary.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor  hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
           </div>

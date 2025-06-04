@@ -264,8 +264,8 @@
       </div>
     </div>
   </div>
-  <div class="mt-8 flex justify-end items-center gap-4">
+  <div class="mt-8 flex justify-end items-center gap-4 cursor-pointer">
     <%= link_to 'Update', edit_family_beneficiary_path(@family_beneficiary), class: 'bg-primarycolor text-white py-1 px-4 w-fit rounded hover:bg-hoverprimarycolor transition-all text-sm sm:text-base' %>
-    <%= button_to 'Destroy', family_beneficiary_path(@family_beneficiary), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-600 text-white py-1 px-4 w-fit rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
+    <%= button_to 'Destroy', family_beneficiary_path(@family_beneficiary), method: :delete, data: { confirm: 'Are you sure?' }, class: 'cursor-pointer bg-red-600 text-white py-1 px-4 w-fit rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
   </div>
 </div>
