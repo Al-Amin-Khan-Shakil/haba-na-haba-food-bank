@@ -33,7 +33,7 @@ export default class extends Controller {
             Donor Type
           </label>
           <select name="request[donation_attributes][donor_type]"
-            class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
+            class="bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor">
             <option value="">Select type</option>
             ${Object.entries({
               individual: "Individual",
@@ -54,7 +54,7 @@ export default class extends Controller {
             Donation Type
           </label>
           <select name="request[donation_attributes][donation_type]"
-            class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor">
+            class="bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor">
             <option value="">Select type</option>
             ${Object.entries({
               fresh_food: "Fresh Food",
@@ -75,7 +75,7 @@ export default class extends Controller {
             Donation Name
           </label>
           <input type="text" name="request[donation_attributes][donation_name]"
-            class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor" />
+            class="bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" />
         </div>
 
         <!-- Amount -->
@@ -84,7 +84,7 @@ export default class extends Controller {
             Amount
           </label>
           <input type="number" name="request[donation_attributes][amount]" step="0.01"
-            class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primarycolor" />
+            class="bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" />
         </div>
       </div>
     `
