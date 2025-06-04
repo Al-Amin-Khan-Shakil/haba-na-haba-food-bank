@@ -3,56 +3,6 @@ module BeneficiaryFilterMethods
 
   private
 
-  # Request Filters
-  def filter_by_request_type(model, request_type)
-    request_type.present? ? model.where(request_type: request_type) : model
-  end
-
-  def filter_by_is_selected(model, is_selected)
-    is_selected.present? ? model.where(is_selected: is_selected) : model
-  end
-
-  # Inventories Filters
-  def filter_by_donor_type(model, donor_type)
-    return model unless donor_type.present?
-
-    model.joins(:donation).where(donations: { donor_type: donor_type })
-  end
-
-  def filter_by_expire_date(model, expire_date)
-    expire_date.present? ? model.where(expire_date: expire_date) : model
-  end
-
-  def filter_by_donation_type(model, donation_type)
-    return model unless donation_type.present?
-
-    model.joins(:donation).where(donations: { donation_type: donation_type })
-  end
-
-  def filter_by_donor_name(model, donor_name)
-    return model unless donor_name.present?
-
-    model.where('donor_name ILIKE ?', "%#{donor_name}%")
-  end
-
-  def filter_by_amount(model, amount)
-    amount.present? ? model.where('amount <= ?', amount) : model
-  end
-
-  def filter_by_event_id(model, event_id)
-    event_id.present? ? model.where(event_id: event_id) : model
-  end
-
-  # Events filter
-  def filter_start_date(model, start_date)
-    start_date.present? ? model.where(start_date: start_date) : model
-  end
-
-  def filter_end_date(model, end_date)
-    end_date.present? ? model.where(end_date: end_date) : model
-  end
-
-  # Common beneficiary filters
   def filter_by_first_name(model, first_name)
     first_name.present? ? model.where('first_name ILIKE ?', "%#{first_name}%") : model
   end
@@ -99,7 +49,6 @@ module BeneficiaryFilterMethods
     model
   end
 
-  # FamilyBeneficiary-specific
   def filter_by_fathers_name(model, fathers_name)
     fathers_name.present? ? model.where('fathers_name ILIKE ?', "%#{fathers_name}%") : model
   end
@@ -132,7 +81,6 @@ module BeneficiaryFilterMethods
     provided_food.present? ? model.where(provided_food: provided_food) : model
   end
 
-  # OrganizationBeneficiary-specific
   def filter_by_organization_name(model, organization_name)
     organization_name.present? ? model.where('organization_name ILIKE ?', "%#{organization_name}%") : model
   end

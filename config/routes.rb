@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/ussd', to: 'ussd#recive'
   resources :users
   resources :branches
+  resources :notifications, only: [:index, :show]
 
   resources :districts do
     resources :counties, only: [] do

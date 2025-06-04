@@ -117,9 +117,9 @@
         </div>
         <div class="mb-4">
           <%= f.hidden_field :donation_id, value: @inventory.donation_id || @request&.donation&.id %>
-          <label class="block text-gray-700 font-bold mb-2">Donation</label>
+          <label class="block text-gray-700 font-bold mb-2">Donated by</label>
           <p class="bg-gray-50 border border-gray-300 rounded-lg p-2">
-            <%= @inventory.donation&.donation_name || @request&.donation&.donation_name || "No donation" %>
+            <%= @inventory.donation&.donor_type&.humanize || @request&.donation&.donor_type&.humanize || "Collected from #{@event.title}" %>
           </p>
         </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-12">
