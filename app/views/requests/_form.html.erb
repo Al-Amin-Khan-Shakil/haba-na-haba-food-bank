@@ -22,16 +22,6 @@
         </h2>
       </div>
       <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
-        <% if @request.errors.any? %>
-          <div class="mb-6 p-4 bg-red-100 text-red-700 rounded-lg border border-red-200">
-            <h2 class="font-bold text-lg mb-2">Please fix the following errors:</h2>
-            <ul class="list-disc pl-5">
-              <% @request.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
         <div class="flex justify-between items-center">
           <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Requester Information</h3>
           <div class="flex items-center gap-2">
@@ -164,13 +154,42 @@
           </div>
           <div class="mb-4">
             <%= f.label :user_id, "Assigned To", class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.collection_select :user_id, User.all, :id, :email,
-                  { include_blank: "Select User" },
-                  class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            <div data-controller="user-dropdown" class="relative inline-block w-full text-left">
+              <input type="hidden" name="request[user_id]" data-user-dropdown-target="hiddenInput" value="<%= f.object.user_id %>">
+              <button type="button" data-action="click->user-dropdown#toggle" data-user-dropdown-target="button"
+                class="bg-gray-50 border border-gray-300 rounded-lg p-[6px] w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor  flex items-center justify-between">
+                <span data-user-dropdown-target="selectedUser">
+                  <% if f.object.user %>
+                    <%= f.object.user.first_name %>
+                  <% else %>
+                    <p class="text-base">Select User</p>
+                  <% end %>
+                </span>
+                <svg class="w-5 h-4 ml-2 text-gray-600 font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+              <ul data-user-dropdown-target="menu" class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-auto hidden">
+                <% User.all.each do |user| %>
+                  <li data-action="click->user-dropdown#select"
+                    data-user-id="<%= user.id %>"
+                    data-user-name="<%= user.first_name %>"
+                    class="cursor-pointer hover:bg-gray-100 px-3 py-2 flex items-start space-x-3">
+                    <% if user.profile_picture.attached? %>
+                      <%= image_tag user.profile_picture, class: "w-10 h-10 rounded-full" %>
+                    <% end %>
+                    <div class="flex flex-col">
+                      <p class="font-medium"><%= "#{user.first_name} #{user.last_name}" %></p>
+                      <p class="text-sm text-gray-500"><%= user.phone_number %></p>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-6">
-          <%= link_to "Cancel", :back, class: "cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
+          <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit @request.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-4 rounded" %>
         </div>
       </div>
