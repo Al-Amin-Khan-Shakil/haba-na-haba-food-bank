@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     fetch_line_chart_data
     fetch_pie_chart_data

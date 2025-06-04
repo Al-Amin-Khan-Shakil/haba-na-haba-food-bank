@@ -10,6 +10,8 @@ class Request < ApplicationRecord
   has_one :family_beneficiary, dependent: :nullify
   has_one :inventory, dependent: :nullify
 
+  has_many :notifications, as: :notifiable, dependent: :destroy
+
   accepts_nested_attributes_for :donation, update_only: true, allow_destroy: false
 
   enum request_type: {

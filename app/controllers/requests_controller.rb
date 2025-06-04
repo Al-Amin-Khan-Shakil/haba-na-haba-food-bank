@@ -37,6 +37,7 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
+      create_notifications(@request, :created)
       redirect_to @request, notice: 'Request was successfully created.'
     else
       render :new, status: :unprocessable_entity
@@ -53,12 +54,12 @@ class RequestsController < ApplicationController
   def update
     if @request.update(request_params)
       if @request.donation_request? && @request.donation.present?
-        # Update donor info from request
         @request.donation.update(
           donor_name: @request.name,
           phone_number: @request.phone_number
         )
       end
+      create_notifications(@request, :updated)
       redirect_to @request, notice: 'Request updated successfully'
     else
       @request.build_donation if @request.donation_request? && @request.donation.blank?
@@ -118,5 +119,32 @@ class RequestsController < ApplicationController
       :address_note,
       donation_attributes: %i[id donation_type donation_name amount donor_type _destroy]
     )
+  end
+
+  def create_notifications(request, action)
+    action = action.to_s.downcase
+
+    branch_message = if action == 'updated'
+                       "A #{request.request_type.humanize.downcase} has been transferred to your branch."
+                     else
+                       "A new #{request.request_type.humanize.downcase} has been assigned to your branch."
+                     end
+
+    volunteer_message = if action == 'updated'
+                          "A #{request.request_type.humanize.downcase} has been transferred to you."
+                        else
+                          "You have been assigned a new #{request.request_type.humanize.downcase}."
+                        end
+
+    User.where(role: 'branch_manager', branch_id: request.branch_id).each do |manager|
+      Notification.create(user: manager, notifiable: request, message: branch_message)
+    end
+
+    return unless request.user_id.present?
+
+    volunteer = User.find_by(id: request.user_id, role: 'volunteer')
+    return unless volunteer
+
+    Notification.create(user: volunteer, notifiable: request, message: volunteer_message)
   end
 end

@@ -1,0 +1,23 @@
+<div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
+  <div class="flex justify-between items-center mb-4">
+    <button onclick="history.go(-1)" class="flex items-center text-sm sm:text-base text-gray-500 py-1 px-4 rounded bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-300 ease-in-out">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span class="ml-2 hidden lg:inline-block">Back</span>
+    </button>
+    <h2 class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight">Notifications</h2>
+  </div>
+  <% if @notifications.any? %>
+    <ul class="space-y-4">
+      <% @notifications.each do |notification| %>
+        <li class="<%= notification.read? ? 'bg-gray-50' : 'bg-blue-100' %> p-4 rounded-md shadow-md hover:shadow-xl transition-all duration-200 ease-in-out">
+          <%= link_to  notification_path(notification), class: "text-blue-600 hover:text-blue-800"  do %>
+            <p class="<%= notification.read? ? 'text-gray-500' : 'text-primarytext' %>"><%= notification.message %></p>
+            <p class="text-sm text-gray-500 mt-1"><%= time_ago_in_words(notification.created_at) %> ago</p>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-gray-600">No notifications available.</p>
+  <% end %>
+</div>

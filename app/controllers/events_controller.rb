@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     if filter_applied
       @events = FilterService.new(Event.all, filter_params).apply.order(created_at: :desc)
     else
-      default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
+      default_params = filter_params.merge(start_date: 3.days.ago.to_date.to_s, end_date: 7.days.from_now.to_date.to_s)
       @events = FilterService.new(Event.all, default_params).apply.order(created_at: :desc)
     end
     @districts = District.all
@@ -102,7 +102,17 @@ class EventsController < ApplicationController
     return if user_ids.nil? || user_ids.empty?
 
     user_ids.each do |user_id|
-      event.event_users.find_or_create_by(user_id: user_id)
+      event_user = event.event_users.find_or_create_by(user_id: user_id)
+      next unless event_user.persisted?
+
+      date_str = event.start_date.strftime('%B %d, %Y at %I:%M %p')
+
+      user = User.find(user_id)
+      Notification.create(
+        user: user,
+        notifiable: event,
+        message: "You’ve been invited to the event \"#{event.title}\" scheduled for #{date_str}."
+      )
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_22_212839) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_02_123806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -199,6 +199,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_22_212839) do
     t.index ["sub_county_id"], name: "index_inventories_on_sub_county_id"
   end
 
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "notifiable_type", null: false
+    t.uuid "notifiable_id", null: false
+    t.string "message"
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "organization_beneficiaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "organization_name"
     t.integer "male"
@@ -311,6 +323,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_22_212839) do
   add_foreign_key "inventories", "events"
   add_foreign_key "inventories", "requests"
   add_foreign_key "inventories", "sub_counties"
+  add_foreign_key "notifications", "users"
   add_foreign_key "organization_beneficiaries", "counties"
   add_foreign_key "organization_beneficiaries", "districts"
   add_foreign_key "organization_beneficiaries", "sub_counties"

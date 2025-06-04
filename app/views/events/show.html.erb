@@ -31,7 +31,7 @@
                   <div class="shadow rounded w-full md:w-[49%] lg:w-[32.3%] xl:[24%] p-2">
                     <p class="font-medium"><span class="inline-block w-[65px] font-bold">Name:</span><%= event_user.user.first_name %> <%= event_user.user.last_name %></p>
                     <p class="font-medium"><span class="inline-block w-[65px] font-bold">Phone:</span><%= event_user.user.phone_number %></p>
-                    <p class="font-medium text-xs bg-primarycolor/20 rounded-full w-fit p-2"><%= event_user.user.role.humanize %></p>
+                    <p class="font-medium text-xs bg-primarycolor/20 rounded-full w-fit px-2 py-1 border border-primarycolor capitalize"><%= event_user.user.role.humanize %></p>
                   </div>
                 <% end %>
               </ul>
