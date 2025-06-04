@@ -39,7 +39,7 @@ class User < ApplicationRecord
       gender == gender_name.tr('_', ' ')
     end
   end
- 
+
   private
 
   def password_required?
