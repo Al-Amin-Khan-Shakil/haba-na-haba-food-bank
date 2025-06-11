@@ -40,7 +40,7 @@
         </div>
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Assign Staff</h3>
         <div class= "grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 ">
-          <% User.all.each do |user| %>
+          <% @unassigned_users.each do |user| %>
             <div class="p-4 flex items-center mb-2 shadow-md rounded-lg my-5">
               <%= check_box_tag "branch[user_ids][]", user.id, @branch.users.include?(user),id:"user_#{user.id}" ,class: "mr-2 h-4 w-4 text-primarycolor focus:ring-primarycolor border-gray-300 rounded" %>
               <div class="w-14 h-14 ml-2 mr-1">
