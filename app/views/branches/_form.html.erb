@@ -38,6 +38,23 @@
             <p class="text-sm text-gray-600 italic mt-2">All districts are already assigned. No available districts to assign.</p>
           <% end %>
         </div>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Assign Staff</h3>
+        <div class= "grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 ">
+          <% User.all.each do |user| %>
+            <div class="p-4 flex items-center mb-2 shadow-md rounded-lg my-5">
+              <%= check_box_tag "branch[user_ids][]", user.id, @branch.users.include?(user),id:"user_#{user.id}" ,class: "mr-2 h-4 w-4 text-primarycolor focus:ring-primarycolor border-gray-300 rounded" %>
+              <div class="w-14 h-14 ml-2 mr-1">
+                <%=  image_tag user.profile_picture, alt: 'user.profile_picture', class: "rounded-full w-full h-full object-cover" %>
+              </div>
+              <div class="leading-tight">
+                <%= label_tag "user_#{user.id}", "#{user.first_name}  #{user.last_name}", class: "" %>
+                <div class="italic text-sm text-gray-700">
+                  <%= user.role%>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-12 cursor-pointer">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= form.submit branch.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
