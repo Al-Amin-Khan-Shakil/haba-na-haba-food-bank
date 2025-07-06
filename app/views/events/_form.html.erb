@@ -74,33 +74,50 @@
             <h4 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Select Team Members</h4>
             <p class="mt-1 text-xs text-gray-500">Select users to participate in this event</p>
           </div>
-          <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+          <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto boeder">
             <input type="hidden" name="event[user_ids][]" value="">
-            <% @users.group_by(&:role).each do |role, users| %>
-              <% if users.any? %>
-                <div class="bg-gray-50 px-4 py-2 sticky top-0 z-10">
-                  <h5 class="text-xs font-medium text-gray-500 uppercase tracking-wider"><%= role.titleize %></h5>
-                </div>
-                <% users.each do |user| %>
-                  <label class="flex items-center px-4 py-3 hover:bg-primarycolor/5 transition-colors duration-150 cursor-pointer">
-                    <div class="flex items-center h-5">
-                      <%= check_box_tag "event[user_ids][]", user.id, @event.users.include?(user),
-                  class: "h-4 w-4 text-primarycolor focus:ring-primarycolor border-gray-300 rounded mr-4" %>
-                    </div>
-                    <div class="ml-3 flex-1 min-w-0">
-                      <div class="flex justify-between items-baseline">
-                        <span class="text-sm font-medium text-gray-900 truncate">
-                          <%= user.first_name %> <%= user.last_name %>
-                        </span>
-                        <span class="ml-2 text-xs text-gray-500"> <span class="underline"><i class="fas fa-phone-alt mr-1 text-gray-400"></i> Tel:</span> <%= user.phone_number %></span>
+            <% @users.group_by(&:role).each_slice(2) do |role_group| %>
+              <div class="flex">
+                <% role_group.each do |role, users| %>
+                  <div class="w-1/2">
+                    <% if users.any? %>
+                      <div class="bg-gray-50 px-4 py-2 sticky top-0 z-10">
+                        <h5 class="text-base  text-gray-500 uppercase font-bold my-3 tracking-wider"><%= role.titleize %></h5>
                       </div>
-                      <div class="mt-1 flex items-center text-xs text-gray-500">
-                        <span class="truncate"><%= user.email %></span>
-                      </div>
-                    </div>
-                  </label>
+                      <% users.each do |user| %>
+                        <label class="border  flex items-center px-4 py-3 hover:bg-primarycolor/5 transition-colors duration-150 cursor-pointer">
+                          <div class="flex items-center h-5">
+                            <%= check_box_tag "event[user_ids][]", user.id, @event.users.include?(user),
+                      class: "h-4 w-4 text-primarycolor focus:ring-primarycolor border-gray-300 rounded mr-4" %>
+                          </div>
+                          <div class="ml-3 flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                              <div class="flex items-center">
+                                <div class="w-14 h-14 ml-2 mr-1">
+                                  <%=  image_tag user.profile_picture, alt: 'user.first_name', class: "rounded-full w-full h-full object-cover" %>
+                                </div>
+                                <div>
+                                  <span class="text-sm font-medium text-gray-900 truncate">
+                                    <%= user.first_name %> <%= user.last_name %>
+                                  </span>
+                                  <div class="mt-1 flex items-center text-xs text-gray-500">
+                                    <span class="truncate"><%= user.email %></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <span class="ml-2 text-xs text-gray-500">
+                                <span class="underline">
+                                  <i class="fas fa-phone-alt mr-1 text-gray-400"></i> Tel:
+                                </span> <%= user.phone_number %>
+                              </span>
+                            </div>
+                          </div>
+                        </label>
+                      <% end %>
+                    <% end %>
+                  </div>
                 <% end %>
-              <% end %>
+              </div>
             <% end %>
           </div>
           <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 text-right">
