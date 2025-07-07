@@ -8,11 +8,11 @@ user = User.first
 if [branch, district, user].any?(&:nil?)
   puts "Please ensure Branch, District, County, SubCounty, and User records exist."
 else
-  start_date = Date.new(2024, 11, 21)
-  end_date = Date.new(2025, 5, 31)
+  start_date = Date.new(2025, 5, 31)
+  end_date = Date.new(2025, 7, 17)
 
   (start_date..end_date).each do |date|
-    rand(1..5).times do |i|
+    rand(3..8).times do |i|
       Request.create!(
         name: "Request #{date}-#{i + 1}",
         phone_number: "070#{rand(1000000..9999999)}",

@@ -1,5 +1,6 @@
 class IndividualBeneficiariesController < ApplicationController
   include BeneficiaryGuard
+  load_and_authorize_resource
 
   before_action :authenticate_user!
   before_action :set_parent_resource, only: %i[new create]

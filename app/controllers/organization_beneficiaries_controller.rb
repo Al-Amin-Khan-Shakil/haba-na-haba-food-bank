@@ -6,6 +6,7 @@ class OrganizationBeneficiariesController < ApplicationController
   before_action :set_organization_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
+  load_and_authorize_resource
 
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?

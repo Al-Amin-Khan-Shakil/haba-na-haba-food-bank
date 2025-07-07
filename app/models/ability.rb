@@ -22,31 +22,54 @@ class Ability
 
   def volunteer_permissions(user)
     can %i[read update], Request, user_id: user.id
-    can :read, Notification, user_id: user.id
     can :read, Branch, id: user.branch_id
-    can :update, User, id: user.id
-    can :read, Event
+    can :read, Event, event_users: { user_id: user.id }
     can :read, District
     can :read, County
     can :read, SubCounty
     common_permissions(user)
   end
 
+  def branch_manager_permissions(user)
+    can :manage, Request, branch_id: user.branch_id
+    can %i[read update], Branch, id: user.branch_id
+    can %i[read create update], Event
+    can %i[create destroy], User do |u|
+      u.role == 'volunteer' && u.branch_id == user.branch_id
+    end
+    can :manage, District
+    can :manage, County
+    can :manage, SubCounty
+    common_permissions(user)
+  end
+
+  def admin_permissions(user)
+    can :manage, :all
+  end
+
+  def super_admin_permissions(user)
+    can :manage, :all
+  end
+
+  def guest_permissions(user)
+    can :read, :sign_up
+  end
+
   def common_permissions(user)
-    can :manage, Inventory, lambda { |inventory|
+    can :update, User, id: user.id
+    can %i[read update], Notification, user_id: user.id
+    can :manage, Inventory do |inventory|
       inventory.branch_id == user.branch_id || user.event_ids.include?(inventory.event_id)
-    }
-    can :manage, IndividualBeneficiary, lambda { |beneficiary|
+    end
+    can :manage, IndividualBeneficiary do |beneficiary|
       beneficiary.branch_id == user.branch_id || user.event_ids.include?(beneficiary.event_id)
-    }
-    can :manage, FamilyBeneficiary, lambda { |beneficiary|
+    end
+    can :manage, FamilyBeneficiary do |beneficiary|
       beneficiary.branch_id == user.branch_id || user.event_ids.include?(beneficiary.event_id)
-    }
-    can :manage, OrgainzationBeneficiary, lambda { |beneficiary|
+    end
+    can :manage, OrganizationBeneficiary do |beneficiary|
       beneficiary.branch_id == user.branch_id || user.event_ids.include?(beneficiary.event_id)
-    }
-    can :read, User, lambda { |u|
-      %w[branch_manager volunteer].include?(u.role) && u.branch_id == user.branch_id
-    }
+    end
+    can :read, User, role: %w[branch_manager volunteer], branch_id: user.branch_id
   end
 end

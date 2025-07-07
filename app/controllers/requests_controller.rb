@@ -1,15 +1,18 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create load_counties load_sub_counties]
   before_action :set_request, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = Request.accessible_by(current_ability)
+
     if filter_applied
-      @requests = FilterService.new(Request.all, filter_params).apply.order(created_at: :desc)
+      @requests = FilterService.new(base_query, filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
-      @requests = FilterService.new(Request.all, default_params).apply.order(created_at: :desc)
+      @requests = FilterService.new(base_query, default_params).apply.order(created_at: :desc)
     end
 
     @districts = District.all
