@@ -39,9 +39,14 @@
       </div>
       <nav class="bg-transparent font-Outfit px-2 z-50  relative">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <%= link_to '/', class: 'flex items-center space-x-3 rtl:space-x-reverse' do %>
-            <%= image_tag "hnh_admin_mobile_logo.png", class: "w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28", alt: "Hnh Logo" %>
-          <% end %>
+          <div class="hidden md:block absolute w-16 h-16 bg-white rounded-full z-0"></div>
+          <div class="flex flex-col items-center z-10">
+            <div class>
+              <%= link_to '/', class: 'flex items-center space-x-3 rtl:space-x-reverse' do %>
+                <%= image_tag "logo.png", class: "w-16 h-16 ", alt: "Hnh Logo" %>
+              </div>
+            <% end %>
+          </div>
           <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg lg:hidden hover:bg-lightGreen focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
@@ -298,7 +303,7 @@
             <div class="md:flex md:justify-between">
               <div class="mb-6 md:mb-0 flex-shrink-0">
                 <%= link_to "/", class: 'flex items-center' do %>
-                  <%= image_tag "hnh_admin_mobile_logo.png", class: "h-12 me-3", alt: "Haba na haba Logo" %>
+                  <%= image_tag "hnh_admin_mobile_logo.png", class: "h-12 me-3 ", alt: "Haba na haba Logo" %>
                   <span class="self-center text-2xl font-semibold whitespace-nowrap text-lightGreen">HabaNaHaba</span>
                 <% end %>
               </div>

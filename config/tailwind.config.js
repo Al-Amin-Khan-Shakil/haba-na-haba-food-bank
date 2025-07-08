@@ -17,12 +17,19 @@ module.exports = {
         primarycolor: "#6dc13d",
         hoverprimarycolor: "#3ea303",
         primarytext: "#302C51",
+        lightGreen: "#6DC13D",
+        lightGray: "#F5F5F5",
+      
+      },
+      fontFamily: {
+        Paprika: ["Paprika", "sans-serif"],
+        Outfit: ["Outfit", "sans-serif"],
       },
         backgroundImage: {
         "users-image": "url('/assets/users-image.svg')",
         "users-show": "url('/assets/users-show.svg')",
         "login-bg": "url('/assets/Shape.svg')",
-        "custom-image": "url('/assets/african-kid.png')",
+        "custom-image": "url('/assets/african-kid-optimized.webp')",
         "community-image": "url('/assets/community.png')",
       },
     },
