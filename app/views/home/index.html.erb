@@ -58,14 +58,18 @@
                 <a href="/" class="relative z-10 block py-2 px-3 text-white bg-primarycolor rounded lg:bg-transparent lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor " aria-current="Page">Home</a>
                 <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </li>
-              <li class="relative inline-block text-black group">
-                <%= link_to 'javascript:void(0)', onclick: "toggleModal('donateModal')", class: 'relative z-10  block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor dark:hover:text-white lg:dark:hover:bg-transparent' do %>
+              <li data-controller = "formswitch" class="relative inline-block text-black group">
+                <%= link_to  new_request_path(type: "donate"),
+    data: { action: "click->formswitch#switch", form_type: "donate" },
+        class: 'relative z-10 block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor dark:hover:text-white lg:dark:hover:bg-transparent' do %>
                   Donate Food
                   <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 <% end %>
               </li>
-              <li class="relative inline-block text-black group">
-                <%= link_to 'javascript:void(0)', onclick: "toggleModal('requestModal')", class: 'relative z-10  block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor lg:dark:hover:bg-transparent' do %>
+              <li data-controller = "formswitch" class="relative inline-block text-black group">
+                <%= link_to  new_request_path(type: "request"),
+    data: { action: "click->formswitch#switch", form_type: "request" },
+        class: 'relative z-10 block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor dark:hover:text-white lg:dark:hover:bg-transparent' do %>
                   Request Food
                   <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 <% end %>
@@ -316,7 +320,7 @@
             <div class="md:flex md:justify-between">
               <div class="mb-6 md:mb-0 flex-shrink-0">
                 <%= link_to "/", class: 'flex items-center' do %>
-                  <%= image_tag "hnh_admin_mobile_logo.png", class: "h-12 me-3 ", alt: "Haba na haba Logo" %>
+                  <%= image_tag "logo.svg", class: "h-20 w-20 me-3 ", alt: "Haba na haba Logo" %>
                   <span class="self-center text-2xl font-semibold whitespace-nowrap text-primarycolor">HabaNaHaba</span>
                 <% end %>
               </div>
@@ -402,8 +406,8 @@
               </span>
               <br class="block md:hidden">
               <span class="text-sm text-white text-center dark:text-gray-400 font-Outfit">
-                Design & Developed By<br>
-                <%= link_to 'The Winning Team', '#', class: 'hover:underline text-primarycolor' %>
+                Design & Developed By
+                <%= link_to 'Nexora', '#', class: 'hover:underline text-primarycolor' %>
               </span>
               <div class="flex mt-4 sm:justify-center sm:mt-0">
                 <%= link_to 'https://www.facebook.com/hnhfoodbank', class: 'text-white hover:text-gray-900 dark:hover:text-white',target: '_blank' do %>

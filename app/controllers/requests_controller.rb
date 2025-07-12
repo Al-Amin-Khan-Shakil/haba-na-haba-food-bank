@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:new, :create]
   before_action :set_request, only: %i[show edit update destroy]
 
   def index
@@ -26,6 +26,7 @@ class RequestsController < ApplicationController
     @districts = District.all
     @counties = County.all
     @sub_counties = SubCounty.all
+    @type = params[:type]
   end
 
   def create
