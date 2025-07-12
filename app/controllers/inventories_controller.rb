@@ -11,11 +11,13 @@ class InventoriesController < ApplicationController
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = Inventory.accessible_by(current_ability)
+
     if filter_applied
-      @inventories = FilterService.new(Inventory.all, filter_params).apply.order(created_at: :desc)
+      @inventories = FilterService.new(base_query, filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
-      @inventories = FilterService.new(Inventory.all, default_params).apply.order(created_at: :desc)
+      @inventories = FilterService.new(base_query, default_params).apply.order(created_at: :desc)
     end
     @districts = District.all
     @counties = County.all

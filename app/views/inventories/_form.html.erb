@@ -101,25 +101,27 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="mb-4">
-            <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.collection_select :branch_id, @branches, :id, :name,
+        <% if current_user.admin? || current_user.super_admin? %>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-4">
+              <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :branch_id, @branches, :id, :name,
               { selected: @inventory&.branch_id || @request&.branch_id, prompt: "Select Branch" },
               class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          </div>
-          <div class="mb-4">
-            <%= f.label :event_id, "Event", class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.collection_select :event_id, @events, :id, :title,
+            </div>
+            <div class="mb-4">
+              <%= f.label :event_id, "Event", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :event_id, @events, :id, :title,
               { prompt: "Select Event" },
               class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            </div>
           </div>
-        </div>
+        <% end %>
         <div class="mb-4">
           <%= f.hidden_field :donation_id, value: @inventory.donation_id || @request&.donation&.id %>
           <label class="block text-gray-700 font-bold mb-2">Donated by</label>
           <p class="bg-gray-50 border border-gray-300 rounded-lg p-2">
-            <%= @inventory.donation&.donor_type&.humanize || @request&.donation&.donor_type&.humanize || "Collected from #{@event.title}" %>
+            <%= @inventory.donation&.donor_type&.humanize || @request&.donation&.donor_type&.humanize || "Collected from #{@event&.title}" %>
           </p>
         </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-12">
