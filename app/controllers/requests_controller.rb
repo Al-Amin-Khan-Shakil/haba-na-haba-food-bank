@@ -38,8 +38,12 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
+      if current_user
       create_notifications(@request, :created)
       redirect_to @request, notice: 'Request was successfully created.'
+      else
+        redirect_to authenticated_root_path, notice: 'Request was successfully created.'
+      end
     else
       render :new, status: :unprocessable_entity
     end

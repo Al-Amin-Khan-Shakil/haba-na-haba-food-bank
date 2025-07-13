@@ -69,17 +69,36 @@
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="mb-4">
-            <%= f.label :request_type, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.select :request_type,
-                  Request.request_types.keys.map { |k| [k.titleize, k] },
-                  { include_blank: "Select Request Type" },
-                  class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
-                  data: {
-                    request_form_target: "requestTypeSelect",
-                    action: "change->request-form#toggleDonationFields"
-                  } %>
-          </div>
+          <% if current_user %>
+            <div class="mb-4">
+              <%= f.label :request_type, class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.select :request_type,
+            Request.request_types.keys.map { |k| [k.titleize, k] },
+            { include_blank: "Select Request Type" },
+            class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+            data: {
+              request_form_target: "requestTypeSelect",
+              action: "change->request-form#toggleDonationFields"
+            } %>
+            </div>
+          <% else %>
+            <div class="mb-4">
+              <% if @type == "donate" %>
+                <%= f.label :request_type, class: "block text-gray-700 font-bold mb-2" %>
+                <%= f.text_field :request_type,placeholder: "Donation Request",
+          
+         value: "donation_request", class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+          data: {
+            request_form_target: "requestTypeSelect",
+            action: "change->request-form#toggleDonationFields"
+          } %>
+              <% else %>
+                <%= f.text_field :request_type,
+          value: "food_request",
+          class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
         <!-- Donation Fields Wrapper -->
         <div id="donation-fields-wrapper bg-gray-50" data-request-form-target="donationFieldsWrapper">
@@ -178,12 +197,14 @@
                   { include_blank: "Select Branch" },
                   class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
-          <div class="mb-4">
-            <%= f.label :user_id, "Assigned To", class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.collection_select :user_id, User.all, :id, :email,
+          <% if current_user %>
+            <div class="mb-4">
+              <%= f.label :user_id, "Assigned To", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :user_id, User.all, :id, :email,
                   { include_blank: "Select User" },
                   class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          </div>
+            </div>
+          <% end %>
         </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-6">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
