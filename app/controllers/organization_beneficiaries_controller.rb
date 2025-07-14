@@ -11,12 +11,14 @@ class OrganizationBeneficiariesController < ApplicationController
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = OrganizationBeneficiary.accessible_by(current_ability)
+
     if filter_applied
-      @organization_beneficiaries = FilterService.new(OrganizationBeneficiary.all,
+      @organization_beneficiaries = FilterService.new(base_query,
                                                       filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
-      @organization_beneficiaries = FilterService.new(OrganizationBeneficiary.all,
+      @organization_beneficiaries = FilterService.new(base_query,
                                                       default_params).apply.order(created_at: :desc)
     end
 

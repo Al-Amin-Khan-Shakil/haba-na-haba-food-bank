@@ -60,9 +60,8 @@ class Ability
     can :manage, IndividualBeneficiary, event_id: user.event_ids if user.event_ids.any?
     can :manage, FamilyBeneficiary, branch_id: user.branch_id if user.branch_id.present?
     can :manage, FamilyBeneficiary, event_id: user.event_ids if user.event_ids.any?
-    can :manage, OrganizationBeneficiary do |beneficiary|
-      beneficiary.branch_id == user.branch_id || user.event_ids.include?(beneficiary.event_id)
-    end
+    can :manage, OrganizationBeneficiary, branch_id: user.branch_id if user.branch_id.present?
+    can :manage, OrganizationBeneficiary, event_id: user.event_ids if user.event_ids.any?
     can :read, User, role: %w[branch_manager volunteer], branch_id: user.branch_id
   end
 end
