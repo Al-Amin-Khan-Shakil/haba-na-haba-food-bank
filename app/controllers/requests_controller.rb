@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
+  before_action :authenticate_user!, except: %i[new create]
   before_action :set_request, only: %i[show edit update destroy]
 
   def index
@@ -37,10 +37,12 @@ class RequestsController < ApplicationController
       @request.donation.phone_number = @request.phone_number
     end
 
+    @request.branch = current_user ? @request.branch : @request.district.branch
+
     if @request.save
       if current_user
-      create_notifications(@request, :created)
-      redirect_to @request, notice: 'Request was successfully created.'
+        create_notifications(@request, :created)
+        redirect_to @request, notice: 'Request was successfully created.'
       else
         redirect_to authenticated_root_path, notice: 'Request was successfully created.'
       end

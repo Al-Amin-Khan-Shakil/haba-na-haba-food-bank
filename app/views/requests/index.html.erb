@@ -94,7 +94,17 @@
         </thead>
         <tbody>
           <% @requests.each do |request| %>
-            <tr class="hover:bg-gray-100 border-b border-b-gray-100">
+            <tr class=" border-b border-b-gray-100 
+            <%= if request.is_selected == nil && request.user_id
+                  "bg-yellow-200/20"
+                elsif request.is_selected == false
+                'bg-red-500/20'
+                elsif request.is_selected == true
+                  'bg-primarycolor/20'
+                else 
+                  'bg-white'
+              
+                end %>">
               <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.name %></td>
               <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.phone_number %></td>
               <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.branch.name %></td>

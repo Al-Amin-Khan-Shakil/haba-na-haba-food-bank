@@ -21,6 +21,7 @@ export default class extends Controller {
     if (!this.hasTitleTarget) return
 
     if (this.typeValue === "donate") {
+      
       this.titleTarget.textContent = "Donate Food"
     } else if (this.typeValue === "request") {
       this.titleTarget.textContent = "Request Food"
