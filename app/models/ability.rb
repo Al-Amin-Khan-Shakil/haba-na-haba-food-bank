@@ -58,8 +58,8 @@ class Ability
   def common_permissions(user)
     can :update, User, id: user.id
     can %i[read update], Notification, user_id: user.id
-    can :manage, Inventory, branch_id: user.branch_id
-    can :manage, Inventory, event_id: user.event_ids
+    can :manage, Inventory, branch_id: user.branch_id if user.branch_id.present?
+    can :manage, Inventory, event_id: user.event_ids if user.event_ids.any?
     can :manage, IndividualBeneficiary do |beneficiary|
       beneficiary.branch_id == user.branch_id || user.event_ids.include?(beneficiary.event_id)
     end
