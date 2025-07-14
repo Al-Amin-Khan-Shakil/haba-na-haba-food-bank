@@ -45,12 +45,22 @@ class Ability
 
   def admin_permissions(user)
     can :manage, :all
+    cannot :manage, User do |u|
+      u.role == 'super_admin'
+    end
+    cannot %i[update destroy], User, role: 'admin'
+    can :manage, User, id: user.id
   end
 
-  def super_admin_permissions(user)
+  def super_admin_permissions(_user)
     can :manage, :all
   end
 
+  def guest_permissions(_user)
+    can :create, Request
+  end
+
+  # rubocop:disable all
   def common_permissions(user)
     can :update, User, id: user.id
     can %i[read update], Notification, user_id: user.id
@@ -64,4 +74,5 @@ class Ability
     can :manage, OrganizationBeneficiary, event_id: user.event_ids if user.event_ids.any?
     can :read, User, role: %w[branch_manager volunteer], branch_id: user.branch_id
   end
+  # rubocop:enable all
 end
