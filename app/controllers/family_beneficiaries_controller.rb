@@ -11,11 +11,13 @@ class FamilyBeneficiariesController < ApplicationController
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = FamilyBeneficiary.accessible_by(current_ability)
+
     if filter_applied
-      @family_beneficiaries = FilterService.new(FamilyBeneficiary.all, filter_params).apply.order(created_at: :desc)
+      @family_beneficiaries = FilterService.new(base_query, filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
-      @family_beneficiaries = FilterService.new(FamilyBeneficiary.all, default_params).apply.order(created_at: :desc)
+      @family_beneficiaries = FilterService.new(base_query, default_params).apply.order(created_at: :desc)
     end
 
     @districts = District.all
@@ -135,6 +137,7 @@ class FamilyBeneficiariesController < ApplicationController
                                                :address_note, :village, :parish, :fathers_name, :mothers_name,
                                                :fathers_occupation, :mothers_occupation, :number_of_meals_home,
                                                :number_of_meals_school, :provided_food, :basic_FEH, :basic_FES,
-                                               :case_name, :case_description, :phone_number, :request_id, :branch_id)
+                                               :case_name, :case_description, :phone_number, :request_id, :branch_id,
+                                               :event_id)
   end
 end

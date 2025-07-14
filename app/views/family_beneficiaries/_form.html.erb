@@ -104,8 +104,14 @@
             <div class="mb-4">
               <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
               <%= f.collection_select :branch_id, @branches, :id, :name,
-          { selected: @family_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
-          class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+                { selected: @family_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
+                class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            </div>
+            <div class="mb-4">
+              <%= f.label :event_id, "Event", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :event_id, Event.all, :id, :title,
+                { selected: @family_beneficiary&.event_id, prompt: "Select Branch" },
+                class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
             </div>
             <!-- District -->
             <div class="mb-4">

@@ -51,10 +51,6 @@ class Ability
     can :manage, :all
   end
 
-  def guest_permissions(user)
-    can :read, :sign_up
-  end
-
   def common_permissions(user)
     can :update, User, id: user.id
     can %i[read update], Notification, user_id: user.id
@@ -62,9 +58,8 @@ class Ability
     can :manage, Inventory, event_id: user.event_ids if user.event_ids.any?
     can :manage, IndividualBeneficiary, branch_id: user.branch_id if user.branch_id.present?
     can :manage, IndividualBeneficiary, event_id: user.event_ids if user.event_ids.any?
-    can :manage, FamilyBeneficiary do |beneficiary|
-      beneficiary.branch_id == user.branch_id || user.event_ids.include?(beneficiary.event_id)
-    end
+    can :manage, FamilyBeneficiary, branch_id: user.branch_id if user.branch_id.present?
+    can :manage, FamilyBeneficiary, event_id: user.event_ids if user.event_ids.any?
     can :manage, OrganizationBeneficiary do |beneficiary|
       beneficiary.branch_id == user.branch_id || user.event_ids.include?(beneficiary.event_id)
     end
