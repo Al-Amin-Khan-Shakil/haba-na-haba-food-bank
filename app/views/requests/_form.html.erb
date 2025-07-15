@@ -12,25 +12,49 @@
           <i class="fa-solid fa-arrow-left"></i>
           <span class="ml-2 hidden lg:inline-block ">Back</span>
         </button>
-        <h2 class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight">
-          <span>
-            <%= @request&.persisted? ? "Edit" : "Create" %>
-          </span>
-          <span class= "hidden md:inline-block">
-            Request
-          </span>
-        </h2>
+        <% if current_user %>
+          <h2  class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight">
+            <span>
+              <%= @request&.persisted? ? "Edit" : "Create" %>
+            </span>
+            <span class= "hidden md:inline-block">
+              Request
+            </span>
+          </h2>
+        <% else %>
+          <div data-controller="formswitch"
+     data-formswitch-type-value="<%= @type %>">
+            <h2 class="text-lg lg:text-3xl text-primarytext font-bold text-center leading-tight" data-formswitch-target="title">
+              <%= @type == "donate" ? "Donate Food" : "Request Food" %>
+            </h2>
+          </div>
+        <% end %>
       </div>
       <div class="bg-white/50 md:p-8 p-4 border rounded-lg">
         <div class="flex justify-between items-center">
           <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Requester Information</h3>
-          <div class="flex items-center gap-2">
-            <%= f.label :is_selected, "Approved?", class: "text-primarytextcolor font-bold ms-3 text-sm font-medium" %>
-            <label class="inline-flex items-center cursor-pointer">
-              <%= f.check_box :is_selected, class: "sr-only peer" %>
-              <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-200 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primarycolor"></div>
-            </label>
-          </div>
+          <% if current_user %>
+            <div data-controller="triple-toggle">
+              <label class="items-center cursor-pointer flex flex-col">
+                <span class= "md:text-xl text-base my-4 font-semibold text-primarytextcolor mb-3"> Is Approved ?</span>
+                <input type="checkbox"
+           value="unset"
+           data-triple-toggle-target="checkbox"
+           data-action="click->triple-toggle#toggle"
+                class="sr-only peer mt-5"
+                id="triple-toggle-checkbox" />
+                <div class="relative w-11 h-6 bg-gray-200
+                peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300
+                rounded-full peer-checked:after:translate-x-full
+                peer-checked:after:border-white
+                after:content-[''] after:absolute after:top-[2px] after:start-[2px]
+                after:bg-white after:border-gray-200 after:border after:rounded-full
+                after:h-5 after:w-5 after:transition-all
+                peer-checked:bg-primarycolor">
+                </div>
+              </label>
+            </div>
+          <% end %>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
@@ -43,16 +67,25 @@
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <% default_value =
+                if @type == "donate"
+                  "donation_request"
+                elsif @type == "request"
+                  "food_request"
+                else
+                  nil
+                end
+            %>
           <div class="mb-4">
             <%= f.label :request_type, class: "block text-gray-700 font-bold mb-2" %>
             <%= f.select :request_type,
-                  Request.request_types.keys.map { |k| [k.titleize, k] },
-                  { include_blank: "Select Request Type" },
-                  class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
-                  data: {
-                    request_form_target: "requestTypeSelect",
-                    action: "change->request-form#toggleDonationFields"
-                  } %>
+        Request.request_types.keys.map { |k| [k.titleize, k] },
+        { include_blank: "Select Request Type", selected: default_value },
+        class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+        data: {
+          request_form_target: "requestTypeSelect",
+          action: "change->request-form#toggleDonationFields"
+        } %>
           </div>
         </div>
         <!-- Donation Fields Wrapper -->
@@ -144,13 +177,22 @@
             </div>
           </div>
         </div>
-        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Assignment</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="mb-4">
-            <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.collection_select :branch_id, Branch.all, :id, :name,
+        <% if current_user %>
+          <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Assignment</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-4">
+              <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :branch_id, Branch.all, :id, :name,
                   { include_blank: "Select Branch" },
                   class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            </div>
+            <div class="mb-4">
+              <%= f.label :user_id, "Assigned To", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.collection_select :user_id, User.all, :id, :email,
+                  { include_blank: "Select User" },
+                  class: " bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+            </div>
+          <% end %>
           </div>
           <div class="mb-4">
             <%= f.label :user_id, "Assigned To", class: "block text-gray-700 font-bold mb-2" %>
@@ -189,6 +231,7 @@
               </ul>
             </div>
           </div>
+
         </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-6">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>

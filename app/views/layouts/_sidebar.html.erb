@@ -160,16 +160,6 @@
 </aside>
 <div class="p-4 min-h-screen bg-gray-50 xl:ml-64">
   <div class="mt-14 bg-gray-50">
-    <% flash.each do |type, message| %>
-      <div
-    data-controller="flash"
-    data-flash-delay-value="10000"
-    class="fixed top-16 right-4 z-1 px-4 py-3 rounded shadow-md max-w-sm mt-10
-           <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
-        <%= message %>
-      </div>
-    <% end %>
-    <%= render "layouts/validation_errors", resource: first_model_with_errors %>
     <%= yield %>
   </div>
 </div>
