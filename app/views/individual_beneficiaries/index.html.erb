@@ -7,11 +7,11 @@
         <span class="hidden sm:inline">Beneficiaries</span>
       </h2>
       <div class="flex justify-end gap-2">
-        <button data-filter-form-target="filterButton" data-action="click->filter-form#toggleForm" class="bg-primarycolor text-white py-1 px-2 rounded hover:bg-hoverprimarycolor">
+        <button data-filter-form-target="filterButton" data-action="click->filter-form#toggleForm" class="cursor-pointer bg-primarycolor text-white py-1 px-2 rounded hover:bg-hoverprimarycolor">
           <i class="fa-solid fa-filter"></i>
           <span class="hidden mr-1 lg:inline-block">Filter</span>
         </button>
-        <%= link_to individual_beneficiaries_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
+        <%= link_to individual_beneficiaries_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "cursor-pointer text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
           <i class="fa-solid fa-arrows-rotate"></i> <span class="ml-1 hidden lg:inline-block">Clear</span>
         <% end %>
       </div>

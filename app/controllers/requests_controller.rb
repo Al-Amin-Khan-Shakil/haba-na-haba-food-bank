@@ -24,9 +24,9 @@ class RequestsController < ApplicationController
     @request = Request.new
     @request.build_donation
     @districts = District.all
-    @counties = County.all
-    @sub_counties = SubCounty.all
-    @type = params[:type]
+    @counties = County.none
+    @sub_counties = SubCounty.none
+
   end
 
   def create
@@ -47,6 +47,9 @@ class RequestsController < ApplicationController
         redirect_to authenticated_root_path, notice: 'Request was successfully created.'
       end
     else
+      @districts = District.all
+      @counties = County.none
+      @sub_counties = SubCounty.none
       render :new, status: :unprocessable_entity
     end
   end

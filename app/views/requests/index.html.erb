@@ -11,7 +11,7 @@
           <i class="fa-solid fa-filter"></i>
           <span class="hidden mr-1 lg:inline-block">Filter</span>
         </button>
-        <%= link_to requests_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
+        <%= link_to requests_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "cursor-pointer text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
           <i class="fa-solid fa-arrows-rotate"></i> <span class="ml-1 hidden lg:inline-block">Clear</span>
         <% end %>
       </div>
@@ -118,16 +118,16 @@
                     </div>
                   </button>
                   <div id="dropdown-<%= request.id %>" class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
-                    <%= link_to 'Details', request_path(request), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
-                    <%= link_to 'Edit', edit_request_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                    <%= link_to 'Details', request_path(request), class: 'cursor-pointer block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
+                    <%= link_to 'Edit', edit_request_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
                     <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
                     <% if request.request_type == 'food_request' %>
-                      <%= link_to '+ Individual', new_request_individual_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
-                      <%= link_to '+ Family', new_request_family_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
-                      <%= link_to '+ Organization', new_request_organization_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Individual', new_request_individual_beneficiary_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Family', new_request_family_beneficiary_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Organization', new_request_organization_beneficiary_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
                     <% end %>
                     <% if request.request_type == 'donation_request' %>
-                      <%= link_to '+ Inventory', new_request_inventory_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Inventory', new_request_inventory_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
                     <% end %>
                   </div>
                 </div>

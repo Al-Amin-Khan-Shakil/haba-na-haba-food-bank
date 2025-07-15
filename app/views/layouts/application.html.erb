@@ -28,8 +28,23 @@
       <% if user_signed_in? %>
         <%= render "layouts/sidebar" %>
       <% else %>
-        <%= yield %>
+        <div class="p-5 flex flex-col justify-center items-center relative min-h-screen">
+          <% flash.each do |type, message| %>
+            <div
+    data-controller="flash"
+    data-flash-delay-value="10000"
+    class="fixed top-16 right-4 z-1 px-4 py-3 rounded shadow-md max-w-sm mt-10
+           <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+              <%= message %>
+            </div>
+          <% end %>
+          <%= image_tag "hnh_admin_mobile_logo", class: "text-white md:w-20 md:h-20 w-10 h-10"%>
+          <p class="text-white  mt-3 font-bold text-3xl">Haba Na Haba</p>
+          <p class="text-white mb-5  text-sm">Little by Little the pot is filled </p>
+          <%= image_tag "bg.svg", class: "absolute top-0 left-0 ri w-full h-full -z-10 object-cover" %>
+          <%= yield %>
+        </div>
       <% end %>
     </main>
-  </body>
+     </body>
 </html>
