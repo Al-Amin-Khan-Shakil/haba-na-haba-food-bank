@@ -150,7 +150,7 @@
         <% end %>
       </li>
       <li>
-        <%= link_to destroy_user_session_path, class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to destroy_user_session_path, data: { "turbo-method": :delete }, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-arrow-right-from-bracket group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Log Out</span>
         <% end %>

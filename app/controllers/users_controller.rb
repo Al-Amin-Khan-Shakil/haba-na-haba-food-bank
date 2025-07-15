@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   def index
-    @users = FilterService.new(User.all, filter_params).apply
+    base_query = User.accessible_by(current_ability)
+
+    @users = FilterService.new(base_query, filter_params).apply
     @branches = Branch.all
   end
 

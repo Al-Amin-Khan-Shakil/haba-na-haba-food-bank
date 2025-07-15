@@ -24,124 +24,134 @@
         </h2>
       </div>
       <div class= "bg-white/50 md:px-8 md:py-4 py-2 px-4 border  rounded-lg">
-        <div class="mb-4">
-          <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Personal Information</h3>
-          <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_field :name, value: @individual_beneficiary&.name.presence || @request&.name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolorborder-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-        </div>
-        <div class="mb-4">
-          <%= f.label :sur_name, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_field :sur_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-        </div>
-        <div class="mb-4">
-          <%= f.label :age, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.number_field :age, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-        </div>
-        <div class="mb-4">
-          <%= f.label :gender, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.select :gender, IndividualBeneficiary.genders.keys.map { |k| [k.titleize, k] }, { include_blank: "Select Gender" }, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor focus:border-primarycolor", required: true %>
-        </div>
-        <div class="mb-4">
-          <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_field :phone_number, value: @individual_beneficiary&.phone_number.presence || @request&.phone_number, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+        <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Personal Information</h3>
+        <div class="flex flex-wrap gap-4">
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :name, value: @individual_beneficiary&.name.presence || @request&.name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolorborder-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :sur_name, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :sur_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :age, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.number_field :age, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :gender, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.select :gender, IndividualBeneficiary.genders.keys.map { |k| [k.titleize, k] }, { include_blank: "Select Gender" }, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor focus:border-primarycolor", required: true %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :phone_number, value: @individual_beneficiary&.phone_number.presence || @request&.phone_number, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
         </div>
         <h3 class="text-xl my-4 underline font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200">Case Information</h3>
-        <div class="mb-4">
-          <%= f.label :case_name, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_field :case_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-        </div>
-        <div class="mb-4">
-          <%= f.label :case_description, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_area :case_description, { rows: 10, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" } %>
+        <div class="flex flex-wrap gap-4">
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :case_name, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :case_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :provided_food, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.number_field :provided_food, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor", step: 0.01 %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :case_description, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_area :case_description, { rows: 10, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" } %>
+          </div>
         </div>
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Family Information</h3>
-        <div class="mb-4">
-          <%= f.label :father_name, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_field :father_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-        </div>
-        <div class="mb-4">
-          <%= f.label :mother_name, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.text_field :mother_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-        </div>
-        <div class="mb-4">
-          <%= f.label :provided_food, class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.number_field :provided_food, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor", step: 0.01 %>
+        <div class="flex flex-wrap gap-4">
+          <div class="flex-grow w-full md:w-[47%]">
+            <%= f.label :father_name, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :father_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :mother_name, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :mother_name, class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
         </div>
         <h3 class="text-xl my-4 underline font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200">Location Information</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="mb-4">
-            <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.text_field :village,
-          value: @individual_beneficiary&.village.presence || @request&.village,
-          class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          </div>
-          <div class="mb-4">
-            <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.text_field :parish,
-          value: @individual_beneficiary&.parish.presence || @request&.parish,
-          class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          </div>
-          <div class="mb-4 md:col-span-2">
-            <%= f.label :address_note, class: "block text-gray-700 font-bold mb-2" %>
-            <%= f.text_area :address_note,
-          value: @individual_beneficiary&.address_note.presence || @request&.address_note,
-          rows: 3,
-          class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          </div>
-        </div>
-        <div data-controller="location" data-location-base-path-value="<%= controller.controller_name %>">
+        <div data-controller="location" data-location-base-path-value="<%= controller.controller_name %>" class="flex flex-wrap gap-4">
           <!-- District -->
-          <div class="mb-4">
+          <div class="w-full md:w-[30%] flex-grow">
             <%= f.label :district_id, "District", class: "block text-gray-700 font-bold mb-2" %>
             <%= f.collection_select :district_id, @districts, :id, :name,
-      { include_blank: "Select District", selected: @individual_beneficiary&.district_id || @request&.district_id },
-      {
-        class: "custom-select bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
-        data: {
-          location_target: "district",
-          action: "change->location#loadCounties"
-        }
-      } %>
+              { include_blank: "Select District", selected: @individual_beneficiary&.district_id || @request&.district_id },
+              {
+                class: "custom-select bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+                data: {
+                  location_target: "district",
+                  action: "change->location#loadCounties"
+                }
+              } %>
           </div>
           <!-- County -->
-          <div class="mb-4">
+          <div class="w-full md:w-[30%] flex-grow">
             <%= f.label :county_id, "County", class: "block text-gray-700 font-bold mb-2" %>
             <%= f.select :county_id,
-      options_from_collection_for_select(@counties, :id, :name, @individual_beneficiary&.county_id || @request&.county_id),
-      {},
-      {
-        class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
-        data: {
-          location_target: "county",
-          action: "change->location#loadSubCounties",
-          initial_selection: (@individual_beneficiary&.county_id || @request&.county_id)
-        }
-      } %>
+              options_from_collection_for_select(@counties, :id, :name, @individual_beneficiary&.county_id || @request&.county_id),
+              {},
+              {
+                class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+                data: {
+                  location_target: "county",
+                  action: "change->location#loadSubCounties",
+                  initial_selection: (@individual_beneficiary&.county_id || @request&.county_id)
+                }
+              } %>
           </div>
           <!-- Sub-county -->
-          <div class="mb-4">
+          <div class="w-full md:w-[30%] flex-grow">
             <%= f.label :sub_county_id, "Sub-county", class: "block text-gray-700 font-bold mb-2" %>
             <%= f.select :sub_county_id,
-      options_from_collection_for_select(@sub_counties, :id, :name, @individual_beneficiary&.sub_county_id || @request&.sub_county_id),
-      {},
-      {
-        class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
-        data: {
-          location_target: "subCounty",
-          initial_selection: (@individual_beneficiary&.sub_county_id || @request&.sub_county_id)
-        }
-      } %>
+              options_from_collection_for_select(@sub_counties, :id, :name, @individual_beneficiary&.sub_county_id || @request&.sub_county_id),
+              {},
+              {
+                class: "bg-gray-50  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor",
+                data: {
+                  location_target: "subCounty",
+                  initial_selection: (@individual_beneficiary&.sub_county_id || @request&.sub_county_id)
+                }
+              } %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :village, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :village,
+                        value: @individual_beneficiary&.village.presence || @request&.village,
+                        class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :parish, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_field :parish,
+                        value: @individual_beneficiary&.parish.presence || @request&.parish,
+                        class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full flex-grow">
+            <%= f.label :address_note, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.text_area :address_note,
+                        value: @individual_beneficiary&.address_note.presence || @request&.address_note,
+                        rows: 3,
+                        class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.collection_select :branch_id, @branches, :id, :name,
+                    { selected: @individual_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
+                    class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="w-full md:w-[47%] flex-grow">
+            <%= f.label :event_id, "Event", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.collection_select :event_id, Event.all, :id, :title,
+                    { selected: @individual_beneficiary&.event_id, prompt: "Select Branch" },
+                    class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
         </div>
-        <div class="mb-4">
-          <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
-          <%= f.collection_select :branch_id, @branches, :id, :name,
-          { selected: @individual_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
-          class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
-          <div class="flex justify-center md:justify-end text-sm items-center mt-12 cursor-pointer">
-            <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
-            <%= f.submit @individual_beneficiary.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor  hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
-          </div>
+        <div class="flex justify-center md:justify-end text-sm items-center mt-12 ">
+          <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
+          <%= f.submit @individual_beneficiary.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor  hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
         </div>
       </div>
     </div>

@@ -6,16 +6,19 @@ class OrganizationBeneficiariesController < ApplicationController
   before_action :set_organization_beneficiary, only: %i[show edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
   before_action :redirect_if_beneficiary_exists, only: %i[new create]
+  load_and_authorize_resource
 
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = OrganizationBeneficiary.accessible_by(current_ability)
+
     if filter_applied
-      @organization_beneficiaries = FilterService.new(OrganizationBeneficiary.all,
+      @organization_beneficiaries = FilterService.new(base_query,
                                                       filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
-      @organization_beneficiaries = FilterService.new(OrganizationBeneficiary.all,
+      @organization_beneficiaries = FilterService.new(base_query,
                                                       default_params).apply.order(created_at: :desc)
     end
 

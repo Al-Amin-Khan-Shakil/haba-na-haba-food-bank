@@ -1,15 +1,18 @@
 class RequestsController < ApplicationController
-  before_action :authenticate_user!, except: %i[new create]
+  before_action :authenticate_user!, except: %i[new create load_counties load_sub_counties]
   before_action :set_request, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = Request.accessible_by(current_ability)
+
     if filter_applied
-      @requests = FilterService.new(Request.all, filter_params).apply.order(created_at: :desc)
+      @requests = FilterService.new(base_query, filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
-      @requests = FilterService.new(Request.all, default_params).apply.order(created_at: :desc)
+      @requests = FilterService.new(base_query, default_params).apply.order(created_at: :desc)
     end
 
     @districts = District.all
@@ -23,9 +26,8 @@ class RequestsController < ApplicationController
   def new
     @request = Request.new
     @request.build_donation
-    @districts = District.all
-    @counties = County.none
-    @sub_counties = SubCounty.none
+    @type = param[:type]
+    form_dependencies
   end
 
   def create
@@ -39,29 +41,23 @@ class RequestsController < ApplicationController
     @request.branch = current_user ? @request.branch : @request.district.branch
 
     if @request.save
-      if current_user
-        create_notifications(@request, :created)
-        redirect_to @request, notice: 'Request was successfully created.'
-      else
-        redirect_to authenticated_root_path, notice: 'Request was successfully created.'
-      end
+      create_notifications(@request, :created)
+      redirect_to(user_signed_in? ? @request : unauthenticated_root_path, notice: 'Request was successfully created.')
     else
-      @districts = District.all
-      @counties = County.none
-      @sub_counties = SubCounty.none
+      form_dependencies
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     @request.build_donation if @request.donation_request? && @request.donation.nil?
-    @districts = District.all
-    @counties = @request.district&.counties || County.none
-    @sub_counties = @request.county&.sub_counties || SubCounty.none
+    form_dependencies
   end
 
   def update
-    if @request.update(request_params)
+    update_params = current_user.role == 'volunteer' ? request_params.except(:user_id) : request_params
+
+    if @request.update(update_params)
       if @request.donation_request? && @request.donation.present?
         @request.donation.update(
           donor_name: @request.name,
@@ -72,6 +68,7 @@ class RequestsController < ApplicationController
       redirect_to @request, notice: 'Request updated successfully'
     else
       @request.build_donation if @request.donation_request? && @request.donation.blank?
+      form_dependencies
       render :edit, status: :unprocessable_entity
     end
   end
@@ -155,5 +152,11 @@ class RequestsController < ApplicationController
     return unless volunteer
 
     Notification.create(user: volunteer, notifiable: request, message: volunteer_message)
+  end
+
+  def form_dependencies
+    @districts = District.all
+    @counties = @request.district&.counties || County.none
+    @sub_counties = @request.county&.sub_counties || SubCounty.none
   end
 end
