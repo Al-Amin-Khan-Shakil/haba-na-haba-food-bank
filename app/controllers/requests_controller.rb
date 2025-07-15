@@ -24,8 +24,8 @@ class RequestsController < ApplicationController
     @request = Request.new
     @request.build_donation
     @districts = District.all
-    @counties = County.all
-    @sub_counties = SubCounty.all
+    @counties = County.none
+    @sub_counties = SubCounty.none
   end
 
   def create
@@ -40,6 +40,9 @@ class RequestsController < ApplicationController
       create_notifications(@request, :created)
       redirect_to @request, notice: 'Request was successfully created.'
     else
+      @districts = District.all
+      @counties = County.none
+      @sub_counties = SubCounty.none
       render :new, status: :unprocessable_entity
     end
   end

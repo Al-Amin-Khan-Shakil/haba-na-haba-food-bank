@@ -11,7 +11,7 @@
           <i class="fa-solid fa-filter"></i>
           <span class="hidden mr-1 lg:inline-block">Filter</span>
         </button>
-        <%= link_to events_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
+        <%= link_to events_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "cursor-pointer text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
           <i class="fa-solid fa-arrows-rotate"></i> <span class="ml-1 hidden lg:inline-block">Clear</span>
         <% end %>
       </div>
@@ -73,10 +73,10 @@
                       <i class="fa-solid fa-chevron-down"></i>
                     </div>
                   </button>
-                  <div id="dropdown-<%= event.id %>" class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
+                  <div id="dropdown-<%= event.id %>" class="cursor-pointer absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
                     <%= link_to 'Details', event_path(event), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
                     <%= link_to 'Edit', edit_event_path(event), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
-                    <%= button_to 'Delete', event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
+                    <%= button_to 'Delete', event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'cursor-pointer block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
                   </div>
                 </div>
               </td>

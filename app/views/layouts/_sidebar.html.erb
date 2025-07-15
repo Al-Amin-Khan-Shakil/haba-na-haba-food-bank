@@ -15,7 +15,7 @@
       </div>
       <div class="flex items-center">
         <div class="relative flex items-center ms-3">
-          <%= link_to notifications_path, class: "flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group relative" do %>
+          <%= link_to notifications_path, class: " cursor-pointer flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group relative" do %>
             <i class="text-lg text-gray-500 fa-solid fa-bell group-hover:text-gray-800 dark:text-gray-400 dark:group-hover:text-white"></i>
             <% if current_user.notifications.unread.any? %>
               <span class="inline-flex items-center justify-center w-4 h-4 md:w-5 md:h-5 text-xs font-bold text-red-800 bg-red-100 rounded-full ms-2 absolute -top-0.5 md:-top-1.5 right-0">
@@ -43,7 +43,7 @@
         <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
           <div class="px-4 py-3">
             <p>
-              <%= link_to user_path(current_user), class:"block font-medium py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+              <%= link_to user_path(current_user), class:"cursor-pointer block font-medium py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
                 <span class="text-gray-700 truncate whitespace-nowrap group-hover:text-primarytext"><%= current_user.first_name %> <%= current_user.last_name %></span>
               <% end %>
             </p>
@@ -53,12 +53,12 @@
           </div>
           <ul class="py-1">
             <li>
-              <%= link_to authenticated_root_path, class:"block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+              <%= link_to authenticated_root_path, class:"cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
                 <span>Settings</span>
               <% end %>
             </li>
             <li>
-              <%= link_to destroy_user_session_path, data: { "turbo-method": :delete }, class:"block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+              <%= link_to destroy_user_session_path, data: { "turbo-method": :delete }, class:"cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" do %>
                 <span>Sign out</span>
               <% end %>
             </li>
@@ -78,25 +78,25 @@
         <% end %>
       </li>
       <li>
-        <%= link_to branches_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to branches_path, class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="fas fa-map-marked-alt text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Branches</span>
         <% end %>
       </li>
       <li>
-        <%= link_to requests_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to requests_path, class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="fas fa-clipboard-check text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Requests</span>
         <% end %>
       </li>
       <li>
-        <%= link_to users_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to users_path, class:" cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-user-group group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Users</span>
         <% end %>
       </li>
       <li>
-        <%= link_to inventories_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to inventories_path, class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="fas fa-boxes-stacked text-white text-lg w-5 h-5 group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Inventories</span>
         <% end %>
@@ -110,19 +110,19 @@
           </summary>
           <ul class="pl-3 mt-2 space-y-2 border-l-2 border-white ms-8">
             <li>
-              <%= link_to individual_beneficiaries_path, class: "flex items-center px-2 text-white hover:bg-gray-100 rounded-md" do %>
+              <%= link_to individual_beneficiaries_path, class: "cursor-pointer flex items-center px-2 text-white hover:bg-gray-100 rounded-md" do %>
                 <span class="w-2 h-2 rounded-full mr-2 text-base bg-primarytext"></span>
                 <span class="text-primarytext">Individual</span>
               <% end %>
             </li>
             <li>
-              <%= link_to family_beneficiaries_path, class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
+              <%= link_to family_beneficiaries_path, class: "cursor-pointer flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
                 <span class="mr-2 w-2 h-2 text-base rounded-full bg-primarytext"></span>
                 <span class="text-primarytext">Family</span>
               <% end %>
             </li>
             <li>
-              <%= link_to organization_beneficiaries_path, class: "flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
+              <%= link_to organization_beneficiaries_path, class: "cursor-pointer flex items-center px-2 text-white hover:bg-gray-100 hover:text-primarytext rounded-md" do %>
                 <span class="mr-2 w-2 h-2 text-base rounded-full bg-primarytext"></span>
                 <span class="text-primarytext">Organization</span>
               <% end %>
@@ -131,26 +131,26 @@
         </details>
       </li>
       <li>
-        <%= link_to events_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to events_path, class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-calendar-days group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Events</span>
         <% end %>
       </li>
       <li>
-        <%= link_to districts_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to districts_path, class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-location group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Locations</span>
         <% end %>
       </li>
       <p class="py-2 mr-20 text-sm font-normal text-white font-Outfit">PREFERENCE</p>
       <li>
-        <%= link_to user_path(current_user), class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to user_path(current_user), class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-gear group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Profile</span>
         <% end %>
       </li>
       <li>
-        <%= link_to destroy_user_session_path, class:"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+        <%= link_to destroy_user_session_path, class:"cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
           <i class="text-base text-white fa-solid fa-arrow-right-from-bracket group-hover:text-gray-800"></i>
           <span class="text-white whitespace-nowrap ms-3 group-hover:text-primarytext">Log Out</span>
         <% end %>
@@ -163,7 +163,7 @@
     <% flash.each do |type, message| %>
       <div
     data-controller="flash"
-    data-flash-delay-value="30000"
+    data-flash-delay-value="10000"
     class="fixed top-16 right-4 z-1 px-4 py-3 rounded shadow-md max-w-sm mt-10
            <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
         <%= message %>
