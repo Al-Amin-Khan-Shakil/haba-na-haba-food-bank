@@ -11,13 +11,18 @@
           <i class="fa-solid fa-filter"></i>
           <span class="hidden mr-1 lg:inline-block">Filter</span>
         </button>
-        <%= link_to organization_beneficiaries_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
+        <%= link_to organization_beneficiaries_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "cursor-pointer text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
           <i class="fa-solid fa-arrows-rotate"></i> <span class="ml-1 hidden lg:inline-block">Clear</span>
         <% end %>
       </div>
     </div>
     <div data-filter-form-target="form" class="space-y-4 hidden bg-white/50 my-4 rounded-lg p-4 shadow-md text-gray-600">
-      <%= form_with url: organization_beneficiaries_path, method: :get, local: true, class: "space-y-4" do |f| %>
+      <%= form_with url: organization_beneficiaries_path, method: :get, local: true, class: "space-y-4",
+                  data: {
+      controller: "location", 
+      location_base_path_value: "organization_beneficiaries",
+      location_context_path_value: organization_beneficiaries_path
+    } do |f| %>
         <div class="flex flex-wrap gap-4">
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :organization_name, "Org Name", class: "block text-gray-700" %>
@@ -41,15 +46,28 @@
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :district_id, "District", class: "block text-gray-700" %>
-            <%= f.collection_select :district_id, @districts, :id, :name, { prompt: "Select District", selected: params[:district_id] }, { class: 'district-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries" } %>
+            <%= f.collection_select :district_id, @districts, :id, :name, { prompt: "Select District", selected: params[:district_id] }, { class: 'district-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries",
+             data: {
+                        location_target: "district",
+                        action: "change->location#loadCounties"
+                      }  } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :county_id, "County", class: "block text-gray-700" %>
-            <%= f.collection_select :county_id, @counties, :id, :name, { prompt: "Select County", selected: params[:county_id] }, { class: 'county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries" } %>
+            <%= f.collection_select :county_id, @counties, :id, :name, { prompt: "Select County", selected: params[:county_id] }, { class: 'county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen', 'data-context-path': "organization_beneficiaries" ,
+             data: {
+                        location_target: "county",
+                        action: "change->location#loadSubCounties",
+                        initial_selection: @request&.county_id
+                      }} %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :sub_county_id, "Sub-County", class: "block text-gray-700" %>
-            <%= f.collection_select :sub_county_id, @sub_counties, :id, :name, { prompt: "Select Sub-County", selected: params[:sub_county_id] }, { class: 'sub-county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen' } %>
+            <%= f.collection_select :sub_county_id, @sub_counties, :id, :name, { prompt: "Select Sub-County", selected: params[:sub_county_id] }, { class: 'sub-county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-lightGreen focus:border-lightGreen',
+             data: {
+                        location_target: "subCounty",
+                        initial_selection: @request&.sub_county_id
+                      } } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= f.label :branch_id, "Branch", class: "block text-gray-700" %>

@@ -122,7 +122,7 @@
             <%= @inventory.donation&.donor_type&.humanize || @request&.donation&.donor_type&.humanize || "Collected from #{@event&.title}" %>
           </p>
         </div>
-        <div class="flex justify-center md:justify-end text-sm items-center mt-12">
+        <div class="flex justify-center md:justify-end text-sm items-center mt-12 cursor-pointer">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit @inventory.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
         </div>

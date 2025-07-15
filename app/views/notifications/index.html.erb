@@ -10,7 +10,7 @@
     <ul class="space-y-4">
       <% @notifications.each do |notification| %>
         <li class="<%= notification.read? ? 'bg-gray-50' : 'bg-blue-100' %> p-4 rounded-md shadow-md hover:shadow-xl transition-all duration-200 ease-in-out">
-          <%= link_to  notification_path(notification), class: "text-blue-600 hover:text-blue-800"  do %>
+          <%= link_to  notification_path(notification), class: "cursor-pointer text-blue-600 hover:text-blue-800"  do %>
             <p class="<%= notification.read? ? 'text-gray-500' : 'text-primarytext' %>"><%= notification.message %></p>
             <p class="text-sm text-gray-500 mt-1"><%= time_ago_in_words(notification.created_at) %> ago</p>
           <% end %>

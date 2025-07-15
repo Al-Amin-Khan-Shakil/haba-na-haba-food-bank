@@ -1,4 +1,3 @@
-# Ensure required associations exist
 branch = Branch.first
 district = District.first
 county = County.first
@@ -32,5 +31,5 @@ else
     end
   end
 
-  puts "✅ Seeded random number of requests per day from 21–27 May 2025."
+  puts "✅ Seeded random number of requests per day from 21–27 May 2025."
 end

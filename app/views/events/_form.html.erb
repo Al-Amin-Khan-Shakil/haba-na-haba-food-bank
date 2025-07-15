@@ -110,7 +110,7 @@
           </div>
         </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-12">
-          <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
+          <%= link_to "Cancel", :back, class: "cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit @event.persisted? ? "Update Event" : "Create Event", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
         </div>
       </div>

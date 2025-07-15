@@ -26,6 +26,7 @@ class RequestsController < ApplicationController
   def new
     @request = Request.new
     @request.build_donation
+    @type = param[:type]
     form_dependencies
   end
 
@@ -36,6 +37,8 @@ class RequestsController < ApplicationController
       @request.donation.donor_name = @request.name
       @request.donation.phone_number = @request.phone_number
     end
+
+    @request.branch = current_user ? @request.branch : @request.district.branch
 
     if @request.save
       create_notifications(@request, :created)

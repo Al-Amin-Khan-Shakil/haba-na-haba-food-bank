@@ -1,7 +1,417 @@
-<div>
-  <h1 class="font-bold text-4xl">Home#index</h1>
-  <p>Find me in app/views/home/index.html.erb</p>
-</div>
-<div data-controller="hello">
-  Stimulus should connect and print in the console!
-</div>
+<section>
+  <div class=" z-50">
+    <% flash.each do |type, message| %>
+      <div
+    data-controller="flash"
+    data-flash-delay-value="30000"
+    class="fixed top-16 right-4 z-1 px-4 py-3 rounded shadow-md max-w-sm 
+           <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+        <%= message %>
+      </div>
+    <% end %>
+    <%= render "layouts/validation_errors", resource: first_model_with_errors %>
+  </div>
+  <div class="bg-custom-image bg-cover bg-center w-full h-screen z-50  bottom-0">
+    <nav class="bg-transparent font-Outfit px-2">
+      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div class="flex flex-col items-center ">
+          <div class>
+            <%= link_to '/', class: 'flex items-center space-x-3 rtl:space-x-reverse' do %>
+              <%= image_tag "logo.svg", class: "w-20 h-20 ", alt: "Hnh Logo" %>
+            </div>
+          <% end %>
+        </div>
+        <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg lg:hidden hover:bg-primarycolor focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+        </button>
+        <div class="hidden w-full md:block lg:w-auto" id="navbar-default">
+          <ul class="font-medium flex flex-col p-4 lg:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 lg:flex-row lg:space-x-8 rtl:space-x-reverse lg:mt-0 lg:border-0 lg:bg-transparent dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
+            <li class="relative inline-block text-black group">
+              <a href="/" class="relative z-10 block py-2 px-3 text-white bg-primarycolor rounded lg:bg-transparent lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor " aria-current="Page">Home</a>
+              <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </li>
+            <li data-controller = "formswitch" class="relative inline-block text-black group">
+              <%= link_to  new_request_path(type: "donate"),
+    data: { action: "click->formswitch#switch", form_type: "donate" },
+        class: 'relative z-10 block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor dark:hover:text-white lg:dark:hover:bg-transparent' do %>
+                Donate Food
+                <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+              <% end %>
+            </li>
+            <li data-controller = "formswitch" class="relative inline-block text-black group">
+              <%= link_to  new_request_path(type: "request"),
+    data: { action: "click->formswitch#switch", form_type: "request" },
+        class: 'relative z-10 block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor dark:hover:text-white lg:dark:hover:bg-transparent' do %>
+                Request Food
+                <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+              <% end %>
+            </li>
+            <li class="relative inline-block text-black group">
+              <%= link_to '#about', class: 'relative z-10  block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor' do %>
+                About Us
+                <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+              <% end %>
+            </li>
+            <li class="relative inline-block text-black group">
+              <%= link_to '#footer', class: 'relative z-10  block py-2 px-3 text-primarytext rounded hover:bg-primarycolor hover:text-white lg:text-white lg:hover:bg-transparent lg:border-0 lg:hover:text-primarycolor lg:p-0 lg:active:text-primarycolor' do %>
+                Contact Us
+                <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class=" w-fit mt-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2    p-5">
+      <div class="group justify-center items-center flex flex-col text-center text-white font-Paprika  w-fit mx-auto ">
+        <h1 class="relative  inline-block text-3.5xl sm:text-3.5xl md:text-5xl lg:text-5xl font-normal w-fit">
+          <span class="relative z-10">Haba Na Haba</span>
+          <span class="absolute left-0 -bottom-2 w-0 h-[5px] bg-primarycolor transition-all duration-300 group-hover:w-full"></span>
+        </h1>
+        <p class="text-xl relative inline-block  sm:text-2xl md:text-3.8xl lg:text-5xl mt-2 font-normal  w-fit">
+          <span> We are passionate hunger heroes</span>
+          <span class="absolute left-0 -bottom-2 w-0 h-[5px] bg-primarycolor transition-all duration-300 group-hover:w-full"></span>
+        </p>
+        <p class="relative w-fit  inline-block text-sm sm:text-base md:text-xl lg:text-xl mt-2 font-Outfit font-light">
+          <span >Together we can end hunger</span>
+          <span class="absolute left-0 -bottom-2 w-0 h-[5px] bg-primarycolor transition-all duration-300 group-hover:w-full"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="No_one" 
+  class="bg-primarycolor text-white mt-0"
+  style="background-image: url('../assets/Flower pattern print.png'); background-size: cover; background-position: center;">
+  <div class="max-w-screen-lg mx-auto px-6 sm:px-12 lg:px-20 py-16">
+    <div class="flex flex-col md:flex-row items-start justify-between gap-8">
+      <!-- Left Side - Main Heading -->
+      <div class="flex-[0.4] md:flex-[0.3] text-left font-Outfit">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold leading-tight">
+          No one <br class="hidden md:block">
+          should ever <br class="hidden md:block" >
+          go hungry
+        </h2>
+      </div>
+      <!-- Right Side - Description and Buttons -->
+      <div class="flex-[0.6] md:flex-[0.7] font-Outfit text-sm md:text-base lg:text-lg text-left">
+        <p class="font-light mb-8 leading-relaxed">
+          That's why we connect people with food today and build community power to end hunger at its roots, eliminating barriers to employment.
+        </p>
+        <!-- Buttons Section -->
+        <div class="flex flex-wrap gap-4">
+          <!-- Request Food Button -->
+          <button type="button" onclick="toggleModal('requestModal')" 
+            class="text-primarycolor bg-white border border-transparent hover:border-white hover:bg-primarycolor hover:text-white focus:ring-4 focus:ring-primarycolor rounded-md px-6 py-3 text-xs md:text-sm transition duration-300">
+            Request Food
+          </button>
+          <!-- Donate Food Button -->
+          <button type="button" onclick="toggleModal('donateModal')" 
+            class="text-white bg-primarytext hover:bg-opacity-90 focus:ring-4 focus:ring-primarytext rounded-md px-6 py-3 text-xs md:text-sm transition duration-300">
+            Donate Food
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="max-w-screen-xl  mx-auto font-Outfit text-primarytext p-4 flex flex-col justify-center items-center">
+  <div class="flex flex-col md:flex-row items-center">
+    <div class="w-full md:w-60%">
+      <%= image_tag("littlepot_tablet.png", alt: "volunteer", class: "w-full h-auto") %>
+    </div>
+    <div class="w-full md:w-40% text-left mt-10 ml-2">
+      <h2 class=" font-bold text-xl sm:text-2xl md:text-3.5xl lg:text-3.8xl lg:pb-4 ">Little by little the pot is filled</h2>
+      <p class="  font-semibold text-sm sm:text-base md:text-xs lg:text-lg mt-2 lg:pb-2">We envision a world where communities are working together to empower each other and alleviate hunger.</p>
+      <p class=" font-Outfit font-normal text-xs sm:text-sm md:text-xxs lg:text-base mt-2 ">
+        At Haba Na Haba, we collect and distribute food to hunger-relief charities and people. Each year billions of kilogrammes of food go to waste, while 1 in 4 people are malnourished. This is why we engage to attenuate the stringent hunger & food waste challenge. We strongly believe that "hunger is often not a food problem; it's a logistics problem"!
+      </p>
+      <ul class="max-w-md space-y-1 list-inside w-full font-Outfit text-primarytext-400 text-base md:text-xxs lg:text-base lg:mt-[4%]">
+        <li class="flex items-center p-3 md:p-1 lg:py-3">
+          <svg class="w-6 h-6 me-2 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" stroke="#6DC13D" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+          </svg>
+          Reduce food waste
+        </li>
+        <li class="flex items-center p-3 md:p-1 lg:py-3">
+          <svg class="w-6 h-6 me-2 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" stroke="#6DC13D" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+          </svg>
+          Fight food hunger
+        </li>
+        <li class="flex items-center p-3 md:p-1 lg:py-3">
+          <svg class="w-6 h-6 me-2 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" stroke="#6DC13D" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+          </svg>
+          Work with people
+        </li>
+      </ul>
+      <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-stretch">
+        <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-stretch lg:mt-[10%]">
+          <!-- Card 1 -->
+          <div class="flex-grow  w-full h-full max-w-sm md:max-w-none md:w-1/2 aspect-w-1 aspect-h-1 p-6 md:p-4 bg-primarytext rounded-2xl shadow flex justify-center items-center ">
+            <h4 class="text-3.8xl font-semibold tracking-tight text-white md:text-xl lg:text-3.8xl mr-2 md:mr-5 text-center">
+              6+ </h4>
+            <span class="text-base text-white md:text-xxs lg:text-base">years of serving community </span>
+            <img src="../assets/love.svg" alt="Icon" class="inline w-5 h-5 ml-2 md:-ml-8 lg:-ml-8" />
+          </div>
+          <!-- Card 2 -->
+          <div class="flex-grow  w-full h-full max-w-sm md:max-w-none md:w-1/2 aspect-w-1 aspect-h-1 p-6 md:p-4 bg-white border-2 border-primarycolor rounded-2xl shadow flex justify-center items-center ">
+            <h4 class="text-3.8xl font-semibold tracking-tight text-primarytext md:text-xl lg:text-3.8xl text-center mr-2">
+              1.25M+
+            </h4>
+            <span class="text-base text-primarytext md:text-xxs lg:text-base">Beneficiaries </span>
+          </div>
+        </div>
+      </section>
+      <section class="block bg-community-image bg-cover bg-center w-full relative" id="about">
+        <div class="text-white max-w-screen-xl mx-auto">
+          <h3 class="font-Outfit font-normal text-base text-center p-5">HOW WE DO THAT</h3>
+          <h3 class="font-Outfit font-bold text-2xl mt-3 text-center">HOW WE GET RESULTS THAT LAST</h3>
+          <div class="grid grid-cols-2 md:flex md:justify-center gap-4 p-6 font-Outfit text-white overflow-x-auto w-full">
+            <%= render partial: 'shared/card', locals: { svg_icon_path: 'gift.svg', title: 'GIVE A DONATION', description: 'Support our cause with your treasures in either funding, materials or alms', action_text: 'DONATE', variant_class: 'h-72', image_container_class: '', text_alignment_class: '', action_text_class: '' } %>
+            <%= render partial: 'shared/card', locals: { svg_icon_path: 'accessible.svg', title: 'VOLUNTEER NOW', description: 'Take time to make impact as you serve humanity together', action_text: 'JOIN IN', variant_class: 'h-72', image_container_class: '', text_alignment_class: '', action_text_class: '' } %>
+            <%= render partial: 'shared/card', locals: { svg_icon_path: 'plus.svg', title: 'PARTNER WITH US', description: 'Let’s join hands to make a difference in the lives of people & communities', action_text: 'START NOW', variant_class: 'h-72 mx-auto', image_container_class: '', text_alignment_class: '', action_text_class: '' } %>
+            <%= render partial: 'shared/card', locals: { svg_icon_path: 'sun.svg', title: 'PRAY FOR US', description: 'Praying is a Godly principle that produces great and valued results', action_text: 'LET\'S TALK', variant_class: 'h-72 mx-auto', image_container_class: '', text_alignment_class: '', action_text_class: '' } %>
+          </div>
+        </div>
+      </section>
+      <section class=" max-w-screen-xl  mx-auto font-Outfit text-primarytext flex flex-col justify-center align-center p-5 gap-10 ">
+        <div>
+          <p class="font-light text-base md:text-xxs lg:text-base lg:pb-4 mt-5 text-center">STILL HAVE QUESTIONS ABOUT US</p>
+          <h4 class="font-bold text-2xl md:text-2xl  lg:text-3.8xl text-center ">LEARN MORE FROM FAQ'S</h4>
+        </div>
+        <div id="accordion-collapse" data-accordion="collapse">
+          <!-- Accordion item 1 -->
+          <h4 id="accordion-collapse-heading-1">
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right border border-primarycolor rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3 mb-4 mt-4" data-accordion-target="#accordion-collapse-body-1" aria-expanded="true" aria-controls="accordion-collapse-body-1">
+              <span>How do I request for food?</span>
+              <svg data-accordion-icon class="w-4 h-4 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5 5 1 1 5"/>
+              </svg>
+            </button>
+          </h4>
+          <div id="accordion-collapse-body-1" class="hidden" aria-labelledby="accordion-collapse-heading-1">
+            <div class="p-5 border border-primarycolor rounded-xl dark:border-gray-700 dark:bg-gray-900">
+              <p class="mb-2">To request food from Haba Na Haba Food Bank, follow these simple steps:</p>
+              <ol class="list-decimal list-inside  space-y-2">
+                <li>
+                  <strong>Visit the Request Food Page:</strong> Go to the “Request Food” section on our website.
+                </li>
+                <li>
+                  <strong>Choose Your Category:</strong> Select whether the request is for an individual, organization, or family.
+                </li>
+                <li>
+                  <strong>Fill Out the Form:</strong> Complete the form with accurate details such as your name, contact information, and food requirements.
+                </li>
+                <li>
+                  <strong>Submit Your Request:</strong> Click the "Submit" button to send your request. You will receive a confirmation message once your request is successfully submitted.
+                </li>
+                <li>
+                  <strong>Wait for Approval:</strong> Our team will review your request. If approved, you will be notified via your provided contact details with further instructions.
+                </li>
+              </ol>
+              <p class="mt-4 ">
+                If you have any questions or face issues while submitting your request, feel free to 
+                <a href="#footer" class="text-primarycolor hover:underline">contact our support team</a>.
+              </p>
+            </div>
+          </div>
+          <!-- Accordion item 2 -->
+          <h4 id="accordion-collapse-heading-2">
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right border border-primarycolor rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3 mb-4 mt-4" data-accordion-target="#accordion-collapse-body-2" aria-expanded="false" aria-controls="accordion-collapse-body-2">
+              <span>How does a food bank operate?</span>
+              <svg data-accordion-icon class="w-4 h-4 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5 5 1 1 5"/>
+              </svg>
+            </button>
+          </h4>
+          <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
+            <div class="p-5 border border-primarycolor rounded-xl dark:border-gray-700">
+              <ol class="list-decimal list-inside  space-y-4">
+                <li>
+                  <strong>Food Collection:</strong> Food banks collect donations from various sources, including:
+                  <ul class="list-disc list-inside ml-6">
+                    <li>Individuals donating non-perishable food items.</li>
+                    <li>Grocery stores and supermarkets providing surplus or unsold food.</li>
+                    <li>Farms and manufacturers offering fresh produce or packaged goods.</li>
+                    <li>Partnerships with local businesses, schools, and community organizations.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Storage and Organization:</strong> Once collected, the food is sorted and stored in warehouses to ensure it is safe and ready for distribution. Items are categorized by type, expiration date, and nutritional value.
+                </li>
+                <li>
+                  <strong>Distribution to Partner Agencies:</strong> Food banks typically work with partner organizations, such as shelters, soup kitchens, and community groups, to distribute the food to those in need. These agencies handle direct distribution to individuals and families.
+                </li>
+                <li>
+                  <strong>Emergency and Direct Support:</strong> Some food banks also provide direct support to individuals and families during emergencies, offering food boxes or meals.
+                </li>
+                <li>
+                  <strong>Community Programs and Education:</strong> Food banks often run programs to educate the community about nutrition, food preparation, and reducing food waste.
+                </li>
+                <li>
+                  <strong>Funding and Volunteer Support:</strong> Food banks rely heavily on donations, grants, and volunteers to sustain operations. Volunteers help with food sorting, packing, and distribution.
+                </li>
+              </ol>
+            </div>
+          </div>
+          <!-- Accordion item 3 -->
+          <h4 id="accordion-collapse-heading-3">
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right border border-primarycolor rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3 mb-4 mt-4" data-accordion-target="#accordion-collapse-body-3" aria-expanded="false" aria-controls="accordion-collapse-body-3">
+              <span>Will I Recieve a reciept for my donation or contribution?</span>
+              <svg data-accordion-icon class="w-4 h-4 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5 5 1 1 5"/>
+              </svg>
+            </button>
+          </h4>
+          <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
+            <div class="p-5 border border-primarycolor rounded-xl dark:border-gray-700">
+              <p class="mb-2">Yes, you will receive a receipt for your donation. For online donations, the receipt is emailed immediately after the transaction. 
+                For in-person donations, a physical receipt is provided. If you need a duplicate, contact our support team.</p>
+            </div>
+          </div>
+          <!-- Accordion item 4 -->
+          <h4 id="accordion-collapse-heading-4">
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right border border-primarycolor rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3 mb-4 mt-4" data-accordion-target="#accordion-collapse-body-4" aria-expanded="false" aria-controls="accordion-collapse-body-4">
+              <span>Is HabanaHaba fook bank registered NGO?</span>
+              <svg data-accordion-icon class="w-4 h-4 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5 5 1 1 5"/>
+              </svg>
+            </button>
+          </h4>
+          <div id="accordion-collapse-body-4" class="hidden" aria-labelledby="accordion-collapse-heading-4">
+            <div class="p-5 border border-primarycolor rounded-xl dark:border-gray-700">
+              <p class="mb-2">Yes, Haba Na Haba Food Bank is a registered NGO in Uganda, with registration number 12122. It is recognized as a member of the Regional Food Banking Network and operates under the mentorship of the Egypt Food Bank</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer id="footer" class="bg-primarytext dark:bg-gray-900 py-5">
+        <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+          <div class="md:flex md:justify-between">
+            <div class="mb-6 md:mb-0 w-fit mx-auto md:mr-10">
+              <%= link_to "/", class: 'text-center' do %>
+                <%= image_tag "logo.svg", class: "h-20 w-20 mx-auto ", alt: "Haba na haba Logo" %>
+                <h2 class=" text-2xl font-semibold whitespace-nowrap text-primarycolor ">HabaNaHaba</h2>
+                <p class="text-white text-xs">Little By Little The Pot Is Filled</p>
+              <% end %>
+            </div>
+            <div class="grid grid-cols-2 gap-8 sm:gap-2 sm:grid-cols-4 w-full md:ml-10">
+              <div>
+                <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Contact us</h2>
+                <ul class="text-white dark:text-gray-400 font-medium">
+                  <li class="mb-4">
+                    <p  class="mb-2 flex flex-row items-center uppercase font-Outfit font-medium text-base text-primarycolor">
+                      <i class="fas fa-map-marker-alt text-primarycolor me-2"></i>
+                      Find us
+                    </p>
+                    <p class="text-white dark:text-gray-400 font-light font-Outfit text-base uppercase md:max-w-40">
+                      Busibante Rd, Nabaweesi Close Najjera, Kampala, Uganda
+                    </p>
+                  </li>
+                  <li class="mb-4">
+                    <p class="mb-2 flex flex-row items-center uppercase font-Outfit font-medium text-base text-primarycolor">
+                      <i class="fas fa-phone-alt text-primarycolor me-2"></i>
+                      Call us
+                    </p>
+                    <div class="flex flex-col">
+                      <%= link_to '(256) 782-611246', 'tel:(256) 782-611246', class: 'hover:underline text-primarycolor dark:text-gray-400 font-light font-Outfit text-base' %>
+                      <%= link_to '(256) 702-878225', 'tel:(256) 702-878225', class: 'hover:underline text-white dark:text-gray-400 font-light font-Outfit text-base' %>
+                    </div>
+                  </li>
+                  <li class="mb-4">
+                    <p class="mb-2  flex flex-row items-center uppercase font-Outfit font-medium text-base text-primarycolor">
+                      <i class="fas fa-envelope text-primarycolor me-2"></i>
+                      Email us
+                    </p>
+                    <%= link_to 'info@hnhfoodbank.org', 'mailto:info@hnhfoodbank.org?subject=Enquiry&body=Hello, I would like to know more about...', class: 'hover:underline text-white dark:text-gray-400 font-light font-Outfit text-base uppercase' %>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Quick access</h2>
+                <ul class="text-white dark:text-gray-400 font-medium">
+                  <li class="mb-2">
+                    <%= link_to 'Make Donation', 'javascript:void(0)', onclick: "toggleModal('donateModal')", class: 'hover:underline' %>
+                  </li>
+                  <li class="mb-2">
+                    <%= link_to 'Request Food', 'javascript:void(0)', onclick: "toggleModal('requestModal')", class: 'hover:underline' %>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Legal</h2>
+                <ul class="text-white dark:text-gray-400 font-medium">
+                  <li class="mb-2">
+                    <%= link_to 'Privacy Policy', 'javascript:void(0)', onclick: "toggleModal('privacy-modal')", class: 'hover:underline' %>
+                  </li>
+                  <li class="mb-2">
+                    <%= link_to 'Terms of Use', 'javascript:void(0)', onclick: "toggleModal('terms-modal')", class: 'hover:underline' %>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Follow us</h2>
+                <ul class="text-white dark:text-gray-400 font-medium">
+                  <li class="mb-4">
+                    <%= link_to 'Facebook', 'https://www.facebook.com/hnhfoodbank', { target: "_blank", class: "hover:underline" } %>
+                  </li>
+                  <li  class="mb-4">
+                    <%= link_to 'Twitter', 'https://x.com/hnhfoodbank', { target: "_blank", class: "hover:underline" } %>
+                  </li>
+                  <li  class="mb-4">
+                    <%= link_to 'Youtube', 'https://www.youtube.com/channel/UCYCwLfY_LQhHOfe0lRWgrng', { target: "_blank", class: "hover:underline" } %>
+                  </li>
+                  <li  class="mb-4">
+                    <%= link_to 'Linkedin', 'https://www.linkedin.com/company/hnhfoodbank/posts/?feedView=all', { target: "_blank", class: "hover:underline" } %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <hr class="my-6 border-primarycolor sm:mx-auto lg:my-8" />
+          <div class="sm:flex sm:items-center sm:justify-between">
+            <span class="text-sm text-white text-center dark:text-gray-400 font-Outfit">
+              Haba Na Haba Food Bank™ 
+              <span class= "hover:underline text-primarycolor">©<%= Time.now.year %></span><br>
+              All Rights Reserved
+            </span>
+            <br class="block md:hidden">
+            <span class="text-sm text-white text-center dark:text-gray-400 font-Outfit">
+              Design & Developed By
+              <%= link_to 'Nexora', '#', class: 'hover:underline text-primarycolor' %>
+            </span>
+            <div class="flex mt-4 sm:justify-center sm:mt-0">
+              <%= link_to 'https://www.facebook.com/hnhfoodbank', class: 'text-white hover:text-gray-900 dark:hover:text-white',target: '_blank' do %>
+                <i class="fa-brands fa-facebook-f"></i>
+                <span class="sr-only">Facebook page</span>
+              <% end %>
+              <%= link_to 'https://x.com/hnhfoodbank', class: 'text-white hover:text-gray-900 dark:hover:text-white ms-5', target: '_blank' do %>
+                <i class="fa-brands fa-x-twitter"></i>
+                <span class="sr-only">X community</span>
+              <% end %>
+              <%= link_to 'https://www.youtube.com/channel/UCYCwLfY_LQhHOfe0lRWgrng', class: 'text-white hover:text-gray-900 dark:hover:text-white ms-5', target: '_blank' do %>
+                <i class="fa-brands fa-youtube"></i>
+                <span class="sr-only">youtube</span>
+              <% end %>
+              <%= link_to 'https://www.linkedin.com/company/hnhfoodbank/posts/?feedView=all', class: 'text-white hover:text-gray-900 dark:hover:text-white ms-5', target: '_blank' do %>
+                <i class="fa-brands fa-linkedin"></i>
+                <span class="sr-only">linkedin</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <%= render 'shared/modals/donate_modal' %>
+      <%= render 'shared/modals/request_modal' %>
+      <%= render 'shared/modals/privacy_modal' %>
+      <%= render 'shared/modals/terms_modal' %>
+      <button id="scrollToTopBtn" class="fixed bottom-4 right-4 bg-primarycolor text-white p-3 rounded-full shadow-lg hover:bg-darkGreen focus:outline-none focus:ring-2 focus:ring-primarycolor hidden">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+      </button>
