@@ -26,7 +26,6 @@ class RequestsController < ApplicationController
     @districts = District.all
     @counties = County.none
     @sub_counties = SubCounty.none
-
   end
 
   def create
