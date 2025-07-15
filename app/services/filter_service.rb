@@ -1,7 +1,7 @@
 class FilterService
   include BeneficiaryFilterMethods
   include GeneralFilterMethods
-  include EventFilterMethods
+  include RequestFilterMethods
 
   def initialize(model, params)
     @model = model

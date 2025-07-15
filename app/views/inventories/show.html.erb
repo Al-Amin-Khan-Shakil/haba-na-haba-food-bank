@@ -120,12 +120,30 @@
               <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @inventory&.sub_county.name %></p>
             </div>
           </div>
+          <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+            <div class="flex items-start gap-1 sm:gap-3 w-fit">
+              <div class="w-[23px]"><i class="fa-solid fa-map-marked-alt text-sm text-primarycolor sm:text-lg"></i></div>
+              <p class="font-medium text-sm sm:text-base text-gray-700">Branch</p>
+            </div>
+            <div class="flex-1 flex justify-end items-start">
+              <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @inventory&.branch&.name %></p>
+            </div>
+          </div>
+          <div class="flex items-start justify-between gap-1.5 sm:gap-3 border-b border-gray-100">
+            <div class="flex items-start gap-1 sm:gap-3 w-fit">
+              <div class="w-[23px]"><i class="fa-solid fa-calendar-days text-sm text-primarycolor sm:text-lg"></i></div>
+              <p class="font-medium text-sm sm:text-base text-gray-700">Event</p>
+            </div>
+            <div class="flex-1 flex justify-end items-start">
+              <p class="text-sm sm:text-base text-wrap break-all font-medium text-[#5a607a] truncate capitalize"><%= @inventory&.event&.title %></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="mt-8 flex justify-end items-center gap-4">
-      <%= link_to 'Edit', edit_inventory_path(@inventory), class: 'bg-primarycolor text-white py-1 px-4 w-fit rounded hover:bg-hoverprimarycolor transition-all text-sm sm:text-base' %>
-      <%= button_to 'Destroy', inventory_path(@inventory), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-600 text-white py-1 px-4 w-fit rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
+    <div class="mt-8 flex justify-end items-center gap-4 ">
+      <%= link_to 'Edit', edit_inventory_path(@inventory), class: 'cursor-pointer bg-primarycolor text-white py-1 px-4 w-fit rounded hover:bg-hoverprimarycolor transition-all text-sm sm:text-base' %>
+      <%= button_to 'Destroy', inventory_path(@inventory), method: :delete, data: { confirm: 'Are you sure?' }, class: 'cursor-pointer bg-red-600 text-white py-1 px-4 w-fit rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
     </div>
   </div>
 </div>

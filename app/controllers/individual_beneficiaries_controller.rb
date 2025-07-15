@@ -1,5 +1,6 @@
 class IndividualBeneficiariesController < ApplicationController
   include BeneficiaryGuard
+  load_and_authorize_resource
 
   before_action :authenticate_user!
   before_action :set_parent_resource, only: %i[new create]
@@ -10,12 +11,14 @@ class IndividualBeneficiariesController < ApplicationController
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = IndividualBeneficiary.accessible_by(current_ability)
+
     if filter_applied
-      @individual_beneficiaries = FilterService.new(IndividualBeneficiary.all,
+      @individual_beneficiaries = FilterService.new(base_query,
                                                     filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 7.days.ago.to_date.to_s, end_date: Date.current.to_s)
-      @individual_beneficiaries = FilterService.new(IndividualBeneficiary.all,
+      @individual_beneficiaries = FilterService.new(base_query,
                                                     default_params).apply.order(created_at: :desc)
     end
 

@@ -29,8 +29,8 @@ class User < ApplicationRecord
             size: { less_than: 2.megabytes, message: 'is too large (maximum size is 2MB)' }
 
   ROLES.each do |role_name|
-    define_method "#{role_name.gsub(' ', '_')}?" do
-      role == role_name.tr('_', ' ')
+    define_method "#{role_name}?" do
+      role == role_name
     end
   end
 

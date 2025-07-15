@@ -134,8 +134,22 @@
             </div>
           </div>
         </div>
+        <div>
+          <div class="mb-4">
+            <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.collection_select :branch_id, @branches, :id, :name,
+                        { selected: @family_beneficiary&.branch_id || @request&.branch_id, prompt: "Select Branch" },
+                        class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :event_id, "Event", class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.collection_select :event_id, Event.all, :id, :title,
+                        { selected: @family_beneficiary&.event_id, prompt: "Select Event" },
+                        class: "bg-gray-50   hover:bg-primarycolor/10  border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
+          </div>
+        </div>
         <div class="flex justify-center md:justify-end text-sm items-center mt-6">
-          <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
+          <%= link_to "Cancel", :back, class: " cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit @organization_beneficiary.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-4 rounded" %>
         </div>
       </div>

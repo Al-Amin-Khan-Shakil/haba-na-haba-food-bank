@@ -2,15 +2,18 @@ class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_event, only: %i[edit update destroy]
   before_action :set_form_dependencies, only: %i[new edit create update]
+  load_and_authorize_resource
 
   def index
     filter_applied = filter_params.except(:commit).reject { |_, v| v.blank? }.present?
 
+    base_query = Event.accessible_by(current_ability)
+
     if filter_applied
-      @events = FilterService.new(Event.all, filter_params).apply.order(created_at: :desc)
+      @events = FilterService.new(base_query, filter_params).apply.order(created_at: :desc)
     else
       default_params = filter_params.merge(start_date: 3.days.ago.to_date.to_s, end_date: 7.days.from_now.to_date.to_s)
-      @events = FilterService.new(Event.all, default_params).apply.order(created_at: :desc)
+      @events = FilterService.new(base_query, default_params).apply.order(created_at: :desc)
     end
     @districts = District.all
     @counties = County.all

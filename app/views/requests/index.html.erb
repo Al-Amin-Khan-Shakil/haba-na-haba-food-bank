@@ -11,13 +11,18 @@
           <i class="fa-solid fa-filter"></i>
           <span class="hidden mr-1 lg:inline-block">Filter</span>
         </button>
-        <%= link_to requests_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
+        <%= link_to requests_path, data: { filter_form_target: "clearButton", action: "click->filter-form#hideForm" }, class: "cursor-pointer text-gray-500 py-1 px-2 bg-gray-100 border-gray-100 rounded hover:bg-gray-200" do %>
           <i class="fa-solid fa-arrows-rotate"></i> <span class="ml-1 hidden lg:inline-block">Clear</span>
         <% end %>
       </div>
     </div>
     <div data-filter-form-target="form" class="space-y-4 hidden bg-white/50 my-4 rounded-lg p-4 shadow-md text-gray-600">
-      <%= form_with url: requests_path, method: :get, local: true, class: "space-y-4" do |form| %>
+      <%= form_with url: requests_path, method: :get, local: true, class: "space-y-4",
+          data: {
+      controller: "location", 
+      location_base_path_value: "requests",
+      location_context_path_value: requests_path
+    } do |form| %>
         <div class="flex flex-wrap gap-4">
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= form.label :name, "Name", class: "block text-gray-700" %>
@@ -42,15 +47,25 @@
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= form.label :district_id, "District", class: "block text-gray-700" %>
-            <%= form.collection_select :district_id, @districts, :id, :name, { prompt: "Select District", selected: params[:district_id] }, { class: 'district-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor', 'data-context-path': "individual_beneficiaries" } %>
+            <%= form.collection_select :district_id, @districts, :id, :name, { prompt: "Select District", selected: params[:district_id] }, { class: 'district-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor', 'data-context-path': "individual_beneficiaries",  data: {
+                        location_target: "district",
+                        action: "change->location#loadCounties"
+                      }} %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= form.label :county_id, "County", class: "block text-gray-700" %>
-            <%= form.collection_select :county_id, @counties, :id, :name, { prompt: "Select County", selected: params[:county_id] }, { class: 'county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor', 'data-context-path': "individual_beneficiaries" } %>
+            <%= form.collection_select :county_id, @counties, :id, :name, { prompt: "Select County", selected: params[:county_id] }, { class: 'county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor', 'data-context-path': "individual_beneficiaries",data: {
+                        location_target: "county",
+                        action: "change->location#loadSubCounties",
+                        initial_selection: @request&.county_id
+                      } } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= form.label :sub_county_id, "Sub-County", class: "block text-gray-700" %>
-            <%= form.collection_select :sub_county_id, @sub_counties, :id, :name, { prompt: "Select Sub-County", selected: params[:sub_county_id] }, { class: 'sub-county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor' } %>
+            <%= form.collection_select :sub_county_id, @sub_counties, :id, :name, { prompt: "Select Sub-County", selected: params[:sub_county_id] }, { class: 'sub-county-select form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-primarycolor focus:border-primarycolor', data: {
+                        location_target: "subCounty",
+                        initial_selection: @request&.sub_county_id
+                      } } %>
           </div>
           <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-grow">
             <%= form.label :start_date, "Start Date", class: "block text-gray-700" %>
@@ -79,7 +94,17 @@
         </thead>
         <tbody>
           <% @requests.each do |request| %>
-            <tr class="hover:bg-gray-100 border-b border-b-gray-100">
+            <tr class=" border-b border-b-gray-100 
+            <%= if request.is_selected == nil && request.user_id
+                  "bg-yellow-200/20"
+                elsif request.is_selected == false
+                'bg-red-500/20'
+                elsif request.is_selected == true
+                  'bg-primarycolor/20'
+                else 
+                  'bg-white'
+              
+                end %>">
               <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.name %></td>
               <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.phone_number %></td>
               <td class="px-6 py-4 text-sm font-semibold font-Outfit text-[#5a607a] w-1/5"><%= request&.branch.name %></td>
@@ -93,16 +118,16 @@
                     </div>
                   </button>
                   <div id="dropdown-<%= request.id %>" class="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg z-10 hidden overflow-hidden font-Outfit font-semibold text-left">
-                    <%= link_to 'Details', request_path(request), class: 'block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
-                    <%= link_to 'Edit', edit_request_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                    <%= link_to 'Details', request_path(request), class: 'cursor-pointer block px-4 py-2 text-primarycolor hover:bg-gray-100' %>
+                    <%= link_to 'Edit', edit_request_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
                     <%= button_to 'Delete', request_path(request), method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-red-600 hover:bg-gray-100 text-left' %>
                     <% if request.request_type == 'food_request' %>
-                      <%= link_to '+ Individual', new_request_individual_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
-                      <%= link_to '+ Family', new_request_family_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
-                      <%= link_to '+ Organization', new_request_organization_beneficiary_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Individual', new_request_individual_beneficiary_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Family', new_request_family_beneficiary_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Organization', new_request_organization_beneficiary_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
                     <% end %>
                     <% if request.request_type == 'donation_request' %>
-                      <%= link_to '+ Inventory', new_request_inventory_path(request), class: 'block px-4 py-2 text-primarytext hover:bg-gray-100' %>
+                      <%= link_to '+ Inventory', new_request_inventory_path(request), class: 'cursor-pointer block px-4 py-2 text-primarytext hover:bg-gray-100' %>
                     <% end %>
                   </div>
                 </div>

@@ -27,7 +27,7 @@
         <h3 class="text-xl my-4 font-semibold text-primarytextcolor mb-3 hover:text-gray-900 transition duration-200 underline">Basic Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="mb-4">
-            <%= f.label :name, class: "block text-gray-700 font-bold mb-2" %>
+            <%= f.label :name, "Item Name", class: "block text-gray-700 font-bold mb-2" %>
             <%= f.text_field :name, value: @inventory&.name || @inventory&.donation&.donation_name || @request&.donation&.donation_name, class: "bg-gray-50 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:border-primarycolor focus:ring-1 focus:ring-primarycolor" %>
           </div>
           <div class="mb-4">
@@ -101,7 +101,7 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid-cols-1 md:grid-cols-2 gap-4 <%= current_user.admin? || current_user.super_admin? ? "grid" : "hidden"%>">
           <div class="mb-4">
             <%= f.label :branch_id, "Branch", class: "block text-gray-700 font-bold mb-2" %>
             <%= f.collection_select :branch_id, @branches, :id, :name,
@@ -119,10 +119,10 @@
           <%= f.hidden_field :donation_id, value: @inventory.donation_id || @request&.donation&.id %>
           <label class="block text-gray-700 font-bold mb-2">Donated by</label>
           <p class="bg-gray-50 border border-gray-300 rounded-lg p-2">
-            <%= @inventory.donation&.donor_type&.humanize || @request&.donation&.donor_type&.humanize || "Collected from #{@event.title}" %>
+            <%= @inventory.donation&.donor_type&.humanize || @request&.donation&.donor_type&.humanize || "Collected from #{@event&.title}" %>
           </p>
         </div>
-        <div class="flex justify-center md:justify-end text-sm items-center mt-12">
+        <div class="flex justify-center md:justify-end text-sm items-center mt-12 cursor-pointer">
           <%= link_to "Cancel", :back, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded text-sm transition duration-200 transform hover:scale-105" %>
           <%= f.submit @inventory.persisted? ? "Update" : "Create", class: "ml-2 bg-primarycolor hover:bg-hoverprimarycolor text-white font-bold py-2 px-6 rounded" %>
         </div>
