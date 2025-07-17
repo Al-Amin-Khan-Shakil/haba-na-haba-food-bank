@@ -26,7 +26,7 @@ class RequestsController < ApplicationController
   def new
     @request = Request.new
     @request.build_donation
-    @type = param[:type]
+    @type = params[:type]
     form_dependencies
   end
 

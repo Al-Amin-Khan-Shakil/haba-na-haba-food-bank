@@ -2,49 +2,42 @@
 <html>
   <head>
     <title>HabaNaHabaFoodBank</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js" defer></script>
   </head>
-  <body>
-    <div class=" z-50">
+  <body class="min-h-screen bg-white relative">
+    <!-- Global Flash Message Handler -->
+    <div class="z-50 fixed top-16 right-4 space-y-2">
       <% flash.each do |type, message| %>
         <div
-    data-controller="flash"
-    data-flash-delay-value="30000"
-    class="fixed top-16 right-4 z-1 px-4 py-3 rounded shadow-md max-w-sm 
-           <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+          data-controller="flash"
+          data-flash-delay-value="<%= user_signed_in? ? 30000 : 10000 %>"
+          class="px-4 py-3 rounded shadow-md max-w-sm text-sm
+                <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
           <%= message %>
         </div>
       <% end %>
-      <%= render "layouts/validation_errors", resource: first_model_with_errors %>
     </div>
+    <!-- Validation Errors -->
+    <%= render "layouts/validation_errors", resource: first_model_with_errors %>
     <main>
       <% if user_signed_in? %>
         <%= render "layouts/sidebar" %>
       <% else %>
-        <div class="p-5 flex flex-col justify-center items-center relative min-h-screen">
-          <% flash.each do |type, message| %>
-            <div
-    data-controller="flash"
-    data-flash-delay-value="10000"
-    class="fixed top-16 right-4 z-1 px-4 py-3 rounded shadow-md max-w-sm mt-10
-           <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
-              <%= message %>
-            </div>
-          <% end %>
-          <%= image_tag "hnh_admin_mobile_logo", class: "text-white md:w-20 md:h-20 w-10 h-10"%>
-          <p class="text-white  mt-3 font-bold text-3xl">Haba Na Haba</p>
-          <p class="text-white mb-5  text-sm">Little by Little the pot is filled </p>
-          <%= image_tag "bg.svg", class: "absolute top-0 left-0 ri w-full h-full -z-10 object-cover" %>
+        <div class="p-5 flex flex-col justify-center items-center min-h-screen relative text-center">
+          <%= image_tag "hnh_admin_mobile_logo", class: "w-10 h-10 md:w-20 md:h-20" %>
+          <h1 class="text-white mt-3 font-bold text-3xl">Haba Na Haba</h1>
+          <p class="text-white mb-5 text-sm">Little by Little the pot is filled</p>
+          <%= image_tag "bg.svg", class: "absolute top-0 left-0 w-full h-full -z-10 object-cover" %>
           <%= yield %>
         </div>
       <% end %>
     </main>
-     </body>
+  </body>
 </html>
