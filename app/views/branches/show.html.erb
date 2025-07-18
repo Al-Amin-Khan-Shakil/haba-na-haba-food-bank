@@ -1,3 +1,10 @@
+<% tailwind_colors = %w[
+  red green blue yellow purple pink indigo teal orange amber emerald fuchsia lime cyan rose sky violet stone slate
+] %>
+<% shades = %w[100 200 300] %>
+<% color_combinations = tailwind_colors.product(shades).map do |color, shade| 
+     "bg-#{color}-#{shade} text-#{color}-800"
+   end %>
 <div class="sm:p-4 md:p-6 lg:p-8 bg-gray-50">
   <div class="min-w-full bg-gradient-to-tr from-white from-40% via-primarycolor/50 via-90% to-red-600/40 to-100% text-white shadow-xl rounded-xl p-3 sm:p-8 mb-8">
     <div class="flex justify-between items-center mb-4">
@@ -5,29 +12,61 @@
         <i class="fa-solid fa-arrow-left"></i>
         <span class="ml-2 hidden lg:inline-block">Back</span>
       <% end %>
-      <h2 class="text-3xl text-primarytext font-bold text-center leading-tight">Details</h2>
+      <h2 class="text-3xl font-bold text-primarytext text-center leading-tight">Details</h2>
     </div>
-    <div class="bg-white/50 md:p-6 p-2 shadow rounded-lg">
-      <p class="text-primarytext text-2xl font-bold text-center leading-tight p-2 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out rounded-lg mb-4"><%= @branch.name %></p>
-      <div class="text-[#5a607a] bg-white/20 md:p-4 p-2 border-l border-b rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out">
-        <p><span class="inline-block w-[85px] font-bold">Phone:</span><span> <%= @branch.phone_number %></span></p>
-        <p><span class="inline-block w-[85px] font-bold">Address:</span><span> <%= @branch.address %></span></p>
+    <div class="bg-white/50 p-2 md:p-6 shadow rounded-lg">
+      <div class="text-2xl font-bold text-primarytext text-center leading-tight p-2 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out rounded-lg mb-4">
+        <p class="mb-2"><%= @branch.name %></p>
+        <div class= "text-primarycolor font-semibold text-base text-center">
+          <p>
+            <span><i class="fas fa-phone"></i></span>
+            <span><%= @branch.phone_number %></span>
+          </p>
+          <p>
+            <span><i class="fas fa-map-marker-alt"></i></span>
+            <span><%= @branch.address %></span>
+          </p>
+        </div>
+      </div>
+      <div class="text-[#5a607a] bg-white/20 p-2 md:p-4 border-l border-b rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out">
         <p class="text-lg font-semibold text-primarytext my-2">Assigned Districts</p>
         <% if @branch.districts.any? %>
-          <ul class="list-none flex gap-2 flex-wrap text-[#5a607a]">
-            <% @branch.districts.each do |district| %>
-              <li class="p-2 bg-white shadow rounded-lg"><%= district.name %></li>
+          <ul class="flex flex-wrap gap-2 list-none text-[#5a607a]">
+            <% @branch.districts.each_with_index do |district, i| %>
+              <% color = color_combinations[i % color_combinations.size] %>
+              <li class="p-2 rounded-lg shadow <%= color %>">
+                <%= district.name %>
+              </li>
             <% end %>
           </ul>
         <% else %>
           <p class="text-gray-500">No districts assigned.</p>
         <% end %>
+        <p class="text-lg font-semibold text-primarytext my-4">Assigned Staff</p>
+        <% if @branch.users.any? %>
+          <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+            <% @branch.users.each do |user| %>
+              <div class="p-4 flex items-center mb-2 shadow-md rounded-lg my-5">
+                <div class="w-14 h-14 ml-2 mr-1">
+                  <%=  image_tag user.profile_picture, alt: 'user.profile_picture', class: "rounded-full w-full h-full object-cover" %>
+                </div>
+                <div class="leading-tight">
+                  <%= "#{user.first_name} #{user.last_name} "%>
+                  <div class="italic text-sm text-gray-700">
+                    <%= user.role.titleize%>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No staff assigned to this branch.</p>
+          <% end %>
+        </div>
       </div>
     </div>
-    <div class="mt-8 flex justify-end items-center gap-4 cursor-pointer ">
-      <%= link_to 'Edit', edit_branch_path(@branch), class: 'bg-primarycolor text-white py-1 px-4 w-fit rounded hover:bg-hoverprimarycolor transition-all text-sm sm:text-base' %>
-      <%= button_to 'Destroy', branch_path(@branch), method: :delete, data: { confirm: 'Are you sure?' }, class: 'cursor-pointer bg-red-600 text-white py-1 px-4 w-fit rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
+    <div class="mt-8 flex justify-end items-center gap-4">
+      <%= link_to 'Edit', edit_branch_path(@branch), class: 'bg-primarycolor text-white py-1 px-4 rounded hover:bg-hoverprimarycolor transition-all text-sm sm:text-base' %>
+      <%= button_to 'Destroy', branch_path(@branch), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-600 text-white py-1 px-4 rounded hover:bg-red-700 transition-all text-sm sm:text-base' %>
     </div>
   </div>
-</div>
 </div>
