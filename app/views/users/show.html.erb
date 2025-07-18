@@ -57,6 +57,14 @@
           <%= @user.address %>
         </span>
       </div>
+      <div class="flex flex-col border md:flex-row md:justify-between items-start py-2 md:py-3 px-3 md:px-4 rounded-xl bg-gray-50/80 hover:bg-gray-100/60 transition-colors duration-200">
+        <span class="font-medium text-gray-600/90 flex items-center text-sm md:text-base">
+          <i class="fas fa-map-marked-alt mr-2 md:mr-3 text-primarycolor/70 text-sm md:text-base"></i> Branch 
+        </span>
+        <span class="text-right font-medium text-gray-800 truncate max-w-[50%] md:max-w-[55%] text-sm md:text-base">
+          <%= @user&.branch&.name %>
+        </span>
+      </div>
     </div>
     <div class="mt-6 mb-6 flex flex-col  md:flex-row justify-end space-y-4 md:space-y-0 space-y-reverse md:space-x-4 px-4 md:px-6 w-full gap-2 md:gap-0">
       <%= link_to 'Edit Profile', edit_user_path(@user), class: "cursor-pointerflex justify-center items-center px-4  py-2 bg-primarytext  text-xs md:text-sm font-semibold uppercase tracking-wide rounded-lg border border-gray-300/80 text-white hover:bg-sky-50 hover:text-primarytext transition-all duration-300 shadow-sm hover:shadow-md" %>
